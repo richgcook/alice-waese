@@ -1,0 +1,100 @@
+@font-face {
+    font-family: 'ABC Solar';
+    src: url('../fonts/ABCSolar-Regular-Trial.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'ABC Solar';
+    src: url('../fonts/ABCSolar-RegularItalic-Trial.woff2') format('woff2');
+    font-style: italic;
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'ABC Solar';
+    src: url('../fonts/ABCSolar-Bold-Trial.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'ABC Solar';
+    src: url('../fonts/ABCSolar-BoldItalic-Trial.woff2') format('woff2');
+    font-style: italic;
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'Adobe Arabic';
+    src: url('../fonts/AdobeArabic-Regular.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 400;
+}
+
+:root {
+	--font-size-base: 20px;
+
+	--padding-base: 30px;
+	--site-max-width: 1920px;
+
+	--color-bg: #ffffff;
+
+	--font-primary: 'ABC Solar', sans-serif;
+	--font-arabic: 'Adobe Arabic', sans-serif;
+}
+@include media('tablet-landscape') {
+	:root { 
+		
+	}
+}
+@include media('tablet-portrait') {
+	:root { 
+		
+	}
+}
+@include media('phone') {
+	:root { 
+		--font-size-base: 14px;
+
+		--padding-base: 20px;
+	}
+}
+* {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+body {
+	font-family: var(--font-primary);
+	font-size: var(--font-size-base);
+	font-weight: 400;
+	letter-spacing: -0.01em;
+	background-color: var(--color-bg);
+	color: black;
+	line-height: 1.3;
+}
+a {
+	&:active, &:focus, &:hover {
+		color: currentColor;
+		outline: none;
+		text-decoration: none;
+	}
+}
+[data-ratio] {
+	display: block;
+	position: relative;
+	width: 100%;
+	background-color: transparent;
+	> img {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+@include globalSelect {
+	color: white;
+	background-color: black;
+}
+[v-cloak] { 
+	display: none !important; 
+}

@@ -1,9 +1,11 @@
 import { defineType, defineField, defineArrayMember } from 'sanity'
+import { orderRankField } from '@sanity/orderable-document-list'
+import { TagIcon } from '@phosphor-icons/react'
 
 export default defineType({
 	type: "document",
-	title: "Contact",
-	name: "contactPage",
+	title: "Category",
+	name: "artworkCategory",
 	fields: [
 		defineField({
 			type: 'string',
@@ -21,15 +23,23 @@ export default defineType({
 			validation: Rule => Rule.required()
 		}),
 		defineField({
-			type: 'richText',
-			title: 'Details',
-			name: 'details',
-			validation: Rule => Rule.required(),
+			type: 'pageBuilderA',
+			title: 'Content',
+			name: 'pageBuilder',
 		}),
-		defineField({
-			title: 'SEO',
-			name: 'seo',
-			type: 'seo'
-		}),
+		orderRankField(
+			{ type: 'artworkCategory' }
+		)
 	],
-})  
+	preview: {
+		select: {
+			title: 'title'
+		},
+		prepare({ title }) {
+			return {
+				title,
+				media: TagIcon
+			}
+		}
+	}
+})

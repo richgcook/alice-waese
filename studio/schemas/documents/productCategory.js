@@ -4,8 +4,8 @@ import { TagIcon } from '@phosphor-icons/react'
 
 export default defineType({
 	type: "document",
-	title: "Type",
-	name: "projectType",
+	title: "Category",
+	name: "productCategory",
 	fields: [
 		defineField({
 			type: 'string',
@@ -22,8 +22,13 @@ export default defineType({
 			},
 			validation: Rule => Rule.required()
 		}),
+		defineField({
+			type: 'pageBuilderA',
+			title: 'Content',
+			name: 'pageBuilder',
+		}),
 		orderRankField(
-			{ type: 'projectType' }
+			{ type: 'productCategory' }
 		)
 	],
 	preview: {

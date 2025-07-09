@@ -1,11 +1,10 @@
 import { defineType, defineField, defineArrayMember } from 'sanity'
-import { orderRankField } from '@sanity/orderable-document-list'
 import { PlayIcon } from '@phosphor-icons/react'
 
 export default defineType({
 	type: "document",
-	title: "Project",
-	name: "project",
+	title: "Product",
+	name: "product",
 	fields: [
 		defineField({
 			type: 'string',
@@ -23,22 +22,9 @@ export default defineType({
 			validation: Rule => Rule.required()
 		}),
 		defineField({
-			type: 'number',
-			title: 'Numeral (Arabic)',
-			name: 'numeralArabic',
-			validation: Rule => Rule.required()
-		}),
-		defineField({
-			type: 'text',
-			title: 'Subtitle',
-			name: 'subtitle',
-			rows: 2,
-			description: 'Optional',
-		}),
-		defineField({
 			type: 'object',
-			title: 'Featured media',
-			name: 'featuredMedia',
+			title: 'Primary image or video',
+			name: 'primaryMedia',
 			fields: [
 				defineField({
 					type: 'image',
@@ -64,31 +50,23 @@ export default defineType({
 		}),
 		defineField({
 			type: 'array',
-			title: 'Type(s)',
-			name: 'types',
+			title: 'Categories',
+			name: 'categories',
 			of: [{
 				type: 'reference',
-				to: [{ type: 'projectType' }]
+				to: [{ type: 'productCategory' }]
 			}],
-		}),
-		defineField({
-			type: 'pageBuilderA',
-			title: 'Content',
-			name: 'pageBuilder',
 		}),
 		defineField({
 			title: 'SEO',
 			name: 'seo',
 			type: 'seo'
 		}),
-		orderRankField(
-			{ type: 'project' }
-		)
 	],
 	preview: {
 		select: {
 			title: 'title',
-			media: 'featuredMedia.image'
+			media: 'primaryMedia.image'
 		},
 		prepare({ title, media }) {
 			return {

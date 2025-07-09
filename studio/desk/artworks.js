@@ -1,14 +1,15 @@
-import { FileIcon, StackIcon, TagIcon } from '@phosphor-icons/react'
+import { PaletteIcon, TagIcon } from '@phosphor-icons/react'
 import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
-export const projectsStructure = (S, context) =>
+export const artworksStructure = (S, context) =>
 S.listItem()
-	.title('Projects')
-	.icon(StackIcon)
+	.title('Artworks')
+	.icon(PaletteIcon)
 	.child(
 		S.list()
-			.title('Projects')
+			.title('Artworks')
 			.items([
+				/*
 				S.listItem()
 				.title('Overview')
 				.icon(FileIcon)
@@ -18,16 +19,12 @@ S.listItem()
 					.schemaType('projectsPage')
 					.documentId('projectsPage')
 				),
+				*/
 				S.divider(),
+				S.documentTypeListItem('artwork').title('Artworks').icon(PaletteIcon),
 				orderableDocumentListDeskItem({
-					type: 'project', 
-					title: 'Projects',
-					icon: StackIcon,
-					S, context
-				}),
-				orderableDocumentListDeskItem({
-					type: 'projectType', 
-					title: 'Types',
+					type: 'artworkCategory', 
+					title: 'Categories',
 					icon: TagIcon,
 					S, context
 				})

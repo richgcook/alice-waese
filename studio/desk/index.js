@@ -1,23 +1,24 @@
-import { HouseIcon, AtIcon } from '@phosphor-icons/react'
-import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
+import { HouseIcon, FilesIcon, AtIcon } from '@phosphor-icons/react'
 
-import { projectsStructure } from './projects'
+import { productsStructure } from './products'
+import { artworksStructure } from './artworks'
+
 import { aboutStructure } from './about'
-import { newsStructure } from './news'
 import { settingsStructure } from './settingsGeneral'
 
 const hiddenDocTypes = listItem => 
 	![
 		'homePage',
 		'settingsGeneral',
-		'contactPage',
-		'projectsPage',
-		'project',
-		'projectType',
+		'pressPage',
+		'stockistsPage',
+		'product',
+		'productCategory',
+		'productCollection',
+		'artwork',
+		'artworkCategory',
 		'aboutPage',
-		'aboutSubPageA',
-		'newsPage',
-		'newsArticle',
+		'pageA',
 	]
 .includes(listItem.getId())
 
@@ -39,19 +40,11 @@ export const deskStructure = (S, context) =>
 
 		aboutStructure(S, context),
 
-		projectsStructure(S, context),
+		productsStructure(S, context),
 
-		newsStructure(S, context),
+		artworksStructure(S, context),
 
-		S.listItem()
-		.title('Contact')
-		.icon(AtIcon)
-		.child(
-			S.document()
-			.id('contactPage')
-			.schemaType('contactPage')
-			.documentId('contactPage')
-		),
+		S.documentTypeListItem('pageA').title('Pages').icon(FilesIcon),
 
 		S.divider(),
 

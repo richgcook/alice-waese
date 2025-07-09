@@ -1,16 +1,17 @@
 import homePage from './documents/homePage'
 import settingsGeneral from './documents/settingsGeneral'
-import contactPage from './documents/contactPage'
-
-import projectsPage from './documents/projectsPage'
-import project from './documents/project'
-import projectType from './documents/projectType'
-
 import aboutPage from './documents/aboutPage'
-import aboutSubPageA from './documents/aboutSubPageA'
+import stockistsPage from './documents/stockistsPage'
+import pressPage from './documents/pressPage'
 
-import newsPage from './documents/newsPage'
-import newsArticle from './documents/newsArticle'
+import product from './documents/product'
+import productCategory from './documents/productCategory'
+import productCollection from './documents/productCollection'
+
+import artwork from './documents/artwork'
+import artworkCategory from './documents/artworkCategory'
+
+import pageA from './documents/pageA'
 
 import richText from './objects/richText'
 import altTag from './objects/altTag'
@@ -24,17 +25,18 @@ export const schemaTypes = [
 	// Documents
 	homePage,
 	settingsGeneral,
-	contactPage,
-
-	projectsPage,
-	project,
-	projectType,
-
 	aboutPage,
-	aboutSubPageA,
+	stockistsPage,
+	pressPage,
 
-	newsPage,
-	newsArticle,
+	product,
+	productCategory,
+	productCollection,
+
+	artwork,
+	artworkCategory,
+
+	pageA,
 
 	// Objects
 	richText,

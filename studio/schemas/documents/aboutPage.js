@@ -21,29 +21,6 @@ export default defineType({
 			validation: Rule => Rule.required()
 		}),
 		defineField({
-			type: 'object',
-			title: 'Featured image',
-			name: 'featuredImage',
-			fields: [
-				defineField({
-					type: 'image',
-					title: 'Image',
-					name: 'image',
-					fields: [
-						{
-							type: 'alt',
-							name: 'alt'
-						}
-					]
-				}),
-				defineField({
-					type: 'richText',
-					title: 'Caption',
-					name: 'caption',
-				})
-			]
-		}),
-		defineField({
 			title: 'SEO',
 			name: 'seo',
 			type: 'seo'

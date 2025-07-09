@@ -1,9 +1,9 @@
-import { defineType, defineField, defineArrayMember } from 'sanity'
+import { defineType, defineField } from 'sanity'
 
 export default defineType({
 	type: "document",
-	title: "News",
-	name: "newsPage",
+	title: "Press",
+	name: "pressPage",
 	fields: [
 		defineField({
 			type: 'string',

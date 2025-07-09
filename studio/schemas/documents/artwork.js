@@ -1,11 +1,10 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField, defineArrayMember } from 'sanity'
 import { PlayIcon } from '@phosphor-icons/react'
-
 
 export default defineType({
 	type: "document",
-	title: "Article",
-	name: "newsArticle",
+	title: "Artwork",
+	name: "artwork",
 	fields: [
 		defineField({
 			type: 'string',
@@ -23,19 +22,9 @@ export default defineType({
 			validation: Rule => Rule.required()
 		}),
 		defineField({
-			type: 'date',
-			title: 'Published date',
-			name: 'publishedDate',
-			options: {
-				dateFormat: 'DD.MM.YYYY',
-				calendarTodayLabel: 'Today'
-			},
-			validation: Rule => Rule.required(),
-		}),
-		defineField({
 			type: 'object',
-			title: 'Featured media',
-			name: 'featuredMedia',
+			title: 'Primary image or video',
+			name: 'primaryMedia',
 			fields: [
 				defineField({
 					type: 'image',
@@ -56,19 +45,17 @@ export default defineType({
 						accept: 'video/*'
 					},
 				}),
-				defineField({
-					type: 'richText',
-					title: 'Caption',
-					name: 'caption',
-				})
 			],
 			validation: Rule => Rule.required()
 		}),
 		defineField({
-			type: 'richText',
-			title: 'Details',
-			name: 'details',
-			validation: Rule => Rule.required()
+			type: 'array',
+			title: 'Categories',
+			name: 'categories',
+			of: [{
+				type: 'reference',
+				to: [{ type: 'artworkCategory' }]
+			}],
 		}),
 		defineField({
 			title: 'SEO',
@@ -79,20 +66,13 @@ export default defineType({
 	preview: {
 		select: {
 			title: 'title',
-			publishedDate: 'publishedDate',
-			media: 'featuredMedia.image',
+			media: 'primaryMedia.image'
 		},
-		prepare(selection) {
-			const { title, publishedDate, media } = selection
-			const monthAndYear = new Date(publishedDate).toLocaleString('default', {
-				month: 'long',
-				year: 'numeric'
-			})
+		prepare({ title, media }) {
 			return {
-				title: title,
-				subtitle: monthAndYear,
+				title,
 				media: media ? media : PlayIcon,
 			}
 		}
-	},
+	}
 })

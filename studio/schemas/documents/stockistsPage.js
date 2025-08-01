@@ -1,4 +1,5 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField, defineArrayMember } from 'sanity'
+import { ArrowRightIcon } from '@phosphor-icons/react'
 
 export default defineType({
 	type: "document",
@@ -19,6 +20,46 @@ export default defineType({
 				source: 'title'
 			},
 			validation: Rule => Rule.required()
+		}),
+		defineField({
+			type: 'array',
+			title: 'Stockists',
+			name: 'stockists',
+			of: [
+				defineArrayMember({
+					type: 'object',
+					name: 'stockist',
+					title: 'Stockist',
+					fields: [
+						defineField({
+							type: 'string',
+							title: 'Name',
+							name: 'name',
+							validation: Rule => Rule.required()
+						}),
+						defineField({
+							type: 'url',
+							title: 'Link/URL',
+							name: 'link',
+							validation: Rule => Rule.required()
+						}),
+					],
+					preview: {
+						select: {
+							title: 'name',
+							url: 'link'
+						},
+						prepare(selection) {
+							const { title, url } = selection
+							return {
+								title,
+								subtitle: url,
+								media: ArrowRightIcon,
+							}
+						}
+					}
+				}),
+			],
 		}),
 		defineField({
 			title: 'SEO',

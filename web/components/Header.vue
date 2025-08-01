@@ -1,14 +1,36 @@
 <template>
 	<header ref="header">
-		<h1 class="logo"><NuxtLink to="/">{{ config?.public?.siteTitle }}</NuxtLink></h1>
-		<button @click="navStore.setOpen()" class="nav-trigger" v-show="!navIsOpen">
-			<span></span><span></span><span></span>
-		</button>
-		<ul class="nav" v-show="navIsOpen">
-			<li v-if="data.aboutPage"><NuxtLink :to="useInternalLinkUrl(data.aboutPage)">{{ data.aboutPage.title }}</NuxtLink></li>
-			<li v-if="data.newsPage"><NuxtLink :to="useInternalLinkUrl(data.newsPage)">{{ data.newsPage.title }}</NuxtLink></li>
-			<li v-if="data.projectsPage"><NuxtLink :to="useInternalLinkUrl(data.projectsPage)">{{ data.projectsPage.title }}</NuxtLink></li>
-			<li v-if="data.contactPage"><NuxtLink :to="useInternalLinkUrl(data.contactPage)">{{ data.contactPage.title }}</NuxtLink></li>
+		<h1 class="logo" v-show="hideLogo"><NuxtLink to="/">{{ config?.public?.siteTitle }}</NuxtLink></h1>
+		<ul class="nav" ref="navElem">
+			<li>
+				<button @click="activeSubMenu ? activeSubMenu = null : activeSubMenu = 1">Jewellery</button>
+				<ul class="sub" v-show="activeSubMenu === 1">
+					<li><NuxtLink to="/">Rings</NuxtLink></li>
+					<li><NuxtLink to="/">Earrings</NuxtLink></li>
+					<li><NuxtLink to="/">Pendants</NuxtLink></li>
+					<li><NuxtLink to="/">Bracelets</NuxtLink></li>
+					<li><NuxtLink to="/">Pins</NuxtLink></li>
+					<li>
+						<button @click="activeSubSubMenu ? activeSubSubMenu = null : activeSubSubMenu = 1">Collections</button>
+						<ul class="sub" v-show="activeSubSubMenu === 1">
+							<li><NuxtLink to="/collections/collection-1">SS25</NuxtLink></li>
+							<li><NuxtLink to="/collections/collection-2">SS26</NuxtLink></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<ul class="sub" v-show="activeSubMenu === 2">
+					<li>Rings</li>
+					<li>Earrings</li>
+					<li>Pendants</li>
+					<li>Bracelets</li>
+					<li>Pins</li>
+					<li>Collections</li>
+				</ul>
+				<button @click="activeSubMenu = 2">Artworks</button>
+			</li>
+			<li><NuxtLink to="/about">About</NuxtLink></li>
 		</ul>
 	</header>
 </template>
@@ -16,6 +38,7 @@
 <script setup>
 
 import { useNavStore } from '~/store/nav'
+import { useThemeModeStore } from '~/store/themeMode'
 import { onClickOutside } from '@vueuse/core'
 
 const config = useRuntimeConfig()
@@ -46,13 +69,34 @@ const query = groq`{
 }`
 const { data } = await useSanityQuery(query)
 
+const route = useRoute()
+
+const hideLogo = computed(() => {
+	return route.name === 'stockists'
+})
+
 const navStore = useNavStore()
 
-const { isOpen: navIsOpen } = storeToRefs(navStore)
+const themeModeStore = useThemeModeStore()
 
-const header = ref(null)
+const textAndAssetColor = computed(() => {
+	if (themeModeStore.getMode == 'dark') {
+		return 'white'
+	} else {
+		return 'black'
+	}
+})
 
-onClickOutside(header, () => navStore.setClose())
+const activeSubMenu = ref(null)
+const activeSubSubMenu = ref(null)
+const navElem = ref(null)
+
+onClickOutside(navElem, () => {
+	if (activeSubMenu.value) {
+		activeSubMenu.value = null
+		activeSubSubMenu.value = null
+	}
+})
 
 </script>
 
@@ -60,55 +104,52 @@ onClickOutside(header, () => navStore.setClose())
 
 header {
 	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	margin: 0 auto;
-	padding: calc(var(--padding-base) / 2) var(--padding-base);
-	text-align: center;
-	z-index: 10;
-	background-color: white;
-	border-bottom: 1px solid black;
+	z-index: 1;
+	color: v-bind(textAndAssetColor);
 	h1.logo {
+		position: fixed;
+		top: 50px;
+		left: 50px;
 		font-size: 30px;
 		font-weight: 700;
 	}
-	button.nav-trigger {
-		all: unset;
-		box-sizing: border-box;
-		cursor: pointer;
-		position: absolute;
-		top: 50%;
-		left: var(--padding-base);
-		width: 38px;
-		height: 18px;
-		transform: translateY(-50%);
-		span {
-			position: absolute;
-			left: 0;
-			width: 100%;
-			height: 1px;
-			background-color: black;
-			&:nth-child(1) {
-				top: 0;
+	ul.nav {
+		position: fixed;
+		bottom: 50px;
+		left: 50px;
+		@include max-width-grid-columns(14, 5, '20px', 'width', '-50px');
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.215em 20px;
+		justify-content: space-between;
+		align-items: flex-end;
+		background-color: red;
+		li {
+			display: flex;
+				flex-flow: column nowrap;
+   				row-gap: 1.15em;
+			font-size: 12px;
+			position: relative;
+			button {
+				all: unset;
+				box-sizing: border-box;
+				cursor: pointer;
 			}
-			&:nth-child(2) {
-				top: 50%;
-				transform: translateY(-50%);
-			}
-			&:nth-child(3) {
-				bottom: 0;
+			ul.sub {
+				display: flex;
+				flex-flow: column nowrap;
+   				row-gap: 1.15em;
+				ul.sub {
+					padding-left: 20px;
+				}
+				li a {
+					transition: padding-left 0.2s;
+					&:hover {
+						padding-left: 20px;
+					}
+				}
 			}
 		}
-	}
-	ul.nav {
-		position: absolute;
-		top: 50%;
-		left: var(--padding-base);
-		transform: translateY(-50%);
-		display: flex;
-		flex-flow: row nowrap;
-		column-gap: 20px;
 	}
 }
 

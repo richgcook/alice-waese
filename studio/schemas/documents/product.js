@@ -58,6 +58,50 @@ export default defineType({
 			}],
 		}),
 		defineField({
+			type: 'array',
+			title: 'Images',
+			name: 'media',
+			validation: Rule => Rule.required().min(1),
+			of: [
+				defineArrayMember({
+					type: 'object',
+					title: 'Image',
+					name: 'imageBlock',
+					fields: [
+						defineField({
+							type: 'image',
+							title: 'Image',
+							name: 'image',
+							fields: [
+								defineField({
+									type: 'alt',
+									name: 'alt'
+								})
+							],
+						}),
+						defineField({
+							type: 'richText',
+							title: 'Caption',
+							name: 'caption'
+						}),
+					],
+					preview: {
+						select: {
+							image: 'image',
+							caption: 'caption'
+						},
+						prepare({ image, caption }) {
+							return {
+								title: 'Image',
+								subtitle: caption ? caption[0].children[0].text.substring(0, 50) + '...' : '',
+								media: image,
+							}
+						}
+					}
+				}),
+			],
+		}),
+		defineField({
 			title: 'SEO',
 			name: 'seo',
 			type: 'seo'

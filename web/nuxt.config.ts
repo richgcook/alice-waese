@@ -55,7 +55,7 @@ export default defineNuxtConfig({
 		'useCdn': false
 	},
 
-	compatibilityDate: '2024-10-01',
+	compatibilityDate: '2025-08-01',
 
 	sitemap: {
 		// Not needed currently as no pages are `prerender: false`

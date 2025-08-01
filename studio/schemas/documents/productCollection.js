@@ -11,6 +11,7 @@ export default defineType({
 			type: 'string',
 			title: 'Title',
 			name: 'title',
+			description: 'Used in menus and navigation',
 			validation: Rule => Rule.required()
 		}),
 		defineField({
@@ -23,9 +24,20 @@ export default defineType({
 			validation: Rule => Rule.required()
 		}),
 		defineField({
+			type: 'string',
+			title: 'Full title',
+			name: 'titleFull',
+			description: 'Full presentational title, used as the large title on the collection page',
+		}),
+		defineField({
 			type: 'pageBuilderA',
 			title: 'Content',
 			name: 'pageBuilder',
+		}),
+		defineField({
+			type: 'richText',
+			title: 'Description',
+			name: 'descriptionText',
 		}),
 		orderRankField(
 			{ type: 'productCollection' }

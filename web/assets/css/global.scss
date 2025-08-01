@@ -1,32 +1,32 @@
 @font-face {
-    font-family: 'ABC Solar';
-    src: url('../fonts/ABCSolar-Regular-Trial.woff2') format('woff2');
+    font-family: 'Director';
+    src: url('../fonts/Director-Regular.woff2') format('woff2');
     font-style: normal;
     font-weight: 400;
 }
 @font-face {
-    font-family: 'ABC Solar';
-    src: url('../fonts/ABCSolar-RegularItalic-Trial.woff2') format('woff2');
-    font-style: italic;
-    font-weight: 400;
+    font-family: 'Director';
+    src: url('../fonts/Director-Light.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 300;
 }
 @font-face {
-    font-family: 'ABC Solar';
-    src: url('../fonts/ABCSolar-Bold-Trial.woff2') format('woff2');
+    font-family: 'Director';
+    src: url('../fonts/Director-Bold.woff2') format('woff2');
     font-style: normal;
     font-weight: 700;
 }
 @font-face {
-    font-family: 'ABC Solar';
-    src: url('../fonts/ABCSolar-BoldItalic-Trial.woff2') format('woff2');
-    font-style: italic;
-    font-weight: 700;
+	font-family: 'Apris';
+	src: url('../fonts/AprisTRIAL-Light.woff2') format('woff2');
+	font-style: normal;
+	font-weight: 300;
 }
 @font-face {
-    font-family: 'Adobe Arabic';
-    src: url('../fonts/AdobeArabic-Regular.woff2') format('woff2');
-    font-style: normal;
-    font-weight: 400;
+	font-family: 'Apris';
+	src: url('../fonts/AprisTRIAL-LightItalic.woff2') format('woff2');
+	font-style: italic;
+	font-weight: 300;
 }
 
 :root {
@@ -36,9 +36,11 @@
 	--site-max-width: 1920px;
 
 	--color-bg: #ffffff;
+	--color-gold: #cba461;
 
-	--font-primary: 'ABC Solar', sans-serif;
-	--font-arabic: 'Adobe Arabic', sans-serif;
+	--font-primary: 'Apris', serif;
+	--font-body: 'Director', serif;
+
 }
 @include media('tablet-landscape') {
 	:root { 

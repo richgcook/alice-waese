@@ -52,6 +52,11 @@ export default defineType({
 			]
 		}),
 		defineField({
+			type: 'richText',
+			title: 'Colophon',
+			name: 'colophon',
+		}),
+		defineField({
 			title: 'SEO',
 			name: 'seo',
 			type: 'seo'

@@ -1,5 +1,5 @@
 <template>
-	<StaggeredList :items="data.stockistsPage?.stockists" />
+	<StaggeredList :items="data.pressPage?.pressLinks" />
 </template>
 
 <script setup>
@@ -8,11 +8,11 @@ const { $seoQuery } = useNuxtApp()
 
 const query = groq`{
 
-	"stockistsPage": *[_type == "stockistsPage"] {
+	"pressPage": *[_type == "pressPage"] {
 		_id, _type, title, slug, seo {
 			${$seoQuery}
 		},
-		stockists[] {
+		pressLinks[] {
 			name, link,
 		}
 	}[0],
@@ -21,7 +21,7 @@ const query = groq`{
 
 const { data } = await useSanityQuery(query)
 
-const { title, description, image, bodyClass } = useMetaBodyHelpers(data?.value.stockistsPage)
+const { title, description, image, bodyClass } = useMetaBodyHelpers(data?.value.pressPage)
 
 useHead({
 	title: title.value,

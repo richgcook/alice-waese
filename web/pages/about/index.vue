@@ -1,21 +1,13 @@
 <template>
-	<div class="sections">
-		<div class="section --init" v-if="data?.aboutPage?.featuredImage?.image?.asset">
-			<div class="featured-image">
-				<ImgWithRatio 
-					:src="data.aboutPage.featuredImage.image.asset.url" 
-					:sizes="`(max-width: 768px) 100vw, 50vw`"
-					:alt="data.aboutPage.featuredImage.image.alt" 
-					:ratio="data.aboutPage.featuredImage.image.asset.ratio"
-				/>
-				<div class="caption" v-if="data.aboutPage.featuredImage.caption?.length">
-					<RichText :blocks="data.aboutPage.featuredImage.caption" />
-				</div>
-			</div>
-		</div>
-		<div v-for="(page, index) in data?.aboutSubPageA" :key="page._id" class="section">
-			<h3 :id="`about-${page.slug?.current}`" class="title">{{ page.title }}</h3>
-			<PageBuilderA :content="page.pageBuilder" />
+	<div>
+		<h2 class="statement">
+			<span>Alice Waese</span>
+			<span>is an artist</span>
+			<span>based in</span>
+			<span>New York.</span>
+		</h2>
+		<div class="details">
+			<p>For all inquiries contact<NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></p>
 		</div>
 	</div>
 </template>
@@ -26,26 +18,9 @@ const { $seoQuery, $pageBuilderAQuery, $imageQuery, $richTextQuery } = useNuxtAp
 
 const query = groq`{
 
-	"aboutSubPageA": *[_type == "aboutSubPageA"] | order(orderRank) {
-		_id, _type, title, slug, seo {
-			${$seoQuery}
-		},
-		pageBuilder[] {
-			${$pageBuilderAQuery}
-		},
-	},
-
 	"aboutPage": *[_type == "aboutPage"] {
 		_id, _type, title, slug, seo {
 			${$seoQuery}
-		},
-		featuredImage {
-			image {
-				${$imageQuery}
-			},
-			caption[] {
-				${$richTextQuery}
-			}
 		},
 	}[0],
 	
@@ -71,31 +46,48 @@ useHead({
 
 <style lang="scss" scoped>
 
-div.sections {
+h2.statement {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height: calc(100% - (25px * 2));
+	width: calc(100% - (50px * 2));
 	display: flex;
-	flex-flow: column nowrap;
-	row-gap: calc(var(--padding-base) * 3);
-	div.section {
+    flex-flow: column nowrap;
+    justify-content: space-between;
+	font-size: clamp(75px, 11.12vw, 160px);
+	line-height: 1.03em;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	span {
+		display: block;
+		&:nth-child(2),
+		&:nth-child(4) {
+			text-align: right;
+		}
+	}
+}
+div.details {
+	position: fixed;
+	//background-color: red;
+	@include max-width-grid-columns(7, 1, '20px', 'width');
+	top: 63%;
+	@include max-width-grid-columns(7, 5, '20px', 'left', '-30px');
+	transform: translateY(-50%);
+	font-size: 12px;
+	line-height: 2.15em;
+	@include media('tablet-portrait') {
+		@include max-width-grid-columns(7, 2, '20px', 'width', '-30px');
+	}
+	p {
 		display: flex;
 		flex-flow: column nowrap;
-		row-gap: var(--padding-base);
-		&.--init {
-			div.featured-image {
-				display: flex;
-				flex-flow: column nowrap;
-				row-gap: 10px;
-				width: calc((40 / 75) * 100%);
-				margin: 0 auto;
-				div.caption {
-					font-size: 12px;
-				}
+		a {
+			align-self: flex-end;
+			&:hover {
+				color: var(--color-gold);
 			}
-		}
-		> h3.title {
-			font-size: 24px;
-			font-weight: 700;
-			width: calc((50 / 75) * 100%);
-			margin: 0 auto;
 		}
 	}
 }

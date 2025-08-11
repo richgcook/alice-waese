@@ -4,9 +4,5 @@ export const PAGE_REFERENCES = [
 	{ type: 'homePage' },
 	{ type: 'pageA' },
 	{ type: 'pressPage' },
-	{ type: 'product' },
-	{ type: 'productCategory' },
-	{ type: 'artwork' },
-	{ type: 'artworkCategory' },
 	{ type: 'stockistsPage' },
 ]

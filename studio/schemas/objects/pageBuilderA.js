@@ -21,6 +21,33 @@ export default defineType({
 				}),
 				defineField({
 					type: 'object',
+					title: 'Media',
+					name: 'mediaOverride',
+					description: "If you want to use a custom image instead of the product's primary image",
+					fields: [
+						defineField({
+							type: 'image',
+							title: 'Image',
+							name: 'image',
+							fields: [
+								defineField({
+									type: 'alt',
+									name: 'alt'
+								})
+							],
+						}),
+						defineField({
+							type: 'file',
+							title: 'Video',
+							name: 'video',
+							options: {
+								accept: 'video/*'
+							},
+						}),
+					],
+				}),
+				defineField({
+					type: 'object',
 					title: 'Settings',
 					name: 'settings',
 					fields: [
@@ -61,6 +88,33 @@ export default defineType({
 					name: 'artwork',
 					to: [{ type: 'artwork' }],
 					validation: Rule => Rule.required(),
+				}),
+				defineField({
+					type: 'object',
+					title: 'Media',
+					name: 'mediaOverride',
+					description: "If you want to use a custom image instead of the artwork's primary image",
+					fields: [
+						defineField({
+							type: 'image',
+							title: 'Image',
+							name: 'image',
+							fields: [
+								defineField({
+									type: 'alt',
+									name: 'alt'
+								})
+							],
+						}),
+						defineField({
+							type: 'file',
+							title: 'Video',
+							name: 'video',
+							options: {
+								accept: 'video/*'
+							},
+						}),
+					],
 				}),
 				defineField({
 					type: 'object',

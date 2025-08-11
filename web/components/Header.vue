@@ -2,37 +2,43 @@
 	<header ref="header">
 		<h1 class="logo" v-show="showLogo"><NuxtLink to="/"><Logo /></NuxtLink></h1>
 		<div class="nav" ref="nav">
-			<button class="menu-trigger" @click="menuOpen = true" v-show="!menuOpen"><img src="/assets/symbols/bunny.png" /></button>
+			<button class="menu-trigger" @click="menuOpen = true" v-show="!menuOpen"><img src="/illustrations/bunny.png" /></button>
 			<ul class="menu" ref="menu" v-show="menuOpen">
 				<li>
 					<button @click="activeSubMenu ? activeSubMenu = null : activeSubMenu = 1">Jewellery</button>
 					<ul class="sub" v-show="activeSubMenu === 1">
-						<li><NuxtLink to="/">Rings</NuxtLink></li>
-						<li><NuxtLink to="/">Earrings</NuxtLink></li>
-						<li><NuxtLink to="/">Pendants</NuxtLink></li>
-						<li><NuxtLink to="/">Bracelets</NuxtLink></li>
-						<li><NuxtLink to="/">Pins</NuxtLink></li>
-						<li>
+						<li v-for="category in data.productCategories" :key="category._id">
+							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
+						</li>
+						<li v-if="data.productCollections?.length">
 							<button @click="activeSubSubMenu ? activeSubSubMenu = null : activeSubSubMenu = 1">Collections</button>
 							<ul class="sub" v-show="activeSubSubMenu === 1">
-								<li><NuxtLink to="/collections/collection-1">SS25</NuxtLink></li>
-								<li><NuxtLink to="/collections/collection-2">SS26</NuxtLink></li>
+								<li v-for="collection in data.productCollections" :key="collection._id">
+									<NuxtLink :to="useInternalLinkUrl(collection)">{{ collection.title }}</NuxtLink>
+								</li>
 							</ul>
 						</li>
 					</ul>
 				</li>
 				<li>
 					<ul class="sub" v-show="activeSubMenu === 2">
-						<li>Rings</li>
-						<li>Earrings</li>
-						<li>Pendants</li>
-						<li>Bracelets</li>
-						<li>Pins</li>
-						<li>Collections</li>
+						<li v-for="category in data.artworkCategories" :key="category._id">
+							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
+						</li>
 					</ul>
 					<button @click="activeSubMenu = 2">Artworks</button>
 				</li>
-				<li><NuxtLink to="/about">About</NuxtLink></li>
+				<li>
+					<ul class="sub" v-show="activeSubMenu === 3">
+						<li><NuxtLink :to="useInternalLinkUrl(data.aboutPage)">{{ data.aboutPage.title }}</NuxtLink></li>
+						<li><NuxtLink :to="useInternalLinkUrl(data.stockistsPage)">{{ data.stockistsPage.title }}</NuxtLink></li>
+						<li><NuxtLink :to="useInternalLinkUrl(data.pressPage)">{{ data.pressPage.title }}</NuxtLink></li>
+						<li v-for="page in data.pages" :key="page._id">
+							<NuxtLink :to="useInternalLinkUrl(page)">{{ page.title }}</NuxtLink>
+						</li>
+					</ul>
+					<button @click="activeSubMenu = 3">About</button>
+				</li>
 			</ul>
 		</div>
 	</header>
@@ -50,24 +56,33 @@ const { $seoQuery, $imageQuery, $richTextQuery } = useNuxtApp()
 
 const query = groq`{ 
 
+	"productCategories": *[_type == "productCategory"] | order(orderRank) {
+		_id, _type, title, slug,
+	},
+
+	"productCollections": *[_type == "productCollection"] | order(orderRank) {
+		_id, _type, title, slug,
+	},
+
+	"artworkCategories": *[_type == "artworkCategory"] | order(orderRank) {
+		_id, _type, title, slug,
+	},
+
 	"aboutPage": *[_type == "aboutPage"] {
 		_id, _type, title, slug,
 	}[0],
 
-	"newsPage": *[_type == "newsPage"] {
+	"stockistsPage": *[_type == "stockistsPage"] {
 		_id, _type, title, slug,
 	}[0],
 
-	"projectsPage": *[_type == "projectsPage"] {
+	"pressPage": *[_type == "pressPage"] {
 		_id, _type, title, slug,
 	}[0],
 
-	"contactPage": *[_type == "contactPage"] {
+	"pages": *[_type == "pageA"] {
 		_id, _type, title, slug,
-		details[] {
-			${$richTextQuery},
-		},
-	}[0],
+	},
 	
 }`
 const { data } = await useSanityQuery(query)
@@ -75,7 +90,7 @@ const { data } = await useSanityQuery(query)
 const route = useRoute()
 
 const showLogo = computed(() => {
-	if (route.name === 'about' || route.name === 'about-stockists' || route.name === 'about-press') return false
+	if (route.name == 'jewellery-collections-slug' || route.name === 'about' || route.name === 'about-stockists' || route.name === 'about-press') return false
 	return true
 })
 
@@ -88,6 +103,14 @@ const textAndAssetColor = computed(() => {
 		return 'white'
 	} else {
 		return 'black'
+	}
+})
+
+const invertAssets = computed(() => {
+	if (themeModeStore.getMode == 'dark') {
+		return 'invert(1)'
+	} else {
+		return 'invert(0)'
 	}
 })
 
@@ -127,6 +150,7 @@ header {
 				max-height: 100%;
 				width: 100%;
 				max-width: 100%;
+				fill: v-bind(textAndAssetColor);
 			}
 		}
 	}
@@ -141,6 +165,7 @@ header {
 			cursor: pointer;
 			img {
 				width: 43px;
+				filter: v-bind(invertAssets);
 			}
 		}
 		ul.menu {

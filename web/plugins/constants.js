@@ -90,23 +90,27 @@ const pageBuilderAQuery = `
 	}
 `
 
-const projectItemQuery = `
+const productQuery = `
 	_id, _type, title, slug, seo {
 		${seoQuery}
 	},
-	numeralArabic,
-	subtitle,
-	featuredMedia {
+	primaryMedia {
 		image {
 			${imageQuery}
 		},
-		"video": video.asset->url
+		"video": video.asset->url,
+	}
+`
+
+const artworkQuery = `
+	_id, _type, title, slug, seo {
+		${seoQuery}
 	},
-	types[]->{
-		_id, _type, title, slug,
-	},
-	pageBuilder[] {
-		${pageBuilderAQuery}
+	primaryMedia {
+		image {
+			${imageQuery}
+		},
+		"video": video.asset->url,
 	}
 `
 
@@ -135,6 +139,7 @@ export default defineNuxtPlugin(nuxtApp => {
 	nuxtApp.provide('richTextQuery', richTextQuery)
 	nuxtApp.provide('imageQuery', imageQuery)
 	nuxtApp.provide('pageBuilderAQuery', pageBuilderAQuery)
-	nuxtApp.provide('projectItemQuery', projectItemQuery)
+	nuxtApp.provide('productQuery', productQuery)
+	nuxtApp.provide('artworkQuery', artworkQuery)
 	nuxtApp.provide('newsArticleQuery', newsArticleQuery)
 })

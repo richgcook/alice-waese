@@ -1,14 +1,25 @@
 <template>
-	<div class="collection-layout">
-		<h1 class="collection-title">{{ data.collection.titleFull ? data.collection.titleFull : data.collection.title }}</h1>
-		<MasonryLayout :items="data.collection.jewellery" v-if="data.collection.jewellery?.length" />
-		<div class="collection-description" v-if="data.collection.descriptionText?.length">
-			<RichText :blocks="data.collection.descriptionText" />
+	<VueLenis root :options="lenisOptions">
+		<div class="collection-layout">
+			<h1 class="collection-title">{{ data.collection.titleFull ? data.collection.titleFull : data.collection.title }}</h1>
+			<MasonryLayout :items="data.collection.jewellery" v-if="data.collection.jewellery?.length" />
+			<div class="collection-description" v-if="data.collection.descriptionText?.length">
+				<RichText :blocks="data.collection.descriptionText" />
+			</div>
 		</div>
-	</div>
+		<div class="collection-layout --clone">
+			<h1 class="collection-title">{{ data.collection.titleFull ? data.collection.titleFull : data.collection.title }}</h1>
+			<MasonryLayout :items="data.collection.jewellery" v-if="data.collection.jewellery?.length" />
+			<div class="collection-description" v-if="data.collection.descriptionText?.length">
+				<RichText :blocks="data.collection.descriptionText" />
+			</div>
+		</div>
+	</VueLenis>
 </template>
 
 <script setup>
+
+import { VueLenis, useLenis } from 'lenis/vue'
  
 const { $seoQuery, $productQuery, $imageQuery, $richTextQuery } = useNuxtApp()
 
@@ -57,10 +68,33 @@ useHead({
 	}
 })
 
+const lenisOptions = {
+	//smoothWheel: true,
+	//smoothTouch: true,
+	infinite: true,
+	autoRaf: true,
+}
+
+const lenis = useLenis()
+
+onMounted(() => {
+	
+})
+
 </script>
 
 <style lang="scss" scoped>
 
+div.collection-layout {
+	&.--clone {
+		position: relative;
+  		height: 100vh;
+		@supports (height: 100dvh) {
+			height: 100dvh;
+		}
+  		overflow: hidden;
+	}
+}
 h1.collection-title {
 	position: absolute;
 	top: 25px;

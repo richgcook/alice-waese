@@ -39,7 +39,8 @@ export default defineNuxtConfig({
 
 	modules: [
 		'@nuxtjs/sanity', 
-		'@pinia/nuxt'
+		'@pinia/nuxt',
+		'lenis/nuxt'
 	],
 
 	build: {

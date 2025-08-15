@@ -81,7 +81,7 @@ div.waterfall-layout {
 		a.media {
 			display: block;
 			aspect-ratio: 4 / 5;
-			outline: 1px solid red;
+			//outline: 1px solid red;
 			position: relative;
 			img, video {
 				position: absolute;

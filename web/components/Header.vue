@@ -5,7 +5,6 @@
 			<button class="menu-trigger" @click="menuOpen = true" v-show="!menuOpen"><img src="/illustrations/bunny.png" /></button>
 			<ul class="menu" ref="menu" v-show="menuOpen">
 				<li>
-					<button @click="activeSubMenu ? activeSubMenu = null : activeSubMenu = 1">Jewellery</button>
 					<ul class="sub" v-show="activeSubMenu === 1">
 						<li v-for="category in data.productCategories" :key="category._id">
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
@@ -19,6 +18,7 @@
 							</ul>
 						</li>
 					</ul>
+					<button @click="activeSubMenu = 1">Jewellery</button>
 				</li>
 				<li>
 					<ul class="sub" v-show="activeSubMenu === 2">
@@ -174,7 +174,7 @@ header {
 			gap: 0.215em 20px;
 			justify-content: space-between;
 			align-items: flex-end;
-			background-color: red;
+			//background-color: red;
 			li {
 				display: flex;
 				flex-flow: column nowrap;

@@ -33,7 +33,8 @@ const props = defineProps({
 const plugins = computed(() => {
 	const basePlugins = [
 		Autoplay({
-			delay: 6000
+			delay: 4000,
+			stopOnInteraction: false,
 		}),
 		Fade(),
   	]
@@ -43,7 +44,8 @@ const plugins = computed(() => {
 const [viewport, embla] = emblaCarouselVue({
 	loop: true,
 	containScroll: false,
-	duration: 120,
+	duration: 70,
+	watchDrag: false,
 }, plugins.value)
 
 const themeModeStore = useThemeModeStore()

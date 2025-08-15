@@ -1,7 +1,7 @@
 <template>
 	<div class="collection-layout">
 		<h1 class="collection-title">{{ data.collection.titleFull ? data.collection.titleFull : data.collection.title }}</h1>
-		<WaterfallLayoutB :items="data.collection.jewellery" :context="`collections`" v-if="data.collection.jewellery?.length" />
+		<MasonryLayout :items="data.collection.jewellery" v-if="data.collection.jewellery?.length" />
 		<div class="collection-description" v-if="data.collection.descriptionText?.length">
 			<RichText :blocks="data.collection.descriptionText" />
 		</div>
@@ -78,9 +78,9 @@ div.collection-description {
 	grid-template-columns: repeat(21, 1fr);
 	gap: 0 20px;
 	padding: 0 50px;
-	padding: 130px 50px 250px 50px; // + 120px from the waterfall layout = 250px as per design
-	padding-top: 14.5vh;
-	padding-bottom: 27.75vh;
+	padding: 130px 50px 250px 50px; /* + 120px from the waterfall layout = 250px as per design */
+	padding-top: 14.44vh; /* ((130 distance / 900 viewport height) * 100) */
+	padding-bottom: 27.78vh; /* ((250 distance / 900 viewport height) * 100) */
 	font-family: var(--font-body);
 	font-weight: 300;
 	font-size: 10px;

@@ -1,31 +1,35 @@
 <template>
-	<div class="masonry-layout">
-		<div class="column" v-for="(col, c) in columns" :key="c">
-			<div v-for="item in col" :key="item.item?._id" class="item">
-				<NuxtLink :to="useInternalLinkUrl(item.item)" class="media">
-					<video 
-						playsinline autoplay loop muted 
-						v-if="primaryMedia(item)?.type === 'video'">
-						<source :src="primaryMedia(item).video" type="video/mp4">
-					</video>
-					<ImgWithRatio 
-						:src="primaryMedia(item).image.asset.url" 
-						:sizes="`
-							(max-width: 768px) 100vw, 
-							50vw`"
-						:alt="primaryMedia(item).image.alt" 
-						:ratio="primaryMedia(item).image.asset.ratio"
-						:style="{ 'width': `${item.settings?.size}%` }"
-						v-else-if="primaryMedia(item)?.type === 'image'"
-					/>
-				</NuxtLink>
+	<VueLenis root :options="lenisOptions">
+		<div class="masonry-layout --original" ref="original">
+			<div class="column" v-for="(col, c) in columns" :key="c">
+				<div v-for="item in col" :key="item.item?._id" class="item">
+					<NuxtLink :to="useInternalLinkUrl(item.item)" class="media">
+						<video 
+							playsinline autoplay loop muted 
+							v-if="primaryMedia(item)?.type === 'video'">
+							<source :src="primaryMedia(item).video" type="video/mp4">
+						</video>
+						<ImgWithRatio 
+							:src="primaryMedia(item).image.asset.url" 
+							:sizes="`
+								(max-width: 768px) 100vw, 
+								50vw`"
+							:alt="primaryMedia(item).image.alt" 
+							:ratio="primaryMedia(item).image.asset.ratio"
+							:style="{ 'width': `${item.settings?.size}%` }"
+							v-else-if="primaryMedia(item)?.type === 'image'"
+						/>
+					</NuxtLink>
+				</div>
+				<RandomIllustrationMark />
 			</div>
-			<RandomIllustrationMark />
 		</div>
-	</div>
+	</VueLenis>
 </template>
 
 <script setup>
+
+import { VueLenis, useLenis } from 'lenis/vue'
 
 const props = defineProps({
 	items: Array,
@@ -72,6 +76,19 @@ const primaryMedia = (item) => {
 
 const { columns } = useMasonryColumns(props.items, 2)
 
+const lenisOptions = {
+	//smoothWheel: true,
+	//smoothTouch: true,
+	infinite: true,
+	autoRaf: true,
+}
+
+const lenis = useLenis()
+
+onMounted(() => {
+	
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -82,6 +99,14 @@ div.masonry-layout {
 	align-items: flex-start;
 	padding: 0 calc(50px * 2);
 	margin: 0 auto 120px auto;
+	&.--clone {
+		position: relative;
+  		height: 100vh;
+		@supports (height: 100dvh) {
+			height: 100dvh;
+		}
+  		overflow: hidden;
+	}
 	div.column {
 		flex: 1 1 0;
   		min-width: 0;

@@ -1,5 +1,5 @@
 <template>
-	<WaterfallLayoutA :items="data.type.jewellery" v-if="data.type.jewellery?.length" />
+	<WaterfallLayout :items="data.type.jewellery" v-if="data.type.jewellery?.length" />
 </template>
 
 <script setup>

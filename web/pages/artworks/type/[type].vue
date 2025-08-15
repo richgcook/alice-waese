@@ -1,5 +1,5 @@
 <template>
-	<WaterfallLayoutA :items="data.type.artworks" v-if="data.type.artworks?.length" />
+	<WaterfallLayout :items="data.type.artworks" v-if="data.type.artworks?.length" />
 </template>
 
 <script setup>

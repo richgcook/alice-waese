@@ -10,6 +10,7 @@
 		<div class="extra" v-if="data.pageA.colophon?.length">
 			<RichText :blocks="data.pageA.colophon" />
 		</div>
+		<RandomIllustrationMark />
 	</div>
 </template>
 
@@ -78,6 +79,7 @@ div.page-layout {
 	font-weight: 300;
 	font-size: 10px;
 	line-height: 2.06em;
+	position: relative;
 	div.content {
 		grid-column: 8 / span 7;
 	}

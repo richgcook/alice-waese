@@ -14,6 +14,7 @@
 				<RichText :blocks="data.collection.descriptionText" />
 			</div>
 		</div>
+		<RandomIllustrationMark />
 	</VueLenis>
 </template>
 
@@ -86,6 +87,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 
 div.collection-layout {
+	position: relative;
 	&.--clone {
 		position: relative;
   		height: 100vh;

@@ -1,5 +1,5 @@
 <template>
-	<div class="masonry-layout --original" ref="original">
+	<div class="masonry-layout">
 		<div class="column" v-for="(col, c) in columns" :key="c">
 			<div v-for="item in col" :key="item.item?._id" class="item">
 				<NuxtLink :to="useInternalLinkUrl(item.item)" class="media">
@@ -20,7 +20,6 @@
 					/>
 				</NuxtLink>
 			</div>
-			<RandomIllustrationMark />
 		</div>
 	</div>
 </template>

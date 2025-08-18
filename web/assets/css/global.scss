@@ -30,7 +30,7 @@
 }
 @font-face {
 	font-family: 'Alice Waese';
-	src: url('../fonts/AliceWaeseBetav1.004-Regular') format('woff2');
+	src: url('../fonts/AliceWaeseBetav1.004-Regular.woff2') format('woff2');
 	font-style: normal;
 	font-weight: 400;
 }
@@ -45,8 +45,8 @@
 	--color-bg: #fffef9;
 	--color-gold: #cba461;
 
-	--font-primary: 'Apris', serif;
-	--font-body: 'Alice Waese', serif;
+	--font-primary: 'Alice Waese', serif;
+	--font-body: 'Director', serif;
 
 }
 @include media('tablet-landscape') {

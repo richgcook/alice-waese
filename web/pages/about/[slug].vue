@@ -1,5 +1,5 @@
 <template>
-	<div class="page-layout" ref="test">
+	<div class="page-layout">
 		<div class="content">
 			<div v-for="(block, index) in data.pageA.content" :key="index">
 				<template v-if="useBlockType(block._type) === 'text'">
@@ -10,7 +10,7 @@
 		<div class="extra" v-if="data.pageA.colophon?.length">
 			<RichText :blocks="data.pageA.colophon" />
 		</div>
-		<RandomIllustrationMark />
+		<RandomIllustrationMark :top="{ min: 30, max: 65 }" :topUnit="`vh`" />
 	</div>
 </template>
 
@@ -59,12 +59,6 @@ useHead({
 	}
 })
 
-const testRef = useTemplateRef('test')
-
-onMounted(() => {
-	//console.log('testRef', testRef.value)
-})
-
 </script>
 
 <style lang="scss" scoped>
@@ -84,8 +78,10 @@ div.page-layout {
 		grid-column: 8 / span 7;
 	}
 	div.extra {
-		grid-column: 18 / span 4;
-		align-self: center;
+		@include max-width-grid-columns(21, 4, '20px', 'width');
+		position: fixed;
+		bottom: 50px;
+		right: 50px;
 	}
 }
 

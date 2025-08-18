@@ -2,8 +2,8 @@
 	<header ref="header">
 		<h1 class="logo" v-show="showLogo"><NuxtLink to="/"><Logo /></NuxtLink></h1>
 		<div class="nav" ref="nav">
-			<button class="menu-trigger" @click="menuOpen = true" v-show="!menuOpen"><img src="/illustrations/bunny.png" /></button>
-			<ul class="menu" ref="menu" v-show="menuOpen">
+			<button class="menu-trigger" @click="navStore.setOpen" v-show="!navStore.isOpen"><img src="/illustrations/bunny.png" /></button>
+			<ul class="menu" ref="menu" v-show="navStore.isOpen">
 				<li>
 					<ul class="sub" v-show="activeSubMenu === 1">
 						<li v-for="category in data.productCategories" :key="category._id">
@@ -114,14 +114,12 @@ const invertAssets = computed(() => {
 	}
 })
 
-const menuOpen = ref(false)
-
 const activeSubMenu = ref(null)
 const activeSubSubMenu = ref(null)
 const navRef = useTemplateRef('nav')
 
 onClickOutside(navRef, () => {
-	if (menuOpen.value) menuOpen.value = false
+	if (navStore.isOpen) navStore.setClose()
 	if (activeSubMenu.value) {
 		activeSubMenu.value = null
 		activeSubSubMenu.value = null
@@ -159,6 +157,12 @@ header {
 		bottom: 50px;
 		left: 50px;
 		@include max-width-grid-columns(14, 5, '20px', 'width', '-70px');
+		@include media('laptop') {
+			@include max-width-grid-columns(14, 6, '20px', 'width', '-70px');
+		}
+		@include media('tablet-landscape') {
+			@include max-width-grid-columns(14, 6, '20px', 'width', '-70px');
+		}
 		button.menu-trigger {
 			all: unset;
 			box-sizing: border-box;
@@ -181,6 +185,10 @@ header {
 				row-gap: 1.15em;
 				font-size: 12px;
 				position: relative;
+				@include media('desktop-large') {
+					font-size: 13px;
+					letter-spacing: 0.02em;
+				}
 				button {
 					all: unset;
 					box-sizing: border-box;

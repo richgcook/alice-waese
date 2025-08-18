@@ -1,5 +1,5 @@
 <template>
-	<StaggeredList :items="data.pressPage?.pressLinks" />
+	<StaggeredList :items="data.pressPage?.pressLinks" :layoutVersion="`b`" />
 </template>
 
 <script setup>

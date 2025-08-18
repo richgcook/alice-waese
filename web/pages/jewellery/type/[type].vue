@@ -1,6 +1,8 @@
 <template>
-	<WaterfallLayout :items="data.type.jewellery" v-if="data.type.jewellery?.length" />
-</template>
+<div class="page-layout">
+		<MasonryLayout :items="data.type.jewellery" v-if="data.type.jewellery?.length" />
+		<RandomIllustrationMark />
+	</div></template>
 
 <script setup>
  
@@ -43,3 +45,11 @@ useHead({
 })
 
 </script>
+
+<style lang="scss" scoped>
+
+div.page-layout {
+	position: relative;
+}
+
+</style>

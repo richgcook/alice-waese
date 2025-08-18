@@ -52,12 +52,20 @@ export default defineType({
 					name: 'settings',
 					fields: [
 						defineField({
-							type: 'number',
+							type: 'string',
 							title: 'Size',
 							name: 'size',
-							description: 'Defines how wide the image should appear in a 5/6 block, as a percentage (50 to 100)',
+							options: {
+								list: [
+									{ title: 'Large', value: 'large' },
+									{ title: 'Medium', value: 'medium' },
+									{ title: 'Small', value: 'small' },
+								]
+							},
+							initialValue: 'large',
+							description: 'Defines how wide the image should appear in a 5/6 block',
 							initialValue: 100,
-							validation: Rule => Rule.min(50).max(100),
+							validation: Rule => Rule.required(),
 						}),
 					],
 				}),
@@ -122,12 +130,20 @@ export default defineType({
 					name: 'settings',
 					fields: [
 						defineField({
-							type: 'number',
+							type: 'string',
 							title: 'Size',
 							name: 'size',
-							description: 'Defines how wide the image should appear in its column, as a percentage (50 to 100)',
+							options: {
+								list: [
+									{ title: 'Large', value: 'large' },
+									{ title: 'Medium', value: 'medium' },
+									{ title: 'Small', value: 'small' },
+								]
+							},
+							initialValue: 'large',
+							description: 'Defines how wide the image should appear in its column',
 							initialValue: 100,
-							validation: Rule => Rule.min(50).max(100),
+							validation: Rule => Rule.required(),
 						}),
 					],
 				}),

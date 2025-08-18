@@ -2,14 +2,14 @@
 	<VueLenis root :options="lenisOptions">
 		<div class="collection-layout">
 			<h1 class="collection-title">{{ data.collection.titleFull ? data.collection.titleFull : data.collection.title }}</h1>
-			<MasonryLayout :items="data.collection.jewellery" v-if="data.collection.jewellery?.length" />
+			<MasonryLayout :items="data.collection.jewellery" context="collections" v-if="data.collection.jewellery?.length" />
 			<div class="collection-description" v-if="data.collection.descriptionText?.length">
 				<RichText :blocks="data.collection.descriptionText" />
 			</div>
 		</div>
 		<div class="collection-layout --clone">
 			<h1 class="collection-title">{{ data.collection.titleFull ? data.collection.titleFull : data.collection.title }}</h1>
-			<MasonryLayout :items="data.collection.jewellery" v-if="data.collection.jewellery?.length" />
+			<MasonryLayout :items="data.collection.jewellery" context="collections" v-if="data.collection.jewellery?.length" />
 			<div class="collection-description" v-if="data.collection.descriptionText?.length">
 				<RichText :blocks="data.collection.descriptionText" />
 			</div>
@@ -106,7 +106,7 @@ h1.collection-title {
 	z-index: 1;
 	font-size: clamp(48px, 6.9vw, 100px);
 	line-height: 1.2em;
-	letter-spacing: 0.03em;
+	letter-spacing: -0.03em;
 	text-align: center;
 }
 div.collection-description {

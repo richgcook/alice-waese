@@ -1,5 +1,5 @@
 <template>
-	<div class="masonry-layout">
+	<div class="masonry-layout" :data-context="context">
 		<div class="column" v-for="(col, c) in columns" :key="c">
 			<div v-for="item in col" :key="item.item?._id" class="item">
 				<NuxtLink :to="useInternalLinkUrl(item.item)" class="media">
@@ -15,7 +15,7 @@
 							50vw`"
 						:alt="primaryMedia(item).image.alt" 
 						:ratio="primaryMedia(item).image.asset.ratio"
-						:style="{ 'width': `${item.settings?.size}%` }"
+						:class="[ item.settings?.size ? `--${item.settings.size}` : '' ]"
 						v-else-if="primaryMedia(item)?.type === 'image'"
 					/>
 				</NuxtLink>
@@ -77,10 +77,61 @@ const { columns } = useMasonryColumns(props.items, 2)
 
 div.masonry-layout {
 	display: flex;
-	gap: 20px;
+	gap: 30px;
 	align-items: flex-start;
 	padding: 0 calc(50px * 2);
 	margin: 0 auto 120px auto;
+	&[data-context="collections"] {
+		div.column {
+			&:nth-child(1) {
+				> div.item {
+					a.media {
+						display: flex;
+						flex-flow: row nowrap;
+						justify-content: end;
+					}
+				}
+			}
+			&:nth-child(2) {
+				> div.item {
+					&:first-child {
+						margin-top: 489px;
+						margin-top: 54.33vh; /* ((489 distance / 900 viewport height) * 100) */
+					}
+				}
+			}
+		}
+	}
+	&:not([data-context="collections"]) {
+		div.column {
+			div.item {
+				a.media {
+					:deep(div.image) {
+						&.--medium {
+							width: 100%;
+							img {
+								width: 75%;
+								top: 50%;
+								left: 50%;
+								transform: translate(-50%, -50%);
+								object-fit: contain;
+							}
+						}
+						&.--small {
+							width: 100%;
+							img {
+								width: 50%;
+								top: 50%;
+								left: 50%;
+								transform: translate(-50%, -50%);
+								object-fit: contain;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	div.column {
 		flex: 1 1 0;
   		min-width: 0;
@@ -89,20 +140,26 @@ div.masonry-layout {
 		row-gap: 250px;
 		row-gap: 27.78vh;  /* ((250 distance / 900 viewport height) * 100) */
 		position: relative;
-		&:nth-child(1) {
-			> div.item {
-				a.media {
-					display: flex;
-					flex-flow: row nowrap;
-					justify-content: end;
-				}
-			}
-		}
 		&:nth-child(2) {
 			> div.item {
 				&:first-child {
-					margin-top: 489px;
-					margin-top: 54.33vh; /* ((489 distance / 900 viewport height) * 100) */
+					margin-top: 111px;
+					margin-top: 12.33vh; /* ((111 distance / 900 viewport height) * 100) */
+				}
+			}
+		}
+		div.item {
+			a.media {
+				:deep(div.image) {
+					&.--large {
+						width: 100%;
+					}
+					&.--medium {
+						width: 75%;
+					}
+					&.--small {
+						width: 50%;
+					}
 				}
 			}
 		}

@@ -100,14 +100,14 @@ const productQuery = `
 		},
 		"video": video.asset->url,
 	},
+	description[] {
+		${richTextQuery}
+	},
 	media[] {
 		_type,
 		_type == "imageBlock" => {
 			image {
 				${imageQuery}
-			},
-			caption[] {
-				${richTextQuery}
 			},
 		}
 	}
@@ -123,14 +123,14 @@ const artworkQuery = `
 		},
 		"video": video.asset->url,
 	},
+	description[] {
+		${richTextQuery}
+	},
 	media[] {
 		_type,
 		_type == "imageBlock" => {
 			image {
 				${imageQuery}
-			},
-			caption[] {
-				${richTextQuery}
 			},
 		}
 	}

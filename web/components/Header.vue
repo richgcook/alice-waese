@@ -194,6 +194,10 @@ header {
 		@include media('tablet-landscape') {
 			@include max-width-grid-columns(14, 6, '20px', 'width', '-70px');
 		}
+		@include media('phone') {
+			bottom: 35px;
+			left: 35px;
+		}
 		button.menu-trigger {
 			all: unset;
 			box-sizing: border-box;

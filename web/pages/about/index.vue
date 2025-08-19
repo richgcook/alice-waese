@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="container">
 		<h2 class="statement">
 			<div><span>Alice</span> <span>Waese</span></div>
 			<div><span>is</span> <span>an</span> <span>artist</span></div>
@@ -11,6 +11,9 @@
 			</div>
 			<div><span>New</span> <span>York.</span></div>
 		</h2>
+		<div class="details">
+			<p>For all inquiries contact<NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></p>
+		</div>
 	</div>
 </template>
 
@@ -48,9 +51,18 @@ useHead({
 
 <style lang="scss" scoped>
 
+div.container {
+	@media (orientation: portrait) {
+		display: grid;
+   		 grid-template-rows: 1fr auto;
+		min-height: calc(100vh + 0.265em);
+		@supports (min-height: 100dvh) {
+			min-height: calc(100dvh + 0.265em);
+		}
+	}
+}
 h2.statement {
 	position: relative;
-    height: calc(100vh + 0.265em);
 	width: 100%;
 	padding: 50px;
 	display: flex;
@@ -61,10 +73,19 @@ h2.statement {
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
 	margin-bottom: calc(83px + 50px);
+	height: calc(100vh + 0.265em);
+	@supports (height: 100dvh) {
+		height: calc(100dvh + 0.265em);
+	}
 	@media (orientation: portrait) {
-		height: calc(100% - 60px);
-		width: calc(100% - 60px);
+		padding: 35px;
+		padding-bottom: 0;
 		justify-content: flex-start;
+		margin-bottom: 0;
+		height: auto;
+		@supports (height: 100dvh) {
+			height: auto;
+		}
 	}
 	div {
 		display: block;
@@ -115,6 +136,7 @@ h2.statement {
 				}
 			}
 			div.details {
+				display: block;
 				position: absolute;
 				top: 50%;
 				right: 0;
@@ -123,6 +145,9 @@ h2.statement {
 				letter-spacing: normal;
 				text-transform: none;
 				text-align: left;
+				@media (orientation: portrait) {
+					display: none;
+				}
 			}
 		}
 		&:nth-child(4) {
@@ -143,6 +168,14 @@ h2.statement {
 div.details {
 	font-size: 12px;
 	line-height: 2.15em;
+	display: none;
+	@media (orientation: portrait) {
+		display: flex;
+        flex-flow: row nowrap;
+		justify-content: flex-end;
+        padding: 35px;
+        padding-top: 0;
+	}
 	p {
 		display: flex;
 		flex-flow: column nowrap;

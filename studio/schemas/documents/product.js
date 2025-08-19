@@ -58,6 +58,11 @@ export default defineType({
 			}],
 		}),
 		defineField({
+			type: 'richText',
+			title: 'Description',
+			name: 'description',
+		}),
+		defineField({
 			type: 'array',
 			title: 'Images',
 			name: 'media',
@@ -79,21 +84,16 @@ export default defineType({
 								})
 							],
 						}),
-						defineField({
-							type: 'richText',
-							title: 'Caption',
-							name: 'caption'
-						}),
 					],
 					preview: {
 						select: {
 							image: 'image',
-							caption: 'caption'
+							imageFilename: 'image.asset.originalFilename'
 						},
-						prepare({ image, caption }) {
+						prepare({ image, imageFilename }) {
 							return {
 								title: 'Image',
-								subtitle: caption ? caption[0].children[0].text.substring(0, 50) + '...' : '',
+								subtitle: imageFilename,
 								media: image,
 							}
 						}

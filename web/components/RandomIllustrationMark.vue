@@ -49,19 +49,18 @@ onMounted(() => {
 	const travel = 200
 
 	gsap.to(illustration.value, {
-  y: () => window.innerHeight * -0.8,   // function evaluated on refresh
-  ease: 'none',
-  scrollTrigger: {
-    trigger: illustration.value,
-start: "0 0",  
-        end: "+=500", 
-    scrub: true,
-	markers: true,
-    invalidateOnRefresh: true,
-    immediateRender: false // also helps avoid initial snap
-  }
-})
-
+		y: () => window.innerHeight * -0.8,   // function evaluated on refresh
+		ease: 'none',
+		scrollTrigger: {
+			trigger: illustration.value,
+			start: "0 0",  
+			end: "+=500", 
+			scrub: true,
+			//markers: true,
+			invalidateOnRefresh: true,
+			immediateRender: false // also helps avoid initial snap
+		}
+	})
 
 })
 

@@ -2,7 +2,7 @@
 	<header ref="header">
 		<h1 class="logo" v-show="showLogo"><NuxtLink to="/"><Logo /></NuxtLink></h1>
 		<div class="nav" ref="nav">
-			<button class="menu-trigger" @click="navStore.setOpen" v-show="!navStore.isOpen"><img src="/illustrations/bunny.png" /></button>
+			<button class="menu-trigger" @click="openMenu" v-show="!navStore.isOpen"><img src="/illustrations/bunny.png" /></button>
 			<ul class="menu" ref="menu" v-show="navStore.isOpen">
 				<li>
 					<ul class="sub" v-show="activeSubMenu === 1">
@@ -48,7 +48,10 @@
 
 import { useNavStore } from '~/store/nav'
 import { useThemeModeStore } from '~/store/themeMode'
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, useWindowSize } from '@vueuse/core'
+
+import { gsap } from 'gsap'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
 const config = useRuntimeConfig()
 
@@ -113,6 +116,34 @@ const invertAssets = computed(() => {
 		return 'invert(0)'
 	}
 })
+
+gsap.registerPlugin(ScrollToPlugin)
+
+const openMenu = () => {
+	if (route.name === 'about') {
+    	const doc = document.documentElement
+    	const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 2
+    	const hasScrolled = window.scrollY > 2 || atBottom
+
+    	if (!hasScrolled) {
+			const { height } = useWindowSize()
+
+			gsap.to(window, { 
+				duration: 0.5,
+				scrollTo: { 
+					y: doc.scrollHeight - height.value,
+					offsetY: 0
+				},
+				onComplete() {
+				navStore.setOpen()
+				}
+			})
+      		return
+		}
+	}
+	
+	navStore.setOpen()
+}
 
 const activeSubMenu = ref(null)
 const activeSubSubMenu = ref(null)

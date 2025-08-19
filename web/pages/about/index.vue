@@ -3,12 +3,14 @@
 		<h2 class="statement">
 			<div><span>Alice</span> <span>Waese</span></div>
 			<div><span>is</span> <span>an</span> <span>artist</span></div>
-			<div><span>based</span> <span>in</span> <span>New</span></div>
+			<div>
+				<span>based</span> <span>in</span> <span>New</span>
+				<div class="details">
+					<p>For all inquiries contact<NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></p>
+				</div>
+			</div>
 			<div><span>New</span> <span>York.</span></div>
 		</h2>
-		<div class="details">
-			<p>For all inquiries contact<NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></p>
-		</div>
 	</div>
 </template>
 
@@ -47,12 +49,10 @@ useHead({
 <style lang="scss" scoped>
 
 h2.statement {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	height: calc(100% - (25px * 2));
-	width: calc(100% - (50px * 2));
+	position: relative;
+    height: calc(100vh + 0.265em);
+	width: 100%;
+	padding: 50px;
 	display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -60,10 +60,11 @@ h2.statement {
 	line-height: 1.03em;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
+	margin-bottom: calc(83px + 50px);
 	@media (orientation: portrait) {
 		height: calc(100% - 60px);
 		width: calc(100% - 60px);
-		 justify-content: flex-start;
+		justify-content: flex-start;
 	}
 	div {
 		display: block;
@@ -94,6 +95,7 @@ h2.statement {
 			}
 		}
 		&:nth-child(3) {
+			position: relative;
 			@media (orientation: portrait) {
 				display: flex;
 				flex-flow: row wrap;
@@ -112,6 +114,16 @@ h2.statement {
 					}
 				}
 			}
+			div.details {
+				position: absolute;
+				top: 50%;
+				right: 0;
+				@include max-width-grid-columns(7, 2, '30px', 'width');
+				transform: translateY(-84%);
+				letter-spacing: normal;
+				text-transform: none;
+				text-align: left;
+			}
 		}
 		&:nth-child(4) {
 			text-align: right;
@@ -129,22 +141,13 @@ h2.statement {
 	}
 }
 div.details {
-	position: fixed;
-	//background-color: red;
-	top: 63%;
-	@include max-width-grid-columns(7, 5, '20px', 'left', '-30px');
-	transform: translateY(-50%);
 	font-size: 12px;
 	line-height: 2.15em;
-	@media (orientation: portrait) {
-		top: auto;
-		bottom: 19px;
-	}
 	p {
 		display: flex;
 		flex-flow: column nowrap;
 		a {
-			align-self: flex-end;
+			text-indent: 5ch;
 			&:hover {
 				color: var(--color-gold);
 			}

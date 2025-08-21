@@ -71,7 +71,7 @@ ul.staggered-list {
 	}
 	li {
 		grid-column: 1 / -1;
-		font-size: clamp(48px, 6.9vw, 100px);
+		font-size: clamp(48px, 6.9vw, 180px);
 		line-height: 1.2em;
 		letter-spacing: -0.03em;
 		a {

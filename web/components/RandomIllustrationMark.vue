@@ -6,7 +6,6 @@
 
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useWindowSize } from '@vueuse/core'
 
 const props = defineProps({
 	top: {
@@ -20,7 +19,7 @@ const props = defineProps({
 	topUnit: {
 		type: String,
 		default: '%'
-  }
+	}
 })
 
 const illustrations = ['eye', 'hand', 'horse', 'spider']
@@ -34,6 +33,20 @@ const randomIllustration = useState(`illu-${uid}-name`, () => illustrations[rand
 const randomTop = ref('0')
 const randomRight = ref('0')
 
+const width = computed(() => {
+	if (randomIllustration.value == 'eye') {
+		return `50px`
+	} else if (randomIllustration.value == 'hand') {
+		return `60px`
+	} else if (randomIllustration.value == 'horse') {
+		return `50px`
+	} else if (randomIllustration.value == 'spider') {
+		return `68px`
+	} else {
+		return '43px'
+	}
+})
+
 const ready = ref(false)
 
 gsap.registerPlugin(ScrollTrigger)
@@ -46,8 +59,6 @@ onMounted(() => {
 
 	ready.value = true
 
-	const travel = 200
-
 	gsap.to(illustration.value, {
 		y: () => window.innerHeight * -0.8,   // function evaluated on refresh
 		ease: 'none',
@@ -56,7 +67,6 @@ onMounted(() => {
 			start: "0 0",  
 			end: "+=500", 
 			scrub: true,
-			//markers: true,
 			invalidateOnRefresh: true,
 			immediateRender: false // also helps avoid initial snap
 		}
@@ -72,7 +82,7 @@ img {
 	position: absolute;
 	top: v-bind(randomTop);
 	right: v-bind(randomRight);
-	width: 43px;
+	width: v-bind(width);
 	pointer-events: none;
 }
 

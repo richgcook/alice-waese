@@ -119,7 +119,7 @@ div.collection-description {
 	padding-bottom: 27.78vh; /* ((250 distance / 900 viewport height) * 100) */
 	font-family: var(--font-body);
 	font-weight: 300;
-	font-size: 10px;
+	font-size: var(--font-size-sm);
 	line-height: 2.06em;
 	:deep(div.text) {
 		grid-column: 8 / span 7;

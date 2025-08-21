@@ -4,11 +4,13 @@
 			<div class="slider" ref="slider">
 				<div v-for="(slide, index) in slides" :key="index" class="slide" :data-settings-position="slide.settings?.position">
 					<template v-if="useBlockType(slide._type) === 'image'">
-						<Img 
-							:src="slide.image.asset?.url"
+						<NuxtImg 
+							:src="slide.image.assetRef" 
 							:alt="slide.image.alt"
-							:loading="`eager`"
-							:fetchpriority="`high`"
+							sizes="100vw tablet-portrait:100vw"
+							loading="eager"
+							preload
+							v-if="slide.image?.asset"
 						/>
 					</template>
 				</div>
@@ -20,7 +22,6 @@
 <script setup>
 
 import { useThemeModeStore } from '~/store/themeMode'
-import { storeToRefs } from 'pinia'
 
 import emblaCarouselVue from 'embla-carousel-vue'
 import Autoplay from 'embla-carousel-autoplay'
@@ -122,37 +123,6 @@ div.slider-container {
 					object-fit: cover;
 				}
 			}
-		}
-	}
-	h1 {
-		position: absolute;
-		top: 50%;
-		left: 0;
-		transform: translateY(-50%);
-		width: 50%;
-		font-size: 128px;
-		font-size: clamp(64px, 7vw, 128px);
-		line-height: 1.08;
-		padding: 0 8%;
-		text-align: center;
-		@include media('phone') {
-			top: 20%;
-			width: 100%;
-			padding: 0;
-		}
-	}
-	div.caption {
-		position: absolute;
-		bottom: calc(var(--padding-base) * 2);
-		left: 0;
-		width: 50%;
-		font-size: 14px;
-		text-align: center;
-		padding: 0 calc(var(--padding-base) * 2);
-		@include media('phone') {
-			bottom: calc(60% + var(--padding-base));
-			width: 100%;
-			font-size: 11px;
 		}
 	}
 }

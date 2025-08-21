@@ -1,6 +1,5 @@
 <template>
-	<NuxtLink :to="useInternalLinkUrl(reference)" :class="{ '--has-symbol': symbolArrow }">
-		<SymbolArrowNextLong v-if="symbolArrow" />
+	<NuxtLink :to="useInternalLinkUrl(reference)">
 		<slot />
 	</NuxtLink>
 </template>
@@ -9,7 +8,6 @@
 
 const props = defineProps({
 	reference: Object,
-	symbolArrow: Boolean,
 })
 
 </script>
@@ -18,23 +16,6 @@ const props = defineProps({
 
 a {
 	color: currentColor;
-	&.--has-symbol {
-		font-size: var(--font-size-base-sm);
-		font-weight: 500;
-		letter-spacing: normal;
-		display: inline-flex;
-		align-items: baseline;
-		column-gap: 0.75ch;
-		svg {
-			height: 13px;
-			fill: currentColor;
-			display: inline-flex;
-			margin-left: 0.75ch;
-			@include media('phone') {
-				height: 9px;
-			}
-		}
-	}
 }
 
 </style>

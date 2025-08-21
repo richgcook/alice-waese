@@ -1,13 +1,13 @@
 <template>
 	<div class="image">
-		<Img 
-			:src="src"
-			:srcSet="srcSet"
-			:sizes="sizes"
+		<NuxtImg 
+			:src="src" 
 			:alt="alt"
-			:orientation="orientation"
-			:loading="lazy"
+			:data-orientation="orientation"
+			:sizes="sizes"
+			:loading="loading"
 			:fetchpriority="priority"
+			:preload="preload"
 		/>
 	</div>
 </template>
@@ -16,11 +16,10 @@
 
 const props = defineProps({
 	src: String,
-	srcSet: Array,
-	sizes: String,
 	alt: String,
+	sizes: String,
 	orientation: String,
-	lazy: {
+	loading: {
 		type: String,
 		default: 'lazy'
 	},
@@ -28,20 +27,23 @@ const props = defineProps({
 		type: String,
 		default: null
 	},
+	preload: {
+		type: Boolean,
+		default: false
+	},
 	ratio: {
 		type: [Number, String],
 		default: null
 	},
 })
+
 </script>
 
 <style scoped lang="scss">
 
 div.image {
 	position: relative;
-	@supports (aspect-ratio: 1 / 1) {
-		aspect-ratio: v-bind(ratio);
-	}
+	aspect-ratio: v-bind(ratio);
 	img {
 		position: absolute;
 		inset: 0;

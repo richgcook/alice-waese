@@ -40,7 +40,8 @@ export default defineNuxtConfig({
 	modules: [
 		'@nuxtjs/sanity', 
 		'@pinia/nuxt',
-		'lenis/nuxt'
+		'@nuxt/image',
+		'lenis/nuxt',
 	],
 
 	build: {
@@ -54,6 +55,22 @@ export default defineNuxtConfig({
     	'dataset': process.env.SANITY_PROJECT_DATASET,
 		'apiVersion': process.env.SANITY_API_VERSION,
 		'useCdn': false
+	},
+
+	image: {
+		screens: {
+			phone: 0,
+			'tablet-portrait': 768,
+			'tablet-landscape': 1024,
+			'laptop': 1200,
+			'desktop': 1440,
+			'desktop-large': 1600,
+		},
+		quality: 100,
+		provider: 'sanity',
+		sanity: {
+			projectId: process.env.SANITY_PROJECT_ID,
+		}
 	},
 
 	compatibilityDate: '2025-08-01',

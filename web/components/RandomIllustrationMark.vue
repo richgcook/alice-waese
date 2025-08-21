@@ -37,7 +37,7 @@ const width = computed(() => {
 	if (randomIllustration.value == 'eye') {
 		return `50px`
 	} else if (randomIllustration.value == 'hand') {
-		return `60px`
+		return `80px`
 	} else if (randomIllustration.value == 'horse') {
 		return `50px`
 	} else if (randomIllustration.value == 'spider') {

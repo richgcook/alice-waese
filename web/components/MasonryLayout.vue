@@ -9,11 +9,9 @@
 						<source :src="primaryMedia(item).video" type="video/mp4">
 					</video>
 					<ImgWithRatio 
-						:src="primaryMedia(item).image.asset.url" 
-						:sizes="`
-							(max-width: 768px) 100vw, 
-							50vw`"
+						:src="primaryMedia(item).image.assetRef" 
 						:alt="primaryMedia(item).image.alt" 
+						:sizes="`100vw tablet-portrait:50vw`"
 						:ratio="primaryMedia(item).image.asset.ratio"
 						:class="[ item.settings?.size ? `--${item.settings.size}` : '' ]"
 						v-else-if="primaryMedia(item)?.type === 'image'"

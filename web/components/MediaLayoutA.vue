@@ -4,10 +4,12 @@
 			<div v-for="(item, index) in media" :key="index" class="item" :data-orientation="item?.image?.asset?.orientation">
 				<template v-if="useBlockType(item._type) == 'image'">
 					<div class="image-block">
-						<Img 
-							:src="item.image.asset.url" 
-							:alt="item.image.alt" 
-							:ratio="item.image.asset.ratio"
+						<NuxtImg 
+							:src="item.image.assetRef" 
+							:alt="item.image.alt"
+							sizes="100vw tablet-portrait:80vw"
+							loading="eager"
+							preload
 							v-if="item.image?.asset"
 						/>
 					</div>
@@ -81,19 +83,18 @@ div.media-layout {
 		position: sticky;
     	top: 0;
 		display: grid;
-		grid-template-columns: subgrid;
 		row-gap: 1.5em;
 		align-items: flex-end;
 		align-content: flex-end;
 		padding-bottom: 50px;
-		font-size: 12px;
+		padding-left: 30px;
 		height: 100vh;
 		@supports (height: 100dvh) {
 			height: 100dvh;
 		}
 		&.--has-text {
 			:deep(div.text) {
-				grid-column: 3 / -1;
+				padding-left: 30px;
 			}
 		}
 		h3.title {
@@ -101,7 +102,7 @@ div.media-layout {
 			text-transform: uppercase;
 		}
 		:deep(div.text) {
-			grid-column: 2 / -1;
+			//
 		}
 	}
 }

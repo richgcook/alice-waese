@@ -218,12 +218,7 @@ header {
 				display: flex;
 				flex-flow: column nowrap;
 				row-gap: 1.15em;
-				font-size: 12px;
 				position: relative;
-				@include media('desktop-large') {
-					font-size: 13px;
-					letter-spacing: 0.02em;
-				}
 				button {
 					all: unset;
 					box-sizing: border-box;

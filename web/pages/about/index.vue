@@ -166,7 +166,7 @@ h2.statement {
 	}
 }
 div.details {
-	font-size: 12px;
+	font-size: var(--font-size-base);
 	line-height: 2.15em;
 	display: none;
 	@media (orientation: portrait) {
@@ -180,7 +180,7 @@ div.details {
 		display: flex;
 		flex-flow: column nowrap;
 		a {
-			text-indent: 5ch;
+			text-indent: 30px;
 			&:hover {
 				color: var(--color-gold);
 			}

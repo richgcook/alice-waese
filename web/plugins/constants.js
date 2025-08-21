@@ -30,6 +30,7 @@ const richTextQuery = `
 
 const imageQuery = `
 	alt,
+	"assetRef": asset._ref,
 	asset->{
 		_id,
 		url,

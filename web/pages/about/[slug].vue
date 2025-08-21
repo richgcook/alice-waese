@@ -71,7 +71,7 @@ div.page-layout {
 	margin: 62px auto 120px auto;
 	font-family: var(--font-body);
 	font-weight: 300;
-	font-size: 10px;
+	font-size: var(--font-size-sm);
 	line-height: 2.06em;
 	position: relative;
 	div.content {

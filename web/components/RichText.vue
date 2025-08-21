@@ -29,18 +29,6 @@ const serializers = {
 
 div.text {
 	white-space: pre-line;
-	&[data-context="footer"] {
-		:deep(a) {
-			color: currentColor;
-		}
-	}
-	:deep(a) {
-		color: var(--color-orange);
-	}
-	:deep(h3) {
-		font-size: var(--font-size-md);
-		line-height: 1.1;
-	}
 	:deep(ul) {
 		li {
 			padding-left: 1.5em;

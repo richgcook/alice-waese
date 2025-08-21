@@ -80,6 +80,7 @@ div.masonry-layout {
 	gap: 30px;
 	align-items: flex-start;
 	padding: 0 calc(50px * 2);
+	padding: 0 12vw;
 	margin: 0 auto 120px auto;
 	&[data-context="collections"] {
 		div.column {
@@ -143,8 +144,9 @@ div.masonry-layout {
 		&:nth-child(2) {
 			> div.item {
 				&:first-child {
-					margin-top: 111px;
-					margin-top: 12.33vh; /* ((111 distance / 900 viewport height) * 100) */
+					//margin-top: 489px;
+					//margin-top: 54.33vh; /* ((489 distance / 900 viewport height) * 100) */
+					margin-top: 45vh;
 				}
 			}
 		}

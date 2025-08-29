@@ -106,9 +106,15 @@ div.slider-container {
 				position: relative;
 				width: 100%;
 				height: 100%;
+				@include media('phone') {
+					grid-template-columns: 1fr;
+				}
 				&[data-settings-position="left"] {
 					img {
 						grid-column: 1 / span 8;
+						@include media('phone') {
+							grid-column: 1 / -1;
+						}
 					}
 				}
 				img, video {
@@ -121,6 +127,9 @@ div.slider-container {
 					max-width: none;
 					transform: translate(-50%, -50%);
 					object-fit: cover;
+					@include media('phone') {
+						grid-column: 1 / -1;
+					}
 				}
 			}
 		}

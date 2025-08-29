@@ -80,6 +80,10 @@ div.masonry-layout {
 	padding: 0 calc(50px * 2);
 	padding: 0 12vw;
 	margin: 0 auto 120px auto;
+	@include media('phone') {
+		flex-flow: column nowrap;
+		padding: 0;
+	}
 	&[data-context="collections"] {
 		div.column {
 			&:nth-child(1) {
@@ -96,6 +100,9 @@ div.masonry-layout {
 					&:first-child {
 						margin-top: 489px;
 						margin-top: 54.33vh; /* ((489 distance / 900 viewport height) * 100) */
+						@include media('phone') {
+							margin-top: 0;
+						}
 					}
 				}
 			}
@@ -139,12 +146,22 @@ div.masonry-layout {
 		row-gap: 250px;
 		row-gap: 27.78vh;  /* ((250 distance / 900 viewport height) * 100) */
 		position: relative;
+		@include media('phone') {
+			margin-top: calc(27.78vh/2);
+		}
+		@include media('phone') {
+			flex: none;
+			width: 100%;
+		}
 		&:nth-child(2) {
 			> div.item {
 				&:first-child {
 					//margin-top: 489px;
 					//margin-top: 54.33vh; /* ((489 distance / 900 viewport height) * 100) */
 					margin-top: 45vh;
+					@include media('phone') {
+						margin-top: 0;
+					}
 				}
 			}
 		}

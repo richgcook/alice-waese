@@ -90,11 +90,11 @@ div.collection-layout {
 	position: relative;
 	&.--clone {
 		position: relative;
+		overflow: hidden;
   		height: 100vh;
 		@supports (height: 100dvh) {
 			height: 100dvh;
 		}
-  		overflow: hidden;
 	}
 }
 h1.collection-title {
@@ -108,6 +108,9 @@ h1.collection-title {
 	line-height: 1.2em;
 	letter-spacing: -0.03em;
 	text-align: center;
+	@include media('phone') {
+		width: calc(100% - (35px * 2));
+	}
 }
 div.collection-description {
 	display: grid;
@@ -121,10 +124,17 @@ div.collection-description {
 	font-weight: 300;
 	font-size: var(--font-size-sm);
 	line-height: 2.06em;
+	@include media('phone') {
+		grid-template-columns: 1fr;
+		padding: 0 35px 120px 35px;
+	}
 	:deep(div.text) {
 		grid-column: 8 / span 7;
 		max-width: 400px;
     	margin: 0 auto;
+		@include media('phone') {
+			grid-column: 1 / -1;
+		}
 	}
 }
 

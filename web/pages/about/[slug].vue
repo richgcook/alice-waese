@@ -74,14 +74,29 @@ div.page-layout {
 	font-size: var(--font-size-sm);
 	line-height: 2.06em;
 	position: relative;
+	@include media('phone') {
+		grid-template-columns: 1fr;
+		padding: 0 35px;
+		margin-top: 200px;
+	}
 	div.content {
 		grid-column: 8 / span 7;
+		@include media('phone') {
+			grid-column: 1 / -1;
+		}
 	}
 	div.extra {
 		@include max-width-grid-columns(21, 4, '20px', 'width');
 		position: fixed;
 		bottom: 50px;
 		right: 50px;
+		@include media('phone') {
+			width: 100%;
+			position: relative;
+			bottom: auto;
+			right: auto;
+			margin-top: 200px;
+		}
 	}
 }
 

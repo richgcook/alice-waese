@@ -39,29 +39,59 @@ div.media-layout {
 	grid-template-columns: repeat(28, 1fr);
 	column-gap: 20px;
 	position: relative;
+	@include media('phone') {
+		grid-template-columns: 1fr;
+		row-gap: 35px;
+		align-items: end;
+		height: 100vh;
+		@supports (height: 100dvh) {
+			height: 100dvh;
+		}
+	}
 	&[data-layout="portrait"] {
 		div.media {
 			grid-column: 1 / span 16;
+			@include media('phone') {
+				grid-column: 1 / -1;
+			}
 		}
 		div.caption {
 			grid-column: span 12;
+			@include media('phone') {
+				grid-column: 1 / -1;
+			}
 		}
 	}
 	&[data-layout="landscape"] {
 		div.media {
 			grid-column: 1 / span 21;
+			@include media('phone') {
+				grid-column: 1 / -1;
+			}
 		}
 		div.caption {
 			grid-column: span 7;
+			@include media('phone') {
+				grid-column: 1 / -1;
+			}
 		}
 	}
 	div.media {
+		@include media('phone') {
+			aspect-ratio: 2 / 3;
+			position: relative;
+			overflow: hidden;
+		}
 		div.item {
 			position: sticky;
 			top: 0;
 			min-height: 100vh;
 			@supports (min-height: 100dvh) {
 				min-height: 100dvh;
+			}
+			@include media('phone') {
+				height: 100%;
+				min-height: 0;
 			}
 			div.image-block {
 				position: absolute;
@@ -74,6 +104,9 @@ div.media-layout {
 					height: 100%;
 					width: 100%;
 					object-fit: cover;
+					@include media('phone') {
+						object-fit: contain;
+					}
 				}
 			}
 		}
@@ -92,17 +125,22 @@ div.media-layout {
 		@supports (height: 100dvh) {
 			height: 100dvh;
 		}
+		@include media('phone') {
+			position: relative;
+			height: auto;
+			padding: 0 35px;
+			text-align: center;
+		}
 		&.--has-text {
+			text-align: left;
+			max-width: 80%;
+    		margin: 0 auto;
 			:deep(div.text) {
 				padding-left: 50px;
 			}
 		}
 		h3.title {
-			grid-column: 2 / -1;
 			text-transform: uppercase;
-		}
-		:deep(div.text) {
-			//
 		}
 	}
 }

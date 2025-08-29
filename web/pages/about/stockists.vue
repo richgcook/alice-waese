@@ -13,7 +13,7 @@ const query = groq`{
 			${$seoQuery}
 		},
 		stockists[] {
-			name, link,
+			name, other, link,
 		}
 	}[0],
 	

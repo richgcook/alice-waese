@@ -1,7 +1,10 @@
 <template>
 	<ul class="staggered-list" :data-layout="layoutVersion">
-		<li v-for="(item, index) in items" :key="index">
-			<NuxtLink :to="item.link" target="_blank">{{ item.name }}</NuxtLink>
+		<li v-for="(item, index) in items" :key="index" :class="{ '--has-other': item.other }">
+			<NuxtLink :to="item.link" target="_blank">
+				<span class="name">{{ item.name }}</span>
+				<span class="other" v-if="item.other"><span>&mdash;{{ item.other }}</span></span>
+			</NuxtLink>
 		</li>
 	</ul>
 </template>
@@ -27,7 +30,9 @@ ul.staggered-list {
 	padding: 0 120px;
 	margin: 25px 0 120px 0;
 	@include media('phone') {
-		padding: 0 30px;
+		grid-template-columns: 1fr;
+		row-gap: 30px;
+		padding: 0 35px;
 	}
 	&[data-layout="a"] {
 		li {
@@ -71,12 +76,41 @@ ul.staggered-list {
 	}
 	li {
 		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: subgrid;
 		font-size: clamp(48px, 6.9vw, 180px);
 		line-height: 1.2em;
 		letter-spacing: -0.03em;
+		@include media('phone') {
+			grid-column: 1 / -1 !important;
+		}
+		&.--has-other {
+			//grid-column: 1 / -1 !important;
+			//text-align: left !important;
+		}
 		a {
+			grid-column: 1 / -1;
+			display: grid;
+			grid-template-columns: subgrid;
 			&:hover {
 				color: var(--color-gold);
+			}
+			span.name {
+				grid-column: 1 / -1;
+			}
+			span.other {
+				grid-column: 1 / -1;
+				display: grid;
+				grid-template-columns: repeat(14, 1fr);
+				@include media('phone') {
+					grid-template-columns: 1fr;
+				}
+				span {
+					grid-column: 3 / -1;
+					@include media('phone') {
+						grid-column: 1 / -1;
+					}
+				}
 			}
 		}
 	}

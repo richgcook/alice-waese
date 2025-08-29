@@ -38,6 +38,11 @@ export default defineType({
 							validation: Rule => Rule.required()
 						}),
 						defineField({
+							type: 'string',
+							title: 'Location/Other',
+							name: 'other',
+						}),
+						defineField({
 							type: 'url',
 							title: 'Link/URL',
 							name: 'link',
@@ -47,12 +52,13 @@ export default defineType({
 					preview: {
 						select: {
 							title: 'name',
+							other: 'other',
 							url: 'link'
 						},
 						prepare(selection) {
-							const { title, url } = selection
+							const { title, other, url } = selection
 							return {
-								title,
+								title: other ? `${title} (${other})` : title,
 								subtitle: url,
 								media: ArrowRightIcon,
 							}

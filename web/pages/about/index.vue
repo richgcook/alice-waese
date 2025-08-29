@@ -54,10 +54,13 @@ useHead({
 div.container {
 	@media (orientation: portrait) {
 		display: grid;
-   		 grid-template-rows: 1fr auto;
+   		grid-template-rows: 1fr auto;
 		min-height: calc(100vh + 0.265em);
 		@supports (min-height: 100dvh) {
 			min-height: calc(100dvh + 0.265em);
+		}
+		@include media('phone') {
+			row-gap: 35px;
 		}
 	}
 }
@@ -68,7 +71,7 @@ h2.statement {
 	display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
-	font-size: clamp(75px, 11.5vw, 320px);
+	font-size: clamp(69px, 11.5vw, 320px);
 	line-height: 1.03em;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;

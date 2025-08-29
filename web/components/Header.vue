@@ -1,8 +1,8 @@
 <template>
 	<header ref="header">
 		<h1 class="logo" v-show="showLogo"><NuxtLink to="/"><Logo /></NuxtLink></h1>
-		<div class="nav" ref="nav" @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
-			<button class="menu-trigger" @click="openMenu" v-show="!navStore.isOpen"><img src="/illustrations/bunny.png" /></button>
+		<div class="nav" :class="{ '--open': navStore.isOpen }" @mouseleave="activeSubMenu = null; activeSubSubMenu = null" ref="nav">
+			<button class="menu-trigger" @click="openMenu"><img src="/illustrations/bunny.png" /></button>
 			<ul class="menu" ref="menu" v-show="navStore.isOpen">
 				<li @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
 					<ul class="sub" v-show="activeSubMenu === 1">
@@ -39,6 +39,7 @@
 					</ul>
 					<button @mouseover="activeSubMenu = 3">About</button>
 				</li>
+				<NuxtLink to="/" class="logo"><Logo /></NuxtLink>
 			</ul>
 		</div>
 	</header>
@@ -48,7 +49,7 @@
 
 import { useNavStore } from '~/store/nav'
 import { useThemeModeStore } from '~/store/themeMode'
-import { onClickOutside, useWindowSize } from '@vueuse/core'
+import { onClickOutside, useWindowSize, useMediaQuery } from '@vueuse/core'
 
 import { gsap } from 'gsap'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
@@ -120,29 +121,38 @@ const invertAssets = computed(() => {
 gsap.registerPlugin(ScrollToPlugin)
 
 const openMenu = () => {
-	if (route.name === 'about') {
-    	const doc = document.documentElement
-    	const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 2
-    	const hasScrolled = window.scrollY > 2 || atBottom
 
-    	if (!hasScrolled) {
-			const { height } = useWindowSize()
-
-			gsap.to(window, { 
-				duration: 0.5,
-				scrollTo: { 
-					y: doc.scrollHeight - height.value,
-					offsetY: 0
-				},
-				onComplete() {
-					navStore.setOpen()
-				}
-			})
-      		return
+	// Toggle on phone
+	if (useMediaQuery('(max-width: 767px)')) {
+		if (navStore.isOpen) {
+			navStore.setClose()
+		} else {
+			navStore.setOpen()
 		}
+	} else {
+		if (route.name === 'about') {
+			const doc = document.documentElement
+			const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 2
+			const hasScrolled = window.scrollY > 2 || atBottom
+
+			if (!hasScrolled) {
+				const { height } = useWindowSize()
+
+				gsap.to(window, { 
+					duration: 0.8,
+					scrollTo: { 
+						y: doc.scrollHeight - height.value,
+						offsetY: 0
+					},
+					onComplete() {
+						navStore.setOpen()
+					}
+				})
+				return
+			}
+		}
+		navStore.setOpen()
 	}
-	
-	navStore.setOpen()
 }
 
 const activeSubMenu = ref(null)
@@ -169,15 +179,23 @@ watch(() => route.path, () => {
 header {
 	position: fixed;
 	z-index: 2;
-	color: v-bind(textAndAssetColor);
 	h1.logo {
 		position: fixed;
 		top: 50px;
 		left: 50px;
+		@include media('phone') {
+			left: 0;
+			width: 100%;
+			padding: 0 35px;
+		}
 		a {
 			display: block;
 			height: 27px;
 			width: 271px;
+			@include media('phone') {
+				height: auto;
+				width: 100%;
+			}
 			svg {
 				display: block;
 				height: 100%;
@@ -185,7 +203,30 @@ header {
 				width: 100%;
 				max-width: 100%;
 				fill: v-bind(textAndAssetColor);
+				@include media('phone') {
+					height: auto;
+					//fill: white !important;
+				}
 			}
+		}
+	}
+	a.logo {
+		position: absolute;
+		top: 50px;
+		left: 0;
+		width: 100%;
+		padding: 0 35px;
+		display: none;
+		@include media('phone') {
+			display: block;
+		}
+		svg {
+			display: block;
+			height: auto;
+			max-height: 100%;
+			width: 100%;
+			max-width: 100%;
+			fill: black;
 		}
 	}
 	div.nav {
@@ -193,9 +234,6 @@ header {
 		bottom: 50px;
 		left: 50px;
 		@include max-width-grid-columns(14, 5, '20px', 'width', '-70px');
-		@include media('desktop-large') {
-			//@include max-width-grid-columns(14, 4, '20px', 'width', '-70px');
-		}
 		@include media('laptop') {
 			@include max-width-grid-columns(14, 6, '20px', 'width', '-70px');
 		}
@@ -206,10 +244,27 @@ header {
 			bottom: 35px;
 			left: 35px;
 		}
+		&.--open {
+			button.menu-trigger {
+				display: none;
+				@include media('phone') {
+					display: inline-flex;
+				}
+				img {
+					@include media('phone') {
+						filter: invert(0) !important;
+					}
+				}
+			}
+		}
 		button.menu-trigger {
 			all: unset;
 			box-sizing: border-box;
 			cursor: pointer;
+			@include media('phone') {
+				position: relative;
+				z-index: 1;
+			}
 			img {
 				width: 43px;
 				filter: v-bind(invertAssets);
@@ -221,28 +276,59 @@ header {
 			gap: 0.215em 20px;
 			justify-content: space-between;
 			align-items: flex-end;
-			//background-color: red;
+			color: v-bind(textAndAssetColor);
+			@include media('phone') {
+				display: flex;
+				flex-flow: column nowrap;
+				justify-content: center;
+				align-items: flex-start;
+				position: fixed;
+				inset: 0;
+				height: 100%;
+				width: 100%;
+				background-color: var(--color-bg);
+				color: black !important;
+				padding: 35px;
+				gap: 0.8em 0;
+			}
 			li {
 				display: flex;
 				flex-flow: column nowrap;
 				row-gap: 1.15em;
 				position: relative;
+				@include media('phone') {
+					display: grid;
+				}
 				button {
 					all: unset;
 					box-sizing: border-box;
 					cursor: pointer;
+					@include media('phone') {
+						grid-row: 1;
+					}
 				}
 				ul.sub {
 					display: flex;
 					flex-flow: column nowrap;
 					row-gap: 1.15em;
+					@include media('phone') {
+						padding-left: 80px;
+					}
 					ul.sub {
 						padding-left: 20px;
+						@include media('phone') {
+							padding-left: 0;
+							display: flex;
+							flex-flow: row wrap;
+							column-gap: 20px;
+						}
 					}
 					li a {
 						transition: padding-left 0.2s;
-						&:hover {
-							padding-left: 20px;
+						@include isNotTouch() {
+							&:hover {
+								padding-left: 20px;
+							}
 						}
 					}
 				}

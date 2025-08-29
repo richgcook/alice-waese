@@ -13,7 +13,7 @@ const query = groq`{
 			${$seoQuery}
 		},
 		pressLinks[] {
-			name, link,
+			name, other, link,
 		}
 	}[0],
 	

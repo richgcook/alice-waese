@@ -36,11 +36,11 @@ ul.staggered-list {
 			&:nth-child(12n + 3) { grid-column: 1 / -1; text-align: right; }
 			&:nth-child(12n + 4) { grid-column: 1 / -1; }
 			&:nth-child(12n + 5) { grid-column: 7 / -1; }
-			&:nth-child(12n + 6) { grid-column: 3 / -1; }
-			&:nth-child(12n + 7) { grid-column: 4 / -1; }
-			&:nth-child(12n + 8) { grid-column: 1 / -1; }
-			&:nth-child(12n + 9) { grid-column: 2 / -1; }
-			&:nth-child(12n + 10) { grid-column: 6 / -1; }
+			&:nth-child(12n + 6) { grid-column: 8 / -1; text-align: right; }
+			&:nth-child(12n + 7) { grid-column: 11 / -1; }
+			&:nth-child(12n + 8) { grid-column: 3 / -1; }
+			&:nth-child(12n + 9) { grid-column: 1 / -1; }
+			&:nth-child(12n + 10) { grid-column: 3 / -1; }
 			&:nth-child(12n + 11) { grid-column: 1 / -1; text-align: right; }
 			&:nth-child(12n + 12) { grid-column: 3 / -1; }
 		}
@@ -55,17 +55,17 @@ ul.staggered-list {
 			&:nth-child(20n + 6) { grid-column: 1 / -1; }
 			&:nth-child(20n + 7) { grid-column: 5 / -1; }
 			&:nth-child(20n + 8) { grid-column: 7 / -1; }
-			&:nth-child(20n + 9) { grid-column: 1 / -1; }
-			&:nth-child(20n + 10) { grid-column: 1 / -1; text-align: right; }
-			&:nth-child(20n + 11) { grid-column: 4 / -1; }
+			&:nth-child(20n + 9) { grid-column: 4 / -1; }
+			&:nth-child(20n + 10) { grid-column: 1 / -1; }
+			&:nth-child(20n + 11) { grid-column: 5 / -1; }
 			&:nth-child(20n + 12) { grid-column: 1 / -1; text-align: right; }
-			&:nth-child(20n + 13) { grid-column: 1 / -1; }
+			&:nth-child(20n + 13) { grid-column: 1 / -1; text-align: right; }
 			&:nth-child(20n + 14) { grid-column: 4 / -1; }
 			&:nth-child(20n + 15) { grid-column: 1 / -1; text-align: right; }
-			&:nth-child(20n + 16) { grid-column: 2 / -1; }
+			&:nth-child(20n + 16) { grid-column: 4 / -1; }
 			&:nth-child(20n + 17) { grid-column: 1 / -1; }
-			&:nth-child(20n + 18) { grid-column: 5 / -1; }
-			&:nth-child(20n + 19) { grid-column: 1 / -1; }
+			&:nth-child(20n + 18) { grid-column: 6 / -1; }
+			&:nth-child(20n + 19) { grid-column: 1 / -1; text-align: right; }
 			&:nth-child(20n + 20) { grid-column: 6 / -1; }
 		}
 	}

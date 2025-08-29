@@ -180,7 +180,7 @@ div.details {
 		display: flex;
 		flex-flow: column nowrap;
 		a {
-			text-indent: 30px;
+			text-indent: 50px;
 			&:hover {
 				color: var(--color-gold);
 			}

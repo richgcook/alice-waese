@@ -94,7 +94,7 @@ div.media-layout {
 		}
 		&.--has-text {
 			:deep(div.text) {
-				padding-left: 40px;
+				padding-left: 50px;
 			}
 		}
 		h3.title {

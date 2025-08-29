@@ -4,13 +4,13 @@
 		<div class="nav" ref="nav">
 			<button class="menu-trigger" @click="openMenu" v-show="!navStore.isOpen"><img src="/illustrations/bunny.png" /></button>
 			<ul class="menu" ref="menu" v-show="navStore.isOpen">
-				<li>
+				<li @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
 					<ul class="sub" v-show="activeSubMenu === 1">
 						<li v-for="category in data.productCategories" :key="category._id">
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
 						</li>
 						<li v-if="data.productCollections?.length">
-							<button @click="activeSubSubMenu ? activeSubSubMenu = null : activeSubSubMenu = 1">Collections</button>
+							<button @mouseover="activeSubSubMenu ? activeSubSubMenu = null : activeSubSubMenu = 1">Collections</button>
 							<ul class="sub" v-show="activeSubSubMenu === 1">
 								<li v-for="collection in data.productCollections" :key="collection._id">
 									<NuxtLink :to="useInternalLinkUrl(collection)">{{ collection.title }}</NuxtLink>
@@ -18,17 +18,17 @@
 							</ul>
 						</li>
 					</ul>
-					<button @click="activeSubMenu = 1">Jewellery</button>
+					<button @mouseover="activeSubMenu = 1">Jewellery</button>
 				</li>
-				<li>
+				<li @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
 					<ul class="sub" v-show="activeSubMenu === 2">
 						<li v-for="category in data.artworkCategories" :key="category._id">
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
 						</li>
 					</ul>
-					<button @click="activeSubMenu = 2">Artworks</button>
+					<button @mouseover="activeSubMenu = 2">Artworks</button>
 				</li>
-				<li>
+				<li @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
 					<ul class="sub" v-show="activeSubMenu === 3">
 						<li><NuxtLink :to="useInternalLinkUrl(data.aboutPage)">{{ data.aboutPage.title }}</NuxtLink></li>
 						<li><NuxtLink :to="useInternalLinkUrl(data.stockistsPage)">{{ data.stockistsPage.title }}</NuxtLink></li>
@@ -37,7 +37,7 @@
 							<NuxtLink :to="useInternalLinkUrl(page)">{{ page.title }}</NuxtLink>
 						</li>
 					</ul>
-					<button @click="activeSubMenu = 3">About</button>
+					<button @mouseover="activeSubMenu = 3">About</button>
 				</li>
 			</ul>
 		</div>
@@ -157,6 +157,11 @@ onClickOutside(navRef, () => {
 	}
 })
 
+watch(() => route.path, () => {
+	activeSubMenu.value = null
+	activeSubSubMenu.value = null
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -188,6 +193,9 @@ header {
 		bottom: 50px;
 		left: 50px;
 		@include max-width-grid-columns(14, 5, '20px', 'width', '-70px');
+		@include media('desktop-large') {
+			//@include max-width-grid-columns(14, 4, '20px', 'width', '-70px');
+		}
 		@include media('laptop') {
 			@include max-width-grid-columns(14, 6, '20px', 'width', '-70px');
 		}

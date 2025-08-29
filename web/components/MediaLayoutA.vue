@@ -83,7 +83,7 @@ div.media-layout {
 		position: sticky;
     	top: 0;
 		display: grid;
-		row-gap: 1.5em;
+		row-gap: 1em;
 		align-items: flex-end;
 		align-content: flex-end;
 		padding-bottom: 50px;
@@ -94,7 +94,7 @@ div.media-layout {
 		}
 		&.--has-text {
 			:deep(div.text) {
-				padding-left: 30px;
+				padding-left: 40px;
 			}
 		}
 		h3.title {

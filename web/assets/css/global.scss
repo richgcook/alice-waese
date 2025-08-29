@@ -52,7 +52,7 @@
 }
 @include media('desktop-large') {
 	:root { 
-		--font-size-base: 13px;
+		--font-size-base: 14px;
 		--font-size-sm: 11px;
 	}
 }
@@ -81,6 +81,7 @@ body {
 	font-family: var(--font-primary);
 	font-size: var(--font-size-base);
 	font-weight: 400;
+	letter-spacing: 0.04em;
 	background-color: var(--color-bg);
 	color: black;
 	line-height: 1.3;

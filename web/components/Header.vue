@@ -1,7 +1,7 @@
 <template>
 	<header ref="header">
 		<h1 class="logo" v-show="showLogo"><NuxtLink to="/"><Logo /></NuxtLink></h1>
-		<div class="nav" ref="nav">
+		<div class="nav" ref="nav" @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
 			<button class="menu-trigger" @click="openMenu" v-show="!navStore.isOpen"><img src="/illustrations/bunny.png" /></button>
 			<ul class="menu" ref="menu" v-show="navStore.isOpen">
 				<li @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
@@ -135,7 +135,7 @@ const openMenu = () => {
 					offsetY: 0
 				},
 				onComplete() {
-				navStore.setOpen()
+					navStore.setOpen()
 				}
 			})
       		return

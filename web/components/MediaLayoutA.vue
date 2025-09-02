@@ -132,9 +132,11 @@ div.media-layout {
 			text-align: center;
 		}
 		&.--has-text {
-			text-align: left;
-			max-width: 80%;
-    		margin: 0 auto;
+			@include media('phone') {
+				max-width: 80%;
+				margin: 0 auto;
+				text-align: left;
+			}
 			:deep(div.text) {
 				padding-left: 50px;
 			}

@@ -18,7 +18,7 @@ const props = defineProps({
 	},
 	left: {
 		type: Object,
-		default: () => ({ min: 100, max: 200 })
+		default: () => ({ min: 200, max: 250 })
 	},
 	topUnit: {
 		type: String,
@@ -44,15 +44,15 @@ const randomLeft  = ref('auto')
 
 const width = computed(() => {
 	if (randomIllustration.value == 'eye') {
-		return `50px`
+		return `40px`
 	} else if (randomIllustration.value == 'hand') {
-		return `80px`
+		return `40px`
 	} else if (randomIllustration.value == 'horse') {
-		return `42px`
+		return `40px`
 	} else if (randomIllustration.value == 'spider') {
-		return `68px`
+		return `40px`
 	} else {
-		return '43px'
+		return '40px'
 	}
 })
 
@@ -88,7 +88,7 @@ onMounted(async () => {
 		y: () => window.innerHeight * -0.8,
 		ease: 'none',
 		scrollTrigger: {
-			 start: startPos,
+			start: startPos,
       		end: endPos,
 			scrub: true,
 			invalidateOnRefresh: true,

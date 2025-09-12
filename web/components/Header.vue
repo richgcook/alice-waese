@@ -1,9 +1,9 @@
 <template>
 	<header ref="header">
 		<h1 class="logo" v-show="showLogo"><NuxtLink to="/"><Logo /></NuxtLink></h1>
-		<div class="nav" :class="{ '--open': navStore.isOpen }" @mouseleave="activeSubMenu = null; activeSubSubMenu = null" ref="nav">
+		<div class="nav" :class="{ '--open': navStore.isOpen }" ref="nav">
 			<button class="menu-trigger" @click="openMenu"><img src="/illustrations/bunny.png" /></button>
-			<ul class="menu" ref="menu" v-show="navStore.isOpen">
+			<ul class="menu" ref="menu" v-show="navStore.isOpen" @mouseleave="navMouseLeave">
 				<li @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
 					<ul class="sub" v-show="activeSubMenu === 1">
 						<li v-for="category in data.productCategories" :key="category._id">
@@ -120,17 +120,20 @@ const invertAssets = computed(() => {
 
 gsap.registerPlugin(ScrollToPlugin)
 
+// Toggle on phone
 const openMenu = () => {
 
-	// Toggle on phone
-	if (useMediaQuery('(max-width: 767px)')) {
+	if (window.matchMedia('(max-width: 767px)').matches) {
+		console.log('test 2')
 		if (navStore.isOpen) {
 			navStore.setClose()
 		} else {
 			navStore.setOpen()
 		}
 	} else {
+		console.log('test 4')
 		if (route.name === 'about') {
+			console.log('test 5')
 			const doc = document.documentElement
 			const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 2
 			const hasScrolled = window.scrollY > 2 || atBottom
@@ -153,6 +156,13 @@ const openMenu = () => {
 		}
 		navStore.setOpen()
 	}
+}
+
+const navMouseLeave = () => {
+	if (!navStore.isOpen) return
+	activeSubMenu.value = null
+	activeSubMenu.value = null
+	navStore.setClose()
 }
 
 const activeSubMenu = ref(null)

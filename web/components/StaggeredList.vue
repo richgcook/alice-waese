@@ -1,6 +1,6 @@
 <template>
 	<ul class="staggered-list" :data-layout="layoutVersion">
-		<li v-for="(item, index) in items" :key="index" :class="{ '--has-other': item.other }">
+		<li v-for="(item, index) in items" :key="index">
 			<NuxtLink :to="item.link" target="_blank">
 				<span class="name">{{ item.name }}</span>
 				<span class="other" v-if="item.other"><span>&mdash;{{ item.other }}</span></span>
@@ -31,7 +31,7 @@ ul.staggered-list {
 	margin: 25px 0 120px 0;
 	@include media('phone') {
 		grid-template-columns: 1fr;
-		row-gap: 30px;
+		row-gap: 1em;
 		padding: 0 35px;
 	}
 	&[data-layout="a"] {
@@ -48,6 +48,13 @@ ul.staggered-list {
 			&:nth-child(12n + 10) { grid-column: 3 / -1; }
 			&:nth-child(12n + 11) { grid-column: 1 / -1; text-align: right; }
 			&:nth-child(12n + 12) { grid-column: 3 / -1; }
+
+			&:nth-child(odd) {
+				text-align: left !important;
+			}
+			&:nth-child(even) {
+				text-align: right !important;
+			}
 		}
 	}
 	&[data-layout="b"] {
@@ -72,6 +79,17 @@ ul.staggered-list {
 			&:nth-child(20n + 18) { grid-column: 6 / -1; }
 			&:nth-child(20n + 19) { grid-column: 1 / -1; text-align: right; }
 			&:nth-child(20n + 20) { grid-column: 6 / -1; }
+
+			&:nth-child(odd) {
+				@include media('phone') {
+					text-align: left !important;
+				}
+			}
+			&:nth-child(even) {
+				@include media('phone') {
+					text-align: right !important;
+				}
+			}
 		}
 	}
 	li {
@@ -83,10 +101,6 @@ ul.staggered-list {
 		letter-spacing: -0.03em;
 		@include media('phone') {
 			grid-column: 1 / -1 !important;
-		}
-		&.--has-other {
-			//grid-column: 1 / -1 !important;
-			//text-align: left !important;
 		}
 		a {
 			grid-column: 1 / -1;
@@ -106,10 +120,7 @@ ul.staggered-list {
 					grid-template-columns: 1fr;
 				}
 				span {
-					grid-column: 3 / -1;
-					@include media('phone') {
-						grid-column: 1 / -1;
-					}
+					grid-column: 1 / -1;
 				}
 			}
 		}

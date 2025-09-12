@@ -1,7 +1,7 @@
 <template>
 	<div class="masonry-layout" :data-context="context">
 		<div class="column" v-for="(col, c) in columns" :key="c">
-			<div v-for="item in col" :key="item.item?._id" class="item">
+			<div v-for="(item, i) in col" :key="item.item?._id" class="item" :class="phoneItemPlacementClass(item, c, i)">
 				<NuxtLink :to="useInternalLinkUrl(item.item)" class="media">
 					<video 
 						playsinline autoplay loop muted 
@@ -69,6 +69,36 @@ const primaryMedia = (item) => {
 
 const { columns } = useMasonryColumns(props.items, 2)
 
+// Only these sizes get placement classes for phone
+const placementPattern = ['--left', '--right', '--center']
+// Cycle pattern for qualifying items
+const qualifySet = new Set(['small', 'medium'])
+
+const itemPlacementByIndex = computed(() => {
+
+	const cols = columns.value ?? []
+	const result = cols.map(col => Array((col ?? []).length).fill(''))
+
+	let seq = 0
+	cols.forEach((col, c) => {
+		col.forEach((item, i) => {
+			const size = item?.settings?.size
+			if (qualifySet.has(size)) {
+				result[c][i] = placementPattern[seq % placementPattern.length]
+				seq++
+			}
+		})
+	})
+	return result
+})
+
+const phoneItemPlacementClass = (item, c, i) => {
+	const size = item?.settings?.size
+	if (!qualifySet.has(size)) return []
+	return [itemPlacementByIndex.value[c]?.[i] ?? '']
+}
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -82,6 +112,7 @@ div.masonry-layout {
 	margin: 0 auto 120px auto;
 	@include media('phone') {
 		flex-flow: column nowrap;
+		row-gap: calc(27.78vh/2);
 		padding: 0;
 	}
 	&[data-context="collections"] {
@@ -91,7 +122,10 @@ div.masonry-layout {
 					a.media {
 						display: flex;
 						flex-flow: row nowrap;
-						justify-content: end;
+						justify-content: flex-end;
+						@include media('phone') {
+							justify-content: start;
+						}
 					}
 				}
 			}
@@ -106,11 +140,62 @@ div.masonry-layout {
 					}
 				}
 			}
+			div.item {
+				&.--center {
+					a.media {
+						@include media('phone') {
+							display: flex;
+							flex-flow: row nowrap;
+							justify-content: center;
+						}
+					}
+				}
+				&.--right {
+					a.media {
+						@include media('phone') {
+							display: flex;
+							flex-flow: row nowrap;
+							justify-content: flex-end;
+						}
+					}
+				}
+			}
 		}
 	}
 	&:not([data-context="collections"]) {
 		div.column {
 			div.item {
+				&.--left {
+					a.media {
+						:deep(div.image) {
+							&.--small,
+							&.--medium {
+								img {
+									@include media('phone') {
+										left: 0;
+										transform: translate(0, -50%);
+									}
+								}
+							}
+						}
+					}
+				}
+				&.--right {
+					a.media {
+						:deep(div.image) {
+							&.--small,
+							&.--medium {
+								img {
+									@include media('phone') {
+										left: auto;
+										right: 0;
+										transform: translate(0, -50%);
+									}
+								}
+							}
+						}
+					}
+				}
 				a.media {
 					:deep(div.image) {
 						&.--medium {
@@ -147,7 +232,8 @@ div.masonry-layout {
 		row-gap: 27.78vh;  /* ((250 distance / 900 viewport height) * 100) */
 		position: relative;
 		@include media('phone') {
-			margin-top: calc(27.78vh/2);
+			//margin-top: calc(27.78vh/2);
+			row-gap: calc(27.78vh/2);
 		}
 		@include media('phone') {
 			flex: none;

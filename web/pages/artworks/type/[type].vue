@@ -1,7 +1,12 @@
 <template>
 	<div class="page-layout">
 		<MasonryLayout :items="data.type.artworks" v-if="data.type.artworks?.length" />
-		<RandomIllustrationMark />
+		<RandomIllustrationMark 
+			v-for="i in illustrationCount"
+      		:key="i"
+			:top="illustrationCount === 2 ? (i === 2 ? { min: 70, max: 90 } : { min: 30, max: 50 }) : undefined"
+      		:side="i === 2 ? 'left' : 'right'" 
+		/>
 	</div>
 </template>
 
@@ -43,6 +48,11 @@ useHead({
 	bodyAttrs: {
 		class: bodyClass.value
 	}
+})
+
+const { count: illustrationCount } = useIllustrationCountByItems(data?.value.type.artworks, {
+	oneAbove: 8,
+	twoAbove: 30,
 })
 
 </script>

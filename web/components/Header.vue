@@ -289,7 +289,7 @@ header {
 				background-color: var(--color-bg);
 				color: black !important;
 				padding: 35px;
-				gap: 0.8em 0;
+				gap: 2.5em 0;
 			}
 			li {
 				display: flex;

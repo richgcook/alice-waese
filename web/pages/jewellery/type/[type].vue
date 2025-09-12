@@ -1,8 +1,14 @@
 <template>
-<div class="page-layout">
+	<div class="page-layout" ref="pageRoot">
 		<MasonryLayout :items="data.type.jewellery" v-if="data.type.jewellery?.length" />
-		<RandomIllustrationMark />
-	</div></template>
+    	<RandomIllustrationMark 
+			v-for="(n, i) in illustrationCount"
+      		:key="i"
+			:top="illustrationCount === 2 ? (i === 1 ? { min: 70, max: 90 } : { min: 30, max: 50 }) : undefined"
+      		:side="i === 1 ? 'left' : 'right'" 
+		/>
+	</div>
+</template>
 
 <script setup>
  
@@ -42,6 +48,14 @@ useHead({
 	bodyAttrs: {
 		class: bodyClass.value
 	}
+})
+
+const pageRoot = useTemplateRef('pageRoot')
+
+const { count: illustrationCount } = useIllustrationCount({
+	twoVh: 2, // < 200vh → 0
+	fourVh: 4, // 200–400vh → 1
+	observe: () => pageRoot.value
 })
 
 </script>

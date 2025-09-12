@@ -16,10 +16,18 @@ const props = defineProps({
 		type: Object,
 		default: () => ({ min: 100, max: 200 })
 	},
+	left: {
+		type: Object,
+		default: () => ({ min: 100, max: 200 })
+	},
 	topUnit: {
 		type: String,
 		default: '%'
-	}
+	},
+	side: { 
+		type: String, 
+		default: 'right' 
+	},
 })
 
 const illustrations = ['eye', 'hand', 'horse', 'spider']
@@ -31,7 +39,8 @@ const uid = useId()
 const randomIllustration = useState(`illu-${uid}-name`, () => illustrations[randInt(0, illustrations.length - 1)])
 
 const randomTop = ref('0')
-const randomRight = ref('0')
+const randomRight = ref('auto')
+const randomLeft  = ref('auto')
 
 const width = computed(() => {
 	if (randomIllustration.value == 'eye') {
@@ -53,22 +62,38 @@ gsap.registerPlugin(ScrollTrigger)
 
 const illustration = useTemplateRef('illustration')
 
-onMounted(() => {
+onMounted(async () => {
+
 	randomTop.value = `${randInt(props.top.min, props.top.max)}${props.topUnit}`
-	randomRight.value = `${randInt(props.right.min, props.right.max)}px`
+
+	if (props.side === 'left') {
+		randomLeft.value  = `${randInt(props.left.min, props.left.max)}px`
+		randomRight.value = 'auto'
+	} else {
+		randomRight.value = `${randInt(props.right.min, props.right.max)}px`
+		randomLeft.value  = 'auto'
+	}
 
 	ready.value = true
 
+	await nextTick() // ensure styles are applied so measurements are correct
+
+	const pageY = () => (window.pageYOffset || document.documentElement.scrollTop || 0)
+	const absTop = () => illustration.value.getBoundingClientRect().top + pageY()
+	const startPos = () => absTop() - window.innerHeight // when element's top hits bottom of viewport
+	const endPos   = () => startPos() + window.innerHeight // run for one viewport height
+
+
 	gsap.to(illustration.value, {
-		y: () => window.innerHeight * -0.8,   // function evaluated on refresh
+		y: () => window.innerHeight * -0.8,
 		ease: 'none',
 		scrollTrigger: {
-			trigger: illustration.value,
-			start: "0 0",  
-			end: "+=500", 
+			 start: startPos,
+      		end: endPos,
 			scrub: true,
 			invalidateOnRefresh: true,
-			immediateRender: false // also helps avoid initial snap
+			immediateRender: false,
+			//markers: true,
 		}
 	})
 
@@ -82,6 +107,7 @@ img {
 	position: absolute;
 	top: v-bind(randomTop);
 	right: v-bind(randomRight);
+	left:  v-bind(randomLeft);
 	width: v-bind(width);
 	pointer-events: none;
 }

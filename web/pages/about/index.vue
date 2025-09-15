@@ -135,6 +135,7 @@ h2.statement {
 						display: block;
 					}
 					&:nth-of-type(2) {
+						font-feature-settings: "ss04";
 						@media (orientation: portrait) {
 							text-align: right;
 						}

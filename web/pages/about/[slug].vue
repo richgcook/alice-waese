@@ -9,9 +9,9 @@
 		</div>
 		<div class="extra" v-if="data.pageA.colophon?.length">
 			<RichText :blocks="data.pageA.colophon" />
-			<RandomIllustrationMark :top="{ min: 30, max: 65 }" :topPhone="{ min: 10, max: 50 }" />
+			<RandomIllustrationMark :top="{ min: 30, max: 65 }" :topPhone="{ min: 10, max: 50 }" :onlyShowOnPhone="true" />
 		</div>
-		<RandomIllustrationMark :top="{ min: 30, max: 65 }" :topUnit="`vh`" :hideOnPhone="true" />
+		<RandomIllustrationMark :top="{ min: 50, max: 65 }" :topUnit="`vh`" :hideOnPhone="true" :immediateStart="true" />
 	</div>
 </template>
 

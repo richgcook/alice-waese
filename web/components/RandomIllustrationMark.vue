@@ -35,7 +35,15 @@ const props = defineProps({
 	hideOnPhone: {
 		type: Boolean,
 		default: false,
-	}
+	},
+	onlyShowOnPhone: {
+		type: Boolean,
+		default: false,
+	},
+	immediateStart: { 
+		type: Boolean, 
+		default: false 
+	},
 })
 
 const illustrations = ['eye', 'hand', 'horse', 'spider']
@@ -57,7 +65,7 @@ const width = computed(() => {
 	} else if (randomIllustration.value == 'hand') {
 		return `40px`
 	} else if (randomIllustration.value == 'horse') {
-		return `40px`
+		return `28px`
 	} else if (randomIllustration.value == 'spider') {
 		return `40px`
 	} else {
@@ -68,6 +76,11 @@ const width = computed(() => {
 const hideOnPhone = computed(() => {
 	if (props.hideOnPhone) return `none`
 	return `initial`
+})
+
+const onlyShowOnPhone = computed(() => {
+	if (props.onlyShowOnPhone) return `none`
+	return `block`
 })
 
 const ready = ref(false)
@@ -98,16 +111,22 @@ onMounted(async () => {
 	const startPos = () => absTop() - window.innerHeight // when element's top hits bottom of viewport
 	const endPos   = () => startPos() + window.innerHeight // run for one viewport height
 
+	const stConfig = props.immediateStart
+    // Start right away and run for 1 viewport height.
+    // Use ScrollTrigger.scroll() so it also works if the page loads mid-scroll.
+    ? { start: () => '0 0', end: () => `+=${window.innerHeight}` }
+    // Start when element enters viewport (your original numeric logic)
+    : { start: startPos, end: endPos }
+
+
 	gsap.to(illustration.value, {
 		y: () => window.innerHeight * -0.8,
 		ease: 'none',
 		scrollTrigger: {
-			start: startPos,
-      		end: endPos,
+			...stConfig,
 			scrub: true,
 			invalidateOnRefresh: true,
 			immediateRender: false,
-			//markers: true,
 		}
 	})
 
@@ -118,6 +137,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 
 img {
+	display: v-bind('onlyShowOnPhone');
 	position: absolute;
 	top: v-bind(randomTop);
 	right: v-bind(randomRight);

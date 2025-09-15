@@ -12,6 +12,10 @@ const props = defineProps({
 		type: Object,
 		default: () => ({ min: 30, max: 90 })
 	},
+	topPhone: {
+		type: Object,
+		default: () => ({ min: 30, max: 90 })
+	},
 	right: {
 		type: Object,
 		default: () => ({ min: 100, max: 200 })
@@ -28,6 +32,10 @@ const props = defineProps({
 		type: String, 
 		default: 'right' 
 	},
+	hideOnPhone: {
+		type: Boolean,
+		default: false,
+	}
 })
 
 const illustrations = ['eye', 'hand', 'horse', 'spider']
@@ -39,6 +47,7 @@ const uid = useId()
 const randomIllustration = useState(`illu-${uid}-name`, () => illustrations[randInt(0, illustrations.length - 1)])
 
 const randomTop = ref('0')
+const randomTopPhone = ref('0')
 const randomRight = ref('auto')
 const randomLeft  = ref('auto')
 
@@ -56,6 +65,11 @@ const width = computed(() => {
 	}
 })
 
+const hideOnPhone = computed(() => {
+	if (props.hideOnPhone) return `none`
+	return `initial`
+})
+
 const ready = ref(false)
 
 gsap.registerPlugin(ScrollTrigger)
@@ -65,6 +79,7 @@ const illustration = useTemplateRef('illustration')
 onMounted(async () => {
 
 	randomTop.value = `${randInt(props.top.min, props.top.max)}${props.topUnit}`
+	randomTopPhone.value = `${randInt(props.topPhone.min, props.topPhone.max)}${props.topUnit}`
 
 	if (props.side === 'left') {
 		randomLeft.value  = `${randInt(props.left.min, props.left.max)}px`
@@ -82,7 +97,6 @@ onMounted(async () => {
 	const absTop = () => illustration.value.getBoundingClientRect().top + pageY()
 	const startPos = () => absTop() - window.innerHeight // when element's top hits bottom of viewport
 	const endPos   = () => startPos() + window.innerHeight // run for one viewport height
-
 
 	gsap.to(illustration.value, {
 		y: () => window.innerHeight * -0.8,
@@ -110,6 +124,10 @@ img {
 	left:  v-bind(randomLeft);
 	width: v-bind(width);
 	pointer-events: none;
+	@include media('phone') {
+		display: v-bind('hideOnPhone');
+		top: v-bind(randomTopPhone);
+	}
 }
 
 </style>

@@ -41,8 +41,10 @@ div.media-layout {
 	position: relative;
 	@include media('phone') {
 		grid-template-columns: 1fr;
+		grid-template-rows: 1fr auto;
 		row-gap: 35px;
-		align-items: end;
+		//align-items: end;
+		padding: calc(85px + 35px) 0;
 		height: 100vh;
 		@supports (height: 100dvh) {
 			height: 100dvh;
@@ -78,9 +80,9 @@ div.media-layout {
 	}
 	div.media {
 		@include media('phone') {
-			aspect-ratio: 2 / 3;
+			//aspect-ratio: 2 / 3;
 			position: relative;
-			overflow: hidden;
+			overflow-y: auto;
 		}
 		div.item {
 			position: sticky;
@@ -104,9 +106,6 @@ div.media-layout {
 					height: 100%;
 					width: 100%;
 					object-fit: cover;
-					@include media('phone') {
-						object-fit: contain;
-					}
 				}
 			}
 		}
@@ -129,12 +128,12 @@ div.media-layout {
 			position: relative;
 			height: auto;
 			padding: 0 35px;
-			text-align: center;
+			//text-align: center;
 		}
 		&.--has-text {
 			@include media('phone') {
-				max-width: 80%;
-				margin: 0 auto;
+				//max-width: 80%;
+				//margin: 0 auto;
 				text-align: left;
 			}
 			:deep(div.text) {

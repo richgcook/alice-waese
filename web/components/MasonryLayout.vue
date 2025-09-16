@@ -211,7 +211,7 @@ div.masonry-layout {
 						&.--small {
 							width: 100%;
 							img {
-								width: 50%;
+								width: 60%;
 								top: 50%;
 								left: 50%;
 								transform: translate(-50%, -50%);
@@ -261,7 +261,7 @@ div.masonry-layout {
 						width: 75%;
 					}
 					&.--small {
-						width: 50%;
+						width: 60%;
 					}
 				}
 			}

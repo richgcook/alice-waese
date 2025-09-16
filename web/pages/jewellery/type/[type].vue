@@ -51,7 +51,7 @@ useHead({
 })
 
 const { count: illustrationCount } = useIllustrationCountByItems(data?.value.type.jewellery, {
-	oneAbove: 8,
+	oneAbove: 5,
 	twoAbove: 30,
 })
 

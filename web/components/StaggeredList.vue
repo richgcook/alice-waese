@@ -31,7 +31,7 @@ ul.staggered-list {
 	margin: 25px 0 120px 0;
 	@include media('phone') {
 		grid-template-columns: 1fr;
-		row-gap: 1em;
+		row-gap: 3em;
 		padding: 0 35px;
 	}
 	&[data-layout="a"] {
@@ -50,27 +50,31 @@ ul.staggered-list {
 			&:nth-child(12n + 12) { grid-column: 3 / -1; }
 
 			&:nth-child(odd) {
-				text-align: left !important;
+				@include media('phone') {
+					text-align: right !important;
+				}
 			}
 			&:nth-child(even) {
-				text-align: right !important;
+				@include media('phone') {
+					text-align: left !important;
+				}
 			}
 		}
 	}
 	&[data-layout="b"] {
 		li {
-			&:nth-child(20n + 1) { grid-column: 1 / -1; text-align: right; }
+			&:nth-child(20n + 1) { grid-column: 6 / -1; }
 			&:nth-child(20n + 2) { grid-column: 3 / -1; }
 			&:nth-child(20n + 3) { grid-column: 1 / -1; }
 			&:nth-child(20n + 4) { grid-column: 4 / -1; }
 			&:nth-child(20n + 5) { grid-column: 6 / -1; }
-			&:nth-child(20n + 6) { grid-column: 1 / -1; }
+			&:nth-child(20n + 6) { grid-column: 1 / -1; text-align: right; }
 			&:nth-child(20n + 7) { grid-column: 5 / -1; }
 			&:nth-child(20n + 8) { grid-column: 7 / -1; }
 			&:nth-child(20n + 9) { grid-column: 4 / -1; }
 			&:nth-child(20n + 10) { grid-column: 1 / -1; }
 			&:nth-child(20n + 11) { grid-column: 5 / -1; }
-			&:nth-child(20n + 12) { grid-column: 1 / -1; text-align: right; }
+			&:nth-child(20n + 12) { grid-column: 8 / -1; }
 			&:nth-child(20n + 13) { grid-column: 1 / -1; text-align: right; }
 			&:nth-child(20n + 14) { grid-column: 4 / -1; }
 			&:nth-child(20n + 15) { grid-column: 1 / -1; text-align: right; }
@@ -82,12 +86,12 @@ ul.staggered-list {
 
 			&:nth-child(odd) {
 				@include media('phone') {
-					text-align: left !important;
+					text-align: right !important;
 				}
 			}
 			&:nth-child(even) {
 				@include media('phone') {
-					text-align: right !important;
+					text-align: left !important;
 				}
 			}
 		}
@@ -100,6 +104,7 @@ ul.staggered-list {
 		line-height: 1.2em;
 		letter-spacing: -0.03em;
 		@include media('phone') {
+			line-height: 1.1em;
 			grid-column: 1 / -1 !important;
 		}
 		a {

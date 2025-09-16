@@ -61,13 +61,13 @@ const randomLeft  = ref('auto')
 
 const width = computed(() => {
 	if (randomIllustration.value == 'eye') {
-		return `40px`
+		return `38px`
 	} else if (randomIllustration.value == 'hand') {
-		return `40px`
+		return `60px`
 	} else if (randomIllustration.value == 'horse') {
-		return `28px`
+		return `35px`
 	} else if (randomIllustration.value == 'spider') {
-		return `40px`
+		return `43px`
 	} else {
 		return '40px'
 	}

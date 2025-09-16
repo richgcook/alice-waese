@@ -19,7 +19,7 @@
 			<div>is an</div>
 			<div>artist</div>
 			<div>based</div>
-			<div><span>in</span> <span>New</span></div>
+			<div>in New</div>
 			<div>York.</div>
 		</h2>
 
@@ -72,7 +72,7 @@ div.container {
 			min-height: calc(100dvh + 0.265em);
 		}
 		@include media('phone') {
-			row-gap: 35px;
+			row-gap: 12px;
 		}
 	}
 }
@@ -116,11 +116,13 @@ h2.statement {
 			&:nth-of-type(4) {
 				text-align: right;
 			}
-			&:nth-of-type(6) {
-				display: flex;
-				flex-flow: row nowrap;
-				justify-content: space-between;
+			&:nth-of-type(2) {
+				font-feature-settings: "ss04";
 			}
+			&:nth-of-type(7) {
+				text-align: right;
+			}
+
 		}
 	}
 	&.--landscape {

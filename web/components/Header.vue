@@ -1,10 +1,10 @@
 <template>
 	<header ref="header">
 		<h1 class="logo" v-show="showLogo"><NuxtLink to="/"><Logo /></NuxtLink></h1>
-		<div class="nav" :class="{ '--open': navStore.isOpen }" ref="nav">
-			<button class="menu-trigger" @click="openMenu"><img src="/illustrations/bunny.png" /></button>
-			<ul class="menu" ref="menu" v-show="navStore.isOpen" @mouseleave="navMouseLeave">
-				<li @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
+		<div class="nav" :class="{ '--open': navStore.isOpen }" ref="nav" @pointerenter="onEnter" @pointerleave="onLeave">
+			<button class="menu-trigger" @click="onTriggerClick"><img src="/illustrations/bunny.png" /></button>
+			<ul class="menu" ref="menu" v-show="navStore.isOpen">
+				<li>
 					<ul class="sub" v-show="activeSubMenu === 1">
 						<li v-for="category in data.productCategories" :key="category._id">
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
@@ -20,7 +20,7 @@
 					</ul>
 					<button @mouseover="activeSubMenu = 1">Jewellery</button>
 				</li>
-				<li @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
+				<li>
 					<ul class="sub" v-show="activeSubMenu === 2">
 						<li v-for="category in data.artworkCategories" :key="category._id">
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
@@ -28,7 +28,7 @@
 					</ul>
 					<button @mouseover="activeSubMenu = 2">Artworks</button>
 				</li>
-				<li @mouseleave="activeSubMenu = null; activeSubSubMenu = null">
+				<li>
 					<ul class="sub" v-show="activeSubMenu === 3">
 						<li><NuxtLink :to="useInternalLinkUrl(data.aboutPage)">{{ data.aboutPage.title }}</NuxtLink></li>
 						<li><NuxtLink :to="useInternalLinkUrl(data.stockistsPage)">{{ data.stockistsPage.title }}</NuxtLink></li>
@@ -126,9 +126,11 @@ const openMenu = () => {
 	if (window.matchMedia('(max-width: 767px)').matches) {
 		console.log('test 2')
 		if (navStore.isOpen) {
+			console.log('test 2.5')
 			navStore.setClose()
 		} else {
 			navStore.setOpen()
+			console.log('test 3')
 		}
 	} else {
 		console.log('test 4')
@@ -142,7 +144,7 @@ const openMenu = () => {
 				const { height } = useWindowSize()
 
 				gsap.to(window, { 
-					duration: 0.8,
+					duration: 0.3,
 					scrollTo: { 
 						y: doc.scrollHeight - height.value,
 						offsetY: 0
@@ -158,11 +160,39 @@ const openMenu = () => {
 	}
 }
 
-const navMouseLeave = () => {
+const isHoverCapable = useMediaQuery('(hover: hover) and (pointer: fine)')
+
+let closeTimer
+
+const openNav  = () => navStore.setOpen()
+const closeNav = () => {
 	if (!navStore.isOpen) return
 	activeSubMenu.value = null
-	activeSubMenu.value = null
+	activeSubSubMenu.value = null
 	navStore.setClose()
+}
+
+const onTriggerClick = (e) => {
+  // Phone/tablet (no reliable hover): toggle on click
+  if (!isHoverCapable.value) {
+    e.stopPropagation() // prevent bubbling that might trigger outside/leave logic
+    navStore.isOpen ? closeNav() : openNav()
+  }
+  // Desktop (hover): clicking trigger is optional; you can ignore or also open:
+  else {
+    openNav()
+  }
+}
+
+const onEnter = () => {
+	if (closeTimer) clearTimeout(closeTimer)
+}
+
+const onLeave = (e) => {
+	if (!isHoverCapable.value) return
+	const to = e.relatedTarget
+	if (to && navRef.value?.contains(to)) return
+	closeTimer = setTimeout(closeNav, 120)
 }
 
 const activeSubMenu = ref(null)
@@ -241,24 +271,20 @@ header {
 	}
 	div.nav {
 		position: fixed;
-		bottom: 50px;
-		left: 50px;
-		@include max-width-grid-columns(14, 5, '20px', 'width', '-70px');
-		@include media('laptop') {
-			@include max-width-grid-columns(14, 6, '20px', 'width', '-70px');
-		}
-		@include media('tablet-landscape') {
-			@include max-width-grid-columns(14, 6, '20px', 'width', '-70px');
-		}
+		bottom: 0;
+		left: 0;
+		padding: 0 0 50px 50px;
+		width: 445px;
 		@include media('phone') {
-			bottom: 35px;
-			left: 35px;
+			padding: 0 0 35px 35px;
 		}
 		&.--open {
 			button.menu-trigger {
-				display: none;
+				opacity: 0;
+				pointer-events: none;
 				@include media('phone') {
-					display: inline-flex;
+					opacity: 1;
+					pointer-events: all;
 				}
 				img {
 					@include media('phone') {
@@ -283,7 +309,7 @@ header {
 		ul.menu {
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
-			gap: 0.215em 20px;
+			gap: 0.215em 0;
 			justify-content: space-between;
 			align-items: flex-end;
 			color: v-bind(textAndAssetColor);

@@ -1,6 +1,6 @@
 <template>
 	<ul class="staggered-list" :data-layout="layoutVersion">
-		<li v-for="(item, index) in items" :key="index">
+		<li v-for="(item, index) in items" :key="index" :class="{ '--has-other': item.other }">
 			<NuxtLink :to="item.link" target="_blank">
 				<span class="name">{{ item.name }}</span>
 				<span class="other" v-if="item.other"><span>&mdash;{{ item.other }}</span></span>
@@ -107,25 +107,35 @@ ul.staggered-list {
 			line-height: 1.1em;
 			grid-column: 1 / -1 !important;
 		}
+		&.--has-other {
+			a {
+				@include media('phone') {
+					display: block;
+				}
+				span.other {
+					@include media('phone') {
+						display: inline;
+					}
+					&:before {
+						@include media('phone') {
+							content: ' ';
+						}
+					}
+				}
+			}
+		}
 		a {
 			grid-column: 1 / -1;
-			display: grid;
-			grid-template-columns: subgrid;
 			&:hover {
 				color: var(--color-gold);
 			}
 			span.name {
-				grid-column: 1 / -1;
+				
 			}
 			span.other {
-				grid-column: 1 / -1;
-				display: grid;
-				grid-template-columns: repeat(14, 1fr);
-				@include media('phone') {
-					grid-template-columns: 1fr;
-				}
+				
 				span {
-					grid-column: 1 / -1;
+					
 				}
 			}
 		}

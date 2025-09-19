@@ -27,6 +27,8 @@ import emblaCarouselVue from 'embla-carousel-vue'
 import Autoplay from 'embla-carousel-autoplay'
 import Fade from 'embla-carousel-fade'
 
+import { useMediaQuery } from '@vueuse/core'
+
 const props = defineProps({
 	slides: Array,
 })
@@ -54,18 +56,31 @@ const themeModeStore = useThemeModeStore()
 const scrollSnaps = ref([])
 const selectedScrollSnap = ref(0)
 
+const isPhone = useMediaQuery('(max-width: 768px)')
+
+const slideTheme = computed(() => {
+	return props.slides[selectedScrollSnap.value]?.settings?.themeMode ?? 'light'
+})
+
+const effectiveTheme = computed(() => {
+	return isPhone.value ? 'dark' : slideTheme.value
+})
+
 const onInit = () => {
 	scrollSnaps.value = embla.value.scrollSnapList()
 	selectedScrollSnap.value = embla.value.selectedScrollSnap()
-	console.log(props.slides[selectedScrollSnap.value].settings?.themeMode)
-	themeModeStore.setMode(props.slides[selectedScrollSnap.value].settings?.themeMode || 'light')
+	themeModeStore.setMode(effectiveTheme.value)
 }
 
 const onSelect = () => {
 	scrollSnaps.value = embla.value.scrollSnapList()
 	selectedScrollSnap.value = embla.value.selectedScrollSnap()
-	themeModeStore.setMode(props.slides[selectedScrollSnap.value].settings?.themeMode || 'light')
+	themeModeStore.setMode(effectiveTheme.value)
 }
+
+watch(effectiveTheme, () => {
+	themeModeStore.setMode(effectiveTheme.value)
+})
 
 onMounted(() => {
 	if (embla.value) {

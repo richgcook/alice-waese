@@ -170,12 +170,7 @@ div.masonry-layout {
 						:deep(div.image) {
 							&.--small,
 							&.--medium {
-								img {
-									@include media('phone') {
-										left: 0;
-										transform: translate(0, -50%);
-									}
-								}
+								margin: 0;
 							}
 						}
 					}
@@ -185,12 +180,18 @@ div.masonry-layout {
 						:deep(div.image) {
 							&.--small,
 							&.--medium {
-								img {
-									@include media('phone') {
-										left: auto;
-										right: 0;
-										transform: translate(0, -50%);
-									}
+								margin: 0 0 0 auto;
+							}
+						}
+					}
+				}
+				&.--center {
+					a.media {
+						:deep(div.image) {
+							&.--small,
+							&.--medium {
+								@include media('phone') {
+									width: 60%;
 								}
 							}
 						}
@@ -198,10 +199,9 @@ div.masonry-layout {
 				}
 				a.media {
 					:deep(div.image) {
+						margin: 0 auto;
 						&.--medium {
-							width: 100%;
 							img {
-								width: 75%;
 								top: 50%;
 								left: 50%;
 								transform: translate(-50%, -50%);
@@ -209,9 +209,7 @@ div.masonry-layout {
 							}
 						}
 						&.--small {
-							width: 100%;
 							img {
-								width: 60%;
 								top: 50%;
 								left: 50%;
 								transform: translate(-50%, -50%);
@@ -232,12 +230,29 @@ div.masonry-layout {
 		row-gap: 27.78vh;  /* ((250 distance / 900 viewport height) * 100) */
 		position: relative;
 		@include media('phone') {
-			//margin-top: calc(27.78vh/2);
-			row-gap: calc(27.78vh/2);
+			row-gap: 150px;
+			row-gap: 20.5vh;
 		}
 		@include media('phone') {
 			flex: none;
 			width: 100%;
+		}
+		&:nth-child(1) {
+			> div.item {
+				&:nth-child(1) {
+					a.media {
+						:deep(div.image) {
+							&.--large {
+								aspect-ratio: auto;
+								height: 100vh;
+								@supports (height: 100svh) {
+									height: 100svh;
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		&:nth-child(2) {
 			> div.item {
@@ -259,9 +274,15 @@ div.masonry-layout {
 					}
 					&.--medium {
 						width: 75%;
+						@include media('phone') {
+							width: 85%;
+						}
 					}
 					&.--small {
 						width: 60%;
+						@include media('phone') {
+							width: 75%;
+						}
 					}
 				}
 			}

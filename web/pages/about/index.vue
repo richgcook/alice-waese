@@ -216,7 +216,7 @@ h2.statement {
 }
 div.details {
 	font-size: var(--font-size-base);
-	line-height: 2.15em;
+	line-height: 1.3;
 	display: none;
 	@media (orientation: portrait) {
 		display: flex;
@@ -228,8 +228,9 @@ div.details {
 	p {
 		display: flex;
 		flex-flow: column nowrap;
+		row-gap: 1em;
 		a {
-			text-indent: 50px;
+			text-indent: 65px;
 			&:hover {
 				color: var(--color-gold);
 			}

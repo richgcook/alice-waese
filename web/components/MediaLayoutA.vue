@@ -80,7 +80,6 @@ div.media-layout {
 	}
 	div.media {
 		@include media('phone') {
-			//aspect-ratio: 2 / 3;
 			position: relative;
 			overflow-y: auto;
 		}
@@ -128,16 +127,13 @@ div.media-layout {
 			position: relative;
 			height: auto;
 			padding: 0 35px;
-			//text-align: center;
 		}
 		&.--has-text {
 			@include media('phone') {
-				//max-width: 80%;
-				//margin: 0 auto;
 				text-align: left;
 			}
 			:deep(div.text) {
-				padding-left: 50px;
+				padding-left: 65px;
 			}
 		}
 		h3.title {

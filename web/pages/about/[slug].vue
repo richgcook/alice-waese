@@ -9,16 +9,30 @@
 		</div>
 		<div class="extra" v-if="data.pageA.colophon?.length">
 			<RichText :blocks="data.pageA.colophon" />
-			<RandomIllustrationMark :top="{ min: 30, max: 65 }" :topPhone="{ min: 10, max: 50 }" :onlyShowOnPhone="true" />
+			<RandomIllustrationMark 
+				:name="name"
+				:top="{ min: 30, max: 65 }" 
+				:topPhone="{ min: 10, max: 50 }" 
+				:onlyShowOnPhone="true"
+			/>
 		</div>
-		<RandomIllustrationMark :top="{ min: 50, max: 65 }" :topUnit="`vh`" :hideOnPhone="true" :immediateStart="true" />
+		<RandomIllustrationMark 
+			:name="name"
+			:top="{ min: 50, max: 65 }" 
+			:topUnit="`vh`" 
+			:hideOnPhone="true" 
+			:immediateStart="true" 
+		/>
 	</div>
 </template>
 
 <script setup>
 
+import { useIllustrationPoolStore } from '~/store/illustrationPool'
+
 const { $seoQuery, $richTextQuery } = useNuxtApp()
 
+const useIllustrationPool = useIllustrationPoolStore()
 const route = useRoute()
 
 const query = groq`{ 
@@ -59,6 +73,12 @@ useHead({
 		class: bodyClass.value
 	}
 })
+
+const name = ref(null)
+
+watch(() => route.fullPath, (id) => {
+	name.value = useIllustrationPool.assign(id, 1)[0]
+}, { immediate: true })
 
 </script>
 

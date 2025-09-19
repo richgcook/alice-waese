@@ -2,18 +2,22 @@
 	<div class="page-layout">
 		<MasonryLayout :items="data.type.jewellery" v-if="data.type.jewellery?.length" />
     	<RandomIllustrationMark 
-			v-for="i in illustrationCount"
-      		:key="i"
-			:top="illustrationCount === 2 ? (i === 2 ? { min: 70, max: 90 } : { min: 30, max: 50 }) : undefined"
-      		:side="i === 2 ? 'left' : 'right'" 
+			v-for="(name, index) in names"
+      		:key="name"
+			:name="name"
+			:top="names === 2 ? (index === 2 ? { min: 70, max: 90 } : { min: 30, max: 50 }) : undefined"
+      		:side="index === 1 ? 'left' : 'right'" 
 		/>
 	</div>
 </template>
 
 <script setup>
- 
+
+import { useIllustrationPoolStore } from '~/store/illustrationPool'
+
 const { $seoQuery, $productQuery } = useNuxtApp()
 
+const useIllustrationPool = useIllustrationPoolStore()
 const route = useRoute()
 
 const query = groq`{ 
@@ -52,8 +56,16 @@ useHead({
 
 const { count: illustrationCount } = useIllustrationCountByItems(data?.value.type.jewellery, {
 	oneAbove: 5,
-	twoAbove: 30,
+	twoAbove: 8,
 })
+
+const names = ref([])
+
+watch(
+	[() => route.fullPath, illustrationCount],
+	([id, count]) => { names.value = useIllustrationPool.assign(id, count) },
+	{ immediate: true }
+)
 
 </script>
 

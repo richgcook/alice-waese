@@ -4,6 +4,7 @@
 
 <script setup>
 
+import { useIllustrationPoolStore } from '~/store/illustrationPool'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -32,6 +33,10 @@ const props = defineProps({
 		type: String, 
 		default: 'right' 
 	},
+	name: {
+		type: String,
+		default: null,
+	},
 	hideOnPhone: {
 		type: Boolean,
 		default: false,
@@ -46,13 +51,12 @@ const props = defineProps({
 	},
 })
 
-const illustrations = ['eye', 'hand', 'horse', 'spider']
+const illustrationPool = useIllustrationPoolStore()
 
-const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
-
-const uid = useId()
-
-const randomIllustration = useState(`illu-${uid}-name`, () => illustrations[randInt(0, illustrations.length - 1)])
+const randomIllustration = ref(props.name || null)
+if (!randomIllustration.value) {
+	randomIllustration.value = illustrationPool.drawOne()
+}
 
 const randomTop = ref('0')
 const randomTopPhone = ref('0')
@@ -60,7 +64,17 @@ const randomRight = ref('auto')
 const randomLeft  = ref('auto')
 
 const width = computed(() => {
-	if (randomIllustration.value == 'eye') {
+	if (randomIllustration.value == 'bear') {
+		return `50px`
+	} else if (randomIllustration.value == 'bunny-ears') {
+		return `35px`
+	} else if (randomIllustration.value == 'cat') {
+		return `40px`
+	} else if (randomIllustration.value == 'elephant') {
+		return `50px`
+	} else if (randomIllustration.value == 'figure') {
+		return `40px`
+	} else if (randomIllustration.value == 'eye') {
 		return `38px`
 	} else if (randomIllustration.value == 'hand') {
 		return `60px`
@@ -88,6 +102,8 @@ const ready = ref(false)
 gsap.registerPlugin(ScrollTrigger)
 
 const illustration = useTemplateRef('illustration')
+
+const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
 onMounted(async () => {
 

@@ -178,9 +178,31 @@ const onTriggerClick = (e) => {
     e.stopPropagation() // prevent bubbling that might trigger outside/leave logic
     navStore.isOpen ? closeNav() : openNav()
   }
-  // Desktop (hover): clicking trigger is optional; you can ignore or also open:
   else {
-    openNav()
+	if (route.name === 'about') {
+		const doc = document.documentElement
+		const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 2
+		const hasScrolled = window.scrollY > 2 || atBottom
+
+		if (!hasScrolled) {
+				const { height } = useWindowSize()
+
+				gsap.to(window, { 
+					duration: 0.3,
+					scrollTo: { 
+						y: doc.scrollHeight - height.value,
+						offsetY: 0
+					},
+					onComplete() {
+						openNav()
+					}
+				})
+				return
+			}
+
+	} else {
+    	openNav()
+	}
   }
 }
 

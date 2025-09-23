@@ -35,16 +35,12 @@ const props = defineProps({
 <style lang="scss" scoped>
 
 div.media-layout {
-	display: grid;
-	grid-template-columns: repeat(28, 1fr);
-	column-gap: 20px;
 	position: relative;
 	@include media('phone') {
-		grid-template-columns: 1fr;
+		display: grid;
 		grid-template-rows: 1fr auto;
 		row-gap: 35px;
-		//align-items: end;
-		padding: calc(85px + 35px) 0;
+		padding: calc(85px + 35px) 0 36px 0;
 		height: 100vh;
 		@supports (height: 100dvh) {
 			height: 100dvh;
@@ -52,38 +48,61 @@ div.media-layout {
 	}
 	&[data-layout="portrait"] {
 		div.media {
-			grid-column: 1 / span 16;
-			@include media('phone') {
-				grid-column: 1 / -1;
+			div.item {
+				grid-column: 1 / span 16;
+				@include media('phone') {
+					grid-column: 1 / -1;
+				}
 			}
 		}
 		div.caption {
-			grid-column: span 12;
+			@include max-width-grid-columns(28, 12, '20px', 'width');
 			@include media('phone') {
-				grid-column: 1 / -1;
+				width: auto;
 			}
 		}
 	}
 	&[data-layout="landscape"] {
 		div.media {
-			grid-column: 1 / span 21;
-			@include media('phone') {
-				grid-column: 1 / -1;
+			div.item {
+				grid-column: 1 / span 21;
+				@include media('phone') {
+					grid-column: 1 / -1;
+				}
+				div.image-block {
+					img {
+						@include media('phone') {
+							object-fit: contain;
+						}
+					}
+				}
 			}
 		}
 		div.caption {
-			grid-column: span 7;
+			@include max-width-grid-columns(28, 7, '20px', 'width');
 			@include media('phone') {
-				grid-column: 1 / -1;
+				width: auto;
 			}
 		}
 	}
 	div.media {
+		scroll-snap-type: y proximity;
+		position: relative;
+		overflow-y: auto;
+		display: grid;
+		grid-template-columns: repeat(28, 1fr);
+		column-gap: 20px;
+		height: 100vh;
+		@supports (height: 100dvh) {
+			height: 100dvh;
+		}
 		@include media('phone') {
-			position: relative;
-			overflow-y: auto;
+			display: block;
+			height: 100%;
+			grid-column: 1 / -1;
 		}
 		div.item {
+			scroll-snap-align: start;
 			position: sticky;
 			top: 0;
 			min-height: 100vh;
@@ -110,23 +129,19 @@ div.media-layout {
 		}
 	}
 	div.caption {
-		align-self: flex-start;
-		position: sticky;
-    	top: 0;
+		position: absolute;
+		bottom: 0;
+		right: 0;
 		display: grid;
 		row-gap: 1em;
 		align-items: flex-end;
 		align-content: flex-end;
 		padding-bottom: 50px;
-		padding-left: 30px;
-		height: 100vh;
-		@supports (height: 100dvh) {
-			height: 100dvh;
-		}
+		padding: 0 30px 50px 30px;
 		@include media('phone') {
 			position: relative;
 			height: auto;
-			padding: 0 35px;
+			padding: 0 35px 0 calc(78px + 35px);
 		}
 		&.--has-text {
 			@include media('phone') {

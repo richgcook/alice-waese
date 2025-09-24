@@ -2,8 +2,10 @@
 	<ul class="staggered-list" :data-layout="layoutVersion">
 		<li v-for="(item, index) in items" :key="index" :class="{ '--has-other': item.other }">
 			<NuxtLink :to="item.link" target="_blank">
-				<span class="name">{{ item.name }}</span>
-				<span class="other" v-if="item.other"><span>&mdash;{{ item.other }}</span></span>
+				<div class="inner">
+					<span class="name">{{ item.name }}</span>
+					<span class="other" v-if="item.other"><span>&mdash;{{ item.other }}</span></span>
+				</div>
 			</NuxtLink>
 		</li>
 	</ul>
@@ -38,25 +40,69 @@ ul.staggered-list {
 		li {
 			&:nth-child(12n + 1) { grid-column: 1 / -1; }
 			&:nth-child(12n + 2) { grid-column: 2 / -1; }
-			&:nth-child(12n + 3) { grid-column: 1 / -1; text-align: right; }
+			&:nth-child(12n + 3) {
+				grid-column: 1 / -1;
+				a {
+					display: flex;
+					justify-content: flex-end;
+				}
+			}
 			&:nth-child(12n + 4) { grid-column: 1 / -1; }
 			&:nth-child(12n + 5) { grid-column: 7 / -1; }
-			&:nth-child(12n + 6) { grid-column: 8 / -1; text-align: right; }
+			&:nth-child(12n + 6) {
+				grid-column: 1 / -1;
+				a {
+					display: flex;
+					justify-content: flex-end;
+				}
+			}
 			&:nth-child(12n + 7) { grid-column: 11 / -1; }
 			&:nth-child(12n + 8) { grid-column: 3 / -1; }
 			&:nth-child(12n + 9) { grid-column: 1 / -1; }
 			&:nth-child(12n + 10) { grid-column: 3 / -1; }
-			&:nth-child(12n + 11) { grid-column: 1 / -1; text-align: right; }
+			&:nth-child(12n + 11) { 
+				grid-column: 1 / -1;
+				a {
+					display: flex;
+					justify-content: flex-end;
+				}
+			}
 			&:nth-child(12n + 12) { grid-column: 3 / -1; }
 
 			&:nth-child(odd) {
 				@include media('phone') {
-					text-align: right !important;
+					a {
+						text-align: left;
+						div.inner {
+							//display: flex;
+							//justify-content: flex-end;
+						}
+					}
+				}
+				&.--has-other {
+					@include media('phone') {
+						a {
+							text-align: left;
+							display: flex;
+							justify-content: flex-end;
+						}
+					}
 				}
 			}
 			&:nth-child(even) {
 				@include media('phone') {
-					text-align: left !important;
+					a {
+						text-align: right;
+					}
+				}
+				&.--has-other {
+					@include media('phone') {
+						a {
+							text-align: left;
+							display: flex;
+							justify-content: flex-start;
+						}
+					}
 				}
 			}
 		}
@@ -68,30 +114,48 @@ ul.staggered-list {
 			&:nth-child(20n + 3) { grid-column: 1 / -1; }
 			&:nth-child(20n + 4) { grid-column: 4 / -1; }
 			&:nth-child(20n + 5) { grid-column: 6 / -1; }
-			&:nth-child(20n + 6) { grid-column: 1 / -1; text-align: right; }
+			&:nth-child(20n + 6) {
+				grid-column: 1 / -1;
+				display: flex;
+				justify-content: flex-end;
+			}
 			&:nth-child(20n + 7) { grid-column: 5 / -1; }
 			&:nth-child(20n + 8) { grid-column: 7 / -1; }
 			&:nth-child(20n + 9) { grid-column: 4 / -1; }
 			&:nth-child(20n + 10) { grid-column: 1 / -1; }
 			&:nth-child(20n + 11) { grid-column: 5 / -1; }
 			&:nth-child(20n + 12) { grid-column: 8 / -1; }
-			&:nth-child(20n + 13) { grid-column: 1 / -1; text-align: right; }
+			&:nth-child(20n + 13) {
+				grid-column: 1 / -1;
+				display: flex;
+				justify-content: flex-end;
+			}
 			&:nth-child(20n + 14) { grid-column: 4 / -1; }
-			&:nth-child(20n + 15) { grid-column: 1 / -1; text-align: right; }
+			&:nth-child(20n + 15) {
+				grid-column: 1 / -1;
+				display: flex;
+				justify-content: flex-end;
+			}
 			&:nth-child(20n + 16) { grid-column: 4 / -1; }
 			&:nth-child(20n + 17) { grid-column: 1 / -1; }
 			&:nth-child(20n + 18) { grid-column: 6 / -1; }
-			&:nth-child(20n + 19) { grid-column: 1 / -1; text-align: right; }
+			&:nth-child(20n + 19) {
+				grid-column: 1 / -1;
+				display: flex;
+				justify-content: flex-end;
+			}
 			&:nth-child(20n + 20) { grid-column: 6 / -1; }
 
 			&:nth-child(odd) {
 				@include media('phone') {
-					text-align: right !important;
+					display: flex;
+					justify-content: flex-end;
 				}
 			}
 			&:nth-child(even) {
 				@include media('phone') {
-					text-align: left !important;
+					display: flex;
+					justify-content: flex-start;
 				}
 			}
 		}
@@ -107,23 +171,25 @@ ul.staggered-list {
 			line-height: 1.1em;
 			grid-column: 1 / -1 !important;
 		}
+		a {
+			grid-column: 1 / -1;
+			&:hover {
+				color: var(--color-gold);
+			}
+			div.inner {
+				display: inline-block;
+			}
+		}
 		&.--has-other {
 			a {
 				@include media('phone') {
 					display: block;
 				}
-				span.other {
-					display: block;
-					@include media('phone') {
-						display: inline;
+				div.inner {
+					span.other {
+						display: block;
 					}
 				}
-			}
-		}
-		a {
-			grid-column: 1 / -1;
-			&:hover {
-				color: var(--color-gold);
 			}
 		}
 	}

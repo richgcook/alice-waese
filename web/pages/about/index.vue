@@ -72,7 +72,7 @@ div.container {
 			min-height: calc(100dvh + 0.265em);
 		}
 		@include media('phone') {
-			row-gap: 12px;
+			row-gap: 20px;
 		}
 	}
 }
@@ -119,7 +119,7 @@ h2.statement {
 			&:nth-of-type(2) {
 				font-feature-settings: "ss04";
 			}
-			&:nth-of-type(7) {
+			&:nth-of-type(6) {
 				text-align: right;
 			}
 
@@ -228,7 +228,7 @@ div.details {
 	p {
 		display: flex;
 		flex-flow: column nowrap;
-		row-gap: 1em;
+		row-gap: 0.8em;
 		a {
 			text-indent: 65px;
 			&:hover {

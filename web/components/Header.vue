@@ -280,7 +280,7 @@ header {
 		max-width: 768px;
 		@include media('phone') {
 			width: auto;
-			padding: 0 0 35px 35px;
+			padding: 0 0 30px 35px;
 		}
 		&.--open {
 			button.menu-trigger {

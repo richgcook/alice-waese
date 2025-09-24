@@ -86,7 +86,7 @@ div.media-layout {
 		}
 	}
 	div.media {
-		scroll-snap-type: y proximity;
+		scroll-snap-type: y mandatory;
 		position: relative;
 		overflow-y: auto;
 		display: grid;
@@ -97,7 +97,10 @@ div.media-layout {
 			height: 100dvh;
 		}
 		@include media('phone') {
-			display: block;
+			scroll-snap-type: x mandatory;
+			display: flex;
+			flex-flow: row nowrap;
+			column-gap: 0;
 			height: 100%;
 			grid-column: 1 / -1;
 		}
@@ -111,7 +114,10 @@ div.media-layout {
 			}
 			@include media('phone') {
 				height: 100%;
+				width: 100%;
 				min-height: 0;
+				flex-shrink: 0;
+				position: relative;
 			}
 			div.image-block {
 				position: absolute;

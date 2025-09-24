@@ -113,13 +113,9 @@ ul.staggered-list {
 					display: block;
 				}
 				span.other {
+					display: block;
 					@include media('phone') {
 						display: inline;
-					}
-					&:before {
-						@include media('phone') {
-							content: ' ';
-						}
 					}
 				}
 			}
@@ -128,15 +124,6 @@ ul.staggered-list {
 			grid-column: 1 / -1;
 			&:hover {
 				color: var(--color-gold);
-			}
-			span.name {
-				
-			}
-			span.other {
-				
-				span {
-					
-				}
 			}
 		}
 	}

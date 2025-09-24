@@ -18,7 +18,10 @@
 							</ul>
 						</li>
 					</ul>
-					<button @mouseover="activeSubMenu = 1">Jewellery</button>
+					<button
+						@mouseover="activeSubMenu = 1"
+						@click.stop.prevent="onItemPress(1)"
+					>Jewellery</button>
 				</li>
 				<li>
 					<ul class="sub" v-show="activeSubMenu === 2">
@@ -26,7 +29,10 @@
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
 						</li>
 					</ul>
-					<button @mouseover="activeSubMenu = 2">Artworks</button>
+					<button
+						@mouseover="activeSubMenu = 2"
+						@click.stop.prevent="onItemPress(2)"
+					>Artworks</button>
 				</li>
 				<li>
 					<ul class="sub" v-show="activeSubMenu === 3">
@@ -37,7 +43,10 @@
 							<NuxtLink :to="useInternalLinkUrl(page)">{{ page.title }}</NuxtLink>
 						</li>
 					</ul>
-					<button @mouseover="activeSubMenu = 3">About</button>
+					<button
+						@mouseover="activeSubMenu = 3"
+						@click.stop.prevent="onItemPress(3)"
+					>About</button>
 				</li>
 				<NuxtLink to="/" class="logo"><Logo /></NuxtLink>
 			</ul>
@@ -121,6 +130,17 @@ const invertAssets = computed(() => {
 gsap.registerPlugin(ScrollToPlugin)
 
 const isHoverCapable = useMediaQuery('(hover: hover) and (pointer: fine)')
+
+const activate = (id) => { activeSubMenu.value = id }
+
+const onItemPress = (id) => {
+	if (!isHoverCapable.value) {
+		activeSubMenu.value = activeSubMenu.value === id ? null : id
+	} else {
+		activate(id)
+	}
+}
+
 const { height } = useWindowSize()
 
 let closeTimer
@@ -259,6 +279,7 @@ header {
 		@include max-width-grid-columns(14, 5, '20px', 'width', '-100px');
 		max-width: 768px;
 		@include media('phone') {
+			width: auto;
 			padding: 0 0 35px 35px;
 		}
 		&.--open {

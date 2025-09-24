@@ -1,5 +1,5 @@
 <template>
-	<div class="media-layout" :data-layout="media[0].image?.asset?.orientation">
+	<div class="media-layout" :data-layout="context?._type == 'product' ? 'portrait' : media[0].image?.asset?.orientation">
 		<div class="media">
 			<div v-for="(item, index) in media" :key="index" class="item" :data-orientation="item?.image?.asset?.orientation">
 				<template v-if="useBlockType(item._type) == 'image'">

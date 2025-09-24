@@ -184,7 +184,7 @@ h2.statement {
 				}
 				div.details {
 					flex-grow: 1;
-					letter-spacing: normal;
+					letter-spacing: 0.04em;
 					text-transform: none;
 					text-align: left;
 					height: 72%;

@@ -107,7 +107,6 @@ div.page-layout {
 		}
 	}
 	div.extra {
-		@include max-width-grid-columns(21, 4, '20px', 'width');
 		position: fixed;
 		bottom: 50px;
 		right: 50px;

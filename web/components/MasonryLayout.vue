@@ -98,7 +98,6 @@ const phoneItemPlacementClass = (item, c, i) => {
 	return [itemPlacementByIndex.value[c]?.[i] ?? '']
 }
 
-
 </script>
 
 <style lang="scss" scoped>
@@ -170,7 +169,10 @@ div.masonry-layout {
 						:deep(div.image) {
 							&.--small,
 							&.--medium {
-								margin: 0;
+								margin: 0 auto;
+								@include media('phone') {
+									margin: 0;
+								}
 							}
 						}
 					}
@@ -180,7 +182,10 @@ div.masonry-layout {
 						:deep(div.image) {
 							&.--small,
 							&.--medium {
-								margin: 0 0 0 auto;
+								margin: 0 auto;
+								@include media('phone') {
+									margin: 0 0 0 auto;
+								}
 							}
 						}
 					}
@@ -243,10 +248,12 @@ div.masonry-layout {
 					a.media {
 						:deep(div.image) {
 							&.--large {
-								aspect-ratio: auto;
-								height: 100vh;
-								@supports (height: 100svh) {
-									height: 100svh;
+								@include media('phone') {
+									aspect-ratio: auto;
+									height: 100vh;
+									@supports (height: 100svh) {
+										height: 100svh;
+									}
 								}
 							}
 						}

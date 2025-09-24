@@ -120,51 +120,16 @@ const invertAssets = computed(() => {
 
 gsap.registerPlugin(ScrollToPlugin)
 
-// Toggle on phone
-const openMenu = () => {
-
-	if (window.matchMedia('(max-width: 767px)').matches) {
-		console.log('test 2')
-		if (navStore.isOpen) {
-			console.log('test 2.5')
-			navStore.setClose()
-		} else {
-			navStore.setOpen()
-			console.log('test 3')
-		}
-	} else {
-		console.log('test 4')
-		if (route.name === 'about') {
-			console.log('test 5')
-			const doc = document.documentElement
-			const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 2
-			const hasScrolled = window.scrollY > 2 || atBottom
-
-			if (!hasScrolled) {
-				const { height } = useWindowSize()
-
-				gsap.to(window, { 
-					duration: 0.3,
-					scrollTo: { 
-						y: doc.scrollHeight - height.value,
-						offsetY: 0
-					},
-					onComplete() {
-						navStore.setOpen()
-					}
-				})
-				return
-			}
-		}
-		navStore.setOpen()
-	}
-}
-
 const isHoverCapable = useMediaQuery('(hover: hover) and (pointer: fine)')
+const { height } = useWindowSize()
 
 let closeTimer
 
-const openNav  = () => navStore.setOpen()
+const openNav  = () => {
+	if (closeTimer) clearTimeout(closeTimer) // Cancel any pending close
+	if (!navStore.isOpen) navStore.setOpen()
+}
+
 const closeNav = () => {
 	if (!navStore.isOpen) return
 	activeSubMenu.value = null
@@ -173,37 +138,32 @@ const closeNav = () => {
 }
 
 const onTriggerClick = (e) => {
-  // Phone/tablet (no reliable hover): toggle on click
-  if (!isHoverCapable.value) {
-    e.stopPropagation() // prevent bubbling that might trigger outside/leave logic
-    navStore.isOpen ? closeNav() : openNav()
-  }
-  else {
+  
+	if (!isHoverCapable.value) {
+		e.stopPropagation()
+		navStore.isOpen ? closeNav() : openNav()
+		return
+	}
+
 	if (route.name === 'about') {
 		const doc = document.documentElement
-		const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 2
+		const atBottom   = window.innerHeight + window.scrollY >= doc.scrollHeight - 2
 		const hasScrolled = window.scrollY > 2 || atBottom
 
 		if (!hasScrolled) {
-				const { height } = useWindowSize()
-
-				gsap.to(window, { 
-					duration: 0.3,
-					scrollTo: { 
-						y: doc.scrollHeight - height.value,
-						offsetY: 0
-					},
-					onComplete() {
-						openNav()
-					}
-				})
-				return
-			}
-
-	} else {
-    	openNav()
+			gsap.to(window, {
+				duration: 0.3,
+				scrollTo: {
+					y: doc.scrollHeight - unref(height),
+					offsetY: 0
+				},
+				onComplete: openNav
+			})
+			return
+		}
 	}
-  }
+
+	openNav()
 }
 
 const onEnter = () => {
@@ -296,7 +256,8 @@ header {
 		bottom: 0;
 		left: 0;
 		padding: 0 0 50px 50px;
-		width: 445px;
+		@include max-width-grid-columns(14, 5, '20px', 'width', '-100px');
+		max-width: 768px;
 		@include media('phone') {
 			padding: 0 0 35px 35px;
 		}
@@ -354,6 +315,7 @@ header {
 				flex-flow: column nowrap;
 				row-gap: 1.15em;
 				position: relative;
+				white-space: nowrap;
 				@include media('phone') {
 					display: grid;
 				}

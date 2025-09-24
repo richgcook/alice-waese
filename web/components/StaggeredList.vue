@@ -71,12 +71,9 @@ ul.staggered-list {
 
 			&:nth-child(odd) {
 				@include media('phone') {
+					display: block;
 					a {
 						text-align: left;
-						div.inner {
-							//display: flex;
-							//justify-content: flex-end;
-						}
 					}
 				}
 				&.--has-other {
@@ -84,12 +81,13 @@ ul.staggered-list {
 						a {
 							text-align: left;
 							display: flex;
-							justify-content: flex-end;
+							justify-content: flex-start;
 						}
 					}
 				}
 			}
 			&:nth-child(even) {
+				display: block;
 				@include media('phone') {
 					a {
 						text-align: right;
@@ -100,7 +98,7 @@ ul.staggered-list {
 						a {
 							text-align: left;
 							display: flex;
-							justify-content: flex-start;
+							justify-content: flex-end;
 						}
 					}
 				}
@@ -148,14 +146,34 @@ ul.staggered-list {
 
 			&:nth-child(odd) {
 				@include media('phone') {
-					display: flex;
-					justify-content: flex-end;
+					display: block;
+					text-align: left;
+				}
+				&.--has-other {
+					@include media('phone') {
+						text-align: left;
+						a {
+							text-align: left;
+							display: flex;
+							justify-content: flex-start;
+						}
+					}
 				}
 			}
 			&:nth-child(even) {
 				@include media('phone') {
-					display: flex;
-					justify-content: flex-start;
+					display: block;
+					text-align: right;
+				}
+				&.--has-other {
+					@include media('phone') {
+						text-align: right;
+						a {
+							text-align: left;
+							display: flex;
+							justify-content: flex-end;
+						}
+					}
 				}
 			}
 		}

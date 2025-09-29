@@ -40,13 +40,15 @@ div.media-layout {
 		display: grid;
 		grid-template-rows: 1fr auto;
 		row-gap: 35px;
-		padding: calc(85px + 35px) 0 36px 0;
 		height: 100vh;
 		@supports (height: 100dvh) {
 			height: 100dvh;
 		}
 	}
 	&[data-layout="portrait"] {
+		@include media('phone') {
+			padding-bottom: 36px;
+		}
 		div.media {
 			div.item {
 				grid-column: 1 / span 16;
@@ -63,6 +65,9 @@ div.media-layout {
 		}
 	}
 	&[data-layout="landscape"] {
+		@include media('phone') {
+			padding: calc(85px + 35px) 0 36px 0;
+		}
 		div.media {
 			div.item {
 				grid-column: 1 / span 21;

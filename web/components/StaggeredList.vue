@@ -71,35 +71,41 @@ ul.staggered-list {
 
 			&:nth-child(odd) {
 				@include media('phone') {
+					text-align: left;
+					/*
 					display: block;
 					a {
 						text-align: left;
 					}
+					*/
 				}
 				&.--has-other {
 					@include media('phone') {
+						/*
 						a {
 							text-align: left;
 							display: flex;
 							justify-content: flex-start;
 						}
+						*/
 					}
 				}
 			}
 			&:nth-child(even) {
-				display: block;
 				@include media('phone') {
+					text-align: right;
+					/* display: block;
 					a {
 						text-align: right;
-					}
+					} */
 				}
 				&.--has-other {
 					@include media('phone') {
-						a {
+						/* a {
 							text-align: left;
 							display: flex;
 							justify-content: flex-end;
-						}
+						} */
 					}
 				}
 			}

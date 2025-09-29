@@ -285,10 +285,12 @@ div.masonry-layout {
 			a.media {
 				position: relative;
 				&.--has-hover {
-					&:hover {
-						:deep(div.image) {
-							&.--hover {
-								opacity: 1;
+					@include isNotTouch() {
+						&:hover {
+							:deep(div.image) {
+								&.--hover {
+									opacity: 1;
+								}
 							}
 						}
 					}

@@ -15,7 +15,7 @@
 
 import { useIllustrationPoolStore } from '~/store/illustrationPool'
 
-const { $seoQuery, $productQuery } = useNuxtApp()
+const { $seoQuery, $productQuery, $imageQuery } = useNuxtApp()
 
 const useIllustrationPool = useIllustrationPoolStore()
 const route = useRoute()
@@ -29,6 +29,15 @@ const query = groq`{
 		"jewellery": pageBuilder[] {
 			"item": product->{
 				${$productQuery},
+			},
+			mediaOverride {
+				image {
+					${$imageQuery}
+				},
+				imageHoverState {
+					${$imageQuery}
+				},
+				"video": video.asset->url,
 			},
 			settings,
 		},

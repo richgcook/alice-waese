@@ -9,6 +9,7 @@
 		</div>
 		<div class="extra" v-if="data.pageA.colophon?.length">
 			<RichText :blocks="data.pageA.colophon" />
+			<p v-if="data.pageA.colophon?.length">{{ config?.public?.siteTitle }} &copy; {{ new Date().getFullYear() }}</p>
 			<RandomIllustrationMark 
 				:name="name"
 				:top="{ min: 30, max: 65 }" 
@@ -73,6 +74,8 @@ useHead({
 		class: bodyClass.value
 	}
 })
+
+const config = useRuntimeConfig()
 
 const name = ref(null)
 

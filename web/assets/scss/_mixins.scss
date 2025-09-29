@@ -78,11 +78,18 @@
     text-decoration-line: underline;
     text-underline-offset: 2px;
 }
-@mixin max-width-grid-columns($total-columns, $max-columns, $gap-size, $attr: 'max-width', $increase-decrease: '0px') {
+@mixin max-width-grid-columns(
+	$total-columns, 
+	$max-columns, 
+	$gap-size, 
+	$attr: 'max-width', 
+	$increase-decrease: '0px', 
+	$total-width: '100%',
+) {
 	#{$attr}: calc(
 		(
 			(
-				100% - (#{$total-columns - 1} * #{$gap-size})
+				#{$total-width} - (#{$total-columns - 1} * #{$gap-size})
 			) / #{$total-columns}
 		) * #{$max-columns}
 		+ ((#{$max-columns - 1}) * #{$gap-size}) + #{$increase-decrease}

@@ -23,12 +23,23 @@ export default defineType({
 					type: 'object',
 					title: 'Media',
 					name: 'mediaOverride',
-					description: "If you want to use a custom image instead of the product's primary image",
+					description: "If you want to a) use a custom image/video instead of the product's primary image or b) add a hover state image",
 					fields: [
 						defineField({
 							type: 'image',
 							title: 'Image',
 							name: 'image',
+							fields: [
+								defineField({
+									type: 'alt',
+									name: 'alt'
+								})
+							],
+						}),
+						defineField({
+							type: 'image',
+							title: 'Image (hover state)',
+							name: 'imageHoverState',
 							fields: [
 								defineField({
 									type: 'alt',

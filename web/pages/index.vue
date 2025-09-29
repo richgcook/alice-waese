@@ -1,10 +1,33 @@
 <template>
-	<SliderHome :slides="data.homePage.content" v-if="data.homePage.content?.length" />
+	<div>
+		<Transition name="fade">
+			<div class="landing" 
+				@click="hideLanding = true" 
+				v-show="!hideLanding" 
+				ref="landing" 
+				v-if="data.homePage.landing.image?.asset || data.homePage.landing.video"
+			>
+				<NuxtImg 
+					:src="data.homePage.landing.image.assetRef" 
+					:alt="data.homePage.landing.image.alt"
+					sizes="100vw tablet-portrait:100vw"
+					loading="eager"
+					preload
+					v-if="data.homePage.landing.image?.asset"
+				/>
+			</div>
+		</Transition>
+		<SliderHome 
+			:slides="data.homePage.content" 
+			:startPlaying="hideLanding"
+			v-if="data.homePage.content?.length" 
+		/>
+	</div>
 </template>
 
 <script setup>
 
-const { $seoQuery, $imageQuery } = useNuxtApp()
+const { $seoQuery, $imageQuery, $internalLinkQuery } = useNuxtApp()
 
 const query = groq`{ 
 
@@ -12,11 +35,23 @@ const query = groq`{
 		_id, _type, title, slug, seo {
 			${$seoQuery}
 		},
+		landing {
+			image {
+				${$imageQuery}
+			},
+			"video": video.asset->url,
+		},
 		content[] {
 			_type,
 			_type == "imageBlock" => {
 				image {
 					${$imageQuery}
+				},
+				link {
+					"internal": internal.page->{
+						${$internalLinkQuery}
+					},
+					"external": external.url,
 				},
 				settings,
 			},
@@ -45,4 +80,35 @@ useHead({
 	}
 })
 
+const hideLanding = ref(false)
+
 </script>
+
+<style lang="scss" scoped>
+
+div.landing {
+	position: fixed;
+	inset: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 30;
+	cursor: pointer;
+	&.fade-enter-active,
+	&.fade-leave-active {
+		transition: opacity 0.5s;
+	}
+	&.fade-enter-from,
+	&.fade-leave-to {
+		opacity: 0;
+	}
+	img, video {
+		position: absolute;
+		inset: 0;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+}
+
+</style>

@@ -103,7 +103,13 @@ const { data } = await useSanityQuery(query)
 const route = useRoute()
 
 const showLogo = computed(() => {
-	if (route.name == 'jewellery-collections-slug' || route.name === 'about' || route.name === 'about-stockists' || route.name === 'about-press') return false
+	const hiddenLogoRoutes = [
+		'jewellery-collections-slug',
+		'about',
+		'about-stockists',
+		'about-press'
+	]
+	if (hiddenLogoRoutes.includes(route.name)) return false
 	return true
 })
 
@@ -187,10 +193,12 @@ const onTriggerClick = (e) => {
 }
 
 const onEnter = () => {
+	return
 	if (closeTimer) clearTimeout(closeTimer)
 }
 
 const onLeave = (e) => {
+	return
 	if (!isHoverCapable.value) return
 	const to = e.relatedTarget
 	if (to && navRef.value?.contains(to)) return
@@ -276,8 +284,11 @@ header {
 		bottom: 0;
 		left: 0;
 		padding: 0 0 50px 50px;
-		@include max-width-grid-columns(14, 5, '20px', 'width', '-100px');
+		@include max-width-grid-columns(21, 6, '20px', 'width', '0px', '100vw + 100px');
 		max-width: 768px;
+		@include media('tablet') {
+			@include max-width-grid-columns(21, 7, '20px', 'width', '0px', '100vw + 100px');
+		}
 		@include media('phone') {
 			width: auto;
 			padding: 0 0 30px 35px;

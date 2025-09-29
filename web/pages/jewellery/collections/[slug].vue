@@ -40,6 +40,9 @@ const query = groq`{
 				image {
 					${$imageQuery}
 				},
+				imageHoverState {
+					${$imageQuery}
+				},
 				"video": video.asset->url,
 			},
 			settings,

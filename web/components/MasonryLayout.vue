@@ -2,7 +2,7 @@
 	<div class="masonry-layout" :data-context="context">
 		<div class="column" v-for="(col, c) in columns" :key="c">
 			<div v-for="(item, i) in col" :key="item.item?._id" class="item" :class="phoneItemPlacementClass(item, c, i)">
-				<NuxtLink :to="useInternalLinkUrl(item.item)" class="media">
+				<NuxtLink :to="useInternalLinkUrl(item.item)" class="media" :class="{ '--has-hover': item.mediaOverride?.imageHoverState?.asset }">
 					<video 
 						playsinline autoplay loop muted 
 						v-if="primaryMedia(item)?.type === 'video'">
@@ -15,6 +15,14 @@
 						:ratio="primaryMedia(item).image.asset.ratio"
 						:class="[ item.settings?.size ? `--${item.settings.size}` : '' ]"
 						v-else-if="primaryMedia(item)?.type === 'image'"
+					/>
+					<ImgWithRatio 
+						:src="item.mediaOverride?.imageHoverState.assetRef" 
+						:alt="item.mediaOverride?.imageHoverState.alt" 
+						:sizes="`100vw tablet-portrait:50vw`"
+						:ratio="primaryMedia(item).image.asset.ratio"
+						:class="[ item.settings?.size ? `--${item.settings.size}` : '', '--hover' ]"
+						v-if="primaryMedia(item)?.type === 'image' && item.mediaOverride?.imageHoverState?.asset"
 					/>
 				</NuxtLink>
 			</div>
@@ -275,6 +283,16 @@ div.masonry-layout {
 		}
 		div.item {
 			a.media {
+				position: relative;
+				&.--has-hover {
+					&:hover {
+						:deep(div.image) {
+							&.--hover {
+								opacity: 1;
+							}
+						}
+					}
+				}
 				:deep(div.image) {
 					&.--large {
 						width: 100%;
@@ -290,6 +308,14 @@ div.masonry-layout {
 						@include media('phone') {
 							width: 75%;
 						}
+					}
+					&.--hover {
+						position: absolute;
+						inset: 0;
+						opacity: 0;
+						z-index: 1;
+						pointer-events: none;
+						transition: opacity 0.3s;
 					}
 				}
 			}

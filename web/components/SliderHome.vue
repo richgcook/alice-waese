@@ -13,6 +13,7 @@
 							v-if="slide.image?.asset"
 						/>
 					</template>
+					<NuxtLink :to="useLinkLink(slide.link)" class="link" v-if="slide.link"></NuxtLink>
 				</div>
 			</div>
 		</div>
@@ -31,11 +32,16 @@ import { useMediaQuery } from '@vueuse/core'
 
 const props = defineProps({
 	slides: Array,
+	startPlaying: {
+		type: Boolean,
+		default: false,
+	},
 })
 
 const plugins = computed(() => {
 	const basePlugins = [
 		Autoplay({
+			playOnInit: false,
 			delay: 4000,
 			stopOnInteraction: false,
 		}),
@@ -81,6 +87,10 @@ const onSelect = () => {
 watch(effectiveTheme, () => {
 	themeModeStore.setMode(effectiveTheme.value)
 })
+
+watch(() => props.startPlaying, () => {
+	if (embla.value && props.startPlaying) embla.value.plugins().autoplay.play()
+}, { once: true })
 
 onMounted(() => {
 	if (embla.value) {
@@ -145,6 +155,13 @@ div.slider-container {
 					@include media('phone') {
 						grid-column: 1 / -1;
 					}
+				}
+				a.link {
+					position: absolute;
+					inset: 0;
+					height: 100%;
+					width: 100%;
+					z-index: 1;
 				}
 			}
 		}

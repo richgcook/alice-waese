@@ -110,8 +110,14 @@ export default defineType({
 								}),
 								defineField({
 									type: 'themeMode',
-									title: 'Theme mode',
+									title: 'Theme mode (desktop)',
 									name: 'themeMode',
+								}),
+								defineField({
+									type: 'themeMode',
+									title: 'Theme mode (phone)',
+									name: 'themeModePhone',
+									description: 'Overrides the theme mode on smaller screens if needed',
 								}),
 							],
 						}),

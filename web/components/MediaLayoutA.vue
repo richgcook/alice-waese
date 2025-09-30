@@ -108,6 +108,15 @@ div.media-layout {
 			column-gap: 0;
 			height: 100%;
 			grid-column: 1 / -1;
+			&::-webkit-scrollbar {
+				width: 5px;
+			}
+			&::-webkit-scrollbar-track {
+				background: red;
+			}
+			&::-webkit-scrollbar-thumb {
+				background: yellow;
+			}
 		}
 		div.item {
 			scroll-snap-align: start;
@@ -160,6 +169,9 @@ div.media-layout {
 			}
 			:deep(div.text) {
 				padding-left: 65px;
+				@include media('phone') {
+					padding-left: 30px;
+				}
 			}
 		}
 		h3.title {

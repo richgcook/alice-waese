@@ -2,6 +2,8 @@ export const useIllustrationCountByItems = (items, opts = {}) => {
 
 	const { oneAbove = 8, twoAbove = 20 } = opts
 
+	console.log('items in useIllustrationCountByItems:', items)
+
 	return {
 		count: computed(() => {
 			const n = Array.isArray(items) ? items.length : Number(items) || 0

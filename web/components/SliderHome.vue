@@ -68,8 +68,12 @@ const slideTheme = computed(() => {
 	return props.slides[selectedScrollSnap.value]?.settings?.themeMode ?? 'light'
 })
 
+const slideThemePhone = computed(() => {
+	return props.slides[selectedScrollSnap.value]?.settings?.themeModePhone ?? slideTheme.value
+})
+
 const effectiveTheme = computed(() => {
-	return isPhone.value ? 'dark' : slideTheme.value
+	return isPhone.value ? slideThemePhone.value : slideTheme.value
 })
 
 const onInit = () => {

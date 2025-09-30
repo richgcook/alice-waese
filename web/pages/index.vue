@@ -1,8 +1,10 @@
 <template>
 	<div>
-		<Transition name="fade">
+		<Transition name="slide-up">
 			<div class="landing" 
 				@click="hideLanding = true" 
+				@touchstart="hideLanding = true" 
+				@wheel="hideLanding = true"
 				v-show="!hideLanding" 
 				ref="landing" 
 				v-if="data.homePage.landing.image?.asset || data.homePage.landing.video"
@@ -93,13 +95,13 @@ div.landing {
 	width: 100%;
 	z-index: 30;
 	cursor: pointer;
-	&.fade-enter-active,
-	&.fade-leave-active {
-		transition: opacity 0.5s;
+	&.slide-up-enter-active,
+	&.slide-up-leave-active {
+		transition: transform 1s ease-out;
 	}
-	&.fade-enter-from,
-	&.fade-leave-to {
-		opacity: 0;
+	&.slide-up-enter-from,
+	&.slide-up-leave-to {
+		transform: translateY(-100%);
 	}
 	img, video {
 		position: absolute;

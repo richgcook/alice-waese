@@ -48,7 +48,7 @@
 						@click.stop.prevent="onItemPress(3)"
 					>About</button>
 				</li>
-				<NuxtLink to="/" class="logo"><Logo /></NuxtLink>
+				<button class="logo" @click="navStore.setClose"><Logo /></button>
 			</ul>
 		</div>
 	</header>
@@ -171,6 +171,7 @@ const onTriggerClick = (e) => {
 		return
 	}
 
+	/*
 	if (route.name === 'about') {
 		const doc = document.documentElement
 		const atBottom   = window.innerHeight + window.scrollY >= doc.scrollHeight - 2
@@ -188,17 +189,16 @@ const onTriggerClick = (e) => {
 			return
 		}
 	}
+	*/
 
 	openNav()
 }
 
 const onEnter = () => {
-	return
 	if (closeTimer) clearTimeout(closeTimer)
 }
 
 const onLeave = (e) => {
-	return
 	if (!isHoverCapable.value) return
 	const to = e.relatedTarget
 	if (to && navRef.value?.contains(to)) return
@@ -260,7 +260,10 @@ header {
 			}
 		}
 	}
-	a.logo {
+	button.logo {
+		all: unset;
+		box-sizing: border-box;
+		cursor: pointer;
 		position: absolute;
 		top: 50px;
 		left: 0;
@@ -339,7 +342,7 @@ header {
 				width: 100%;
 				background-color: var(--color-bg);
 				color: black !important;
-				padding: 35px;
+				padding: 85px 35px 75px 35px;
 				gap: 2.5em 0;
 			}
 			li {

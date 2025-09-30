@@ -1,12 +1,20 @@
 <template>
-	<VueLenis root :options="lenisOptions">
+	<!--<VueLenis root :options="lenisOptions">-->
 		<div class="collection-layout">
 			<h1 class="collection-title">{{ data.collection.titleFull ? data.collection.titleFull : data.collection.title }}</h1>
 			<MasonryLayout :items="data.collection.jewellery" context="collections" v-if="data.collection.jewellery?.length" />
 			<div class="collection-description" v-if="data.collection.descriptionText?.length">
 				<RichText :blocks="data.collection.descriptionText" />
 			</div>
+			<RandomIllustrationMark 
+				v-for="(name, index) in names"
+				:key="name"
+				:name="name"
+				:top="names === 2 ? (index === 2 ? { min: 70, max: 90 } : { min: 30, max: 50 }) : undefined"
+				:side="index === 1 ? 'left' : 'right'" 
+			/>
 		</div>
+		<!--
 		<div class="collection-layout --clone">
 			<h1 class="collection-title">{{ data.collection.titleFull ? data.collection.titleFull : data.collection.title }}</h1>
 			<MasonryLayout :items="data.collection.jewellery" context="collections" v-if="data.collection.jewellery?.length" />
@@ -14,13 +22,15 @@
 				<RichText :blocks="data.collection.descriptionText" />
 			</div>
 		</div>
-		<RandomIllustrationMark />
-	</VueLenis>
+		-->
+	<!--</VueLenis>-->
 </template>
 
 <script setup>
 
-import { VueLenis, useLenis } from 'lenis/vue'
+import { useIllustrationPoolStore } from '~/store/illustrationPool'
+
+//import { VueLenis, useLenis } from 'lenis/vue'
  
 const { $seoQuery, $productQuery, $imageQuery, $richTextQuery } = useNuxtApp()
 
@@ -72,6 +82,21 @@ useHead({
 	}
 })
 
+const useIllustrationPool = useIllustrationPoolStore()
+
+const { count: illustrationCount } = useIllustrationCountByItems(data?.value.collection.jewellery, {
+	oneAbove: 3,
+	twoAbove: 8,
+})
+
+const names = ref([])
+
+watch(
+	[() => route.fullPath, illustrationCount],
+	([id, count]) => { names.value = useIllustrationPool.assign(id, count) },
+	{ immediate: true }
+)
+
 const lenisOptions = {
 	//smoothWheel: true,
 	//smoothTouch: true,
@@ -79,7 +104,7 @@ const lenisOptions = {
 	autoRaf: true,
 }
 
-const lenis = useLenis()
+//const lenis = useLenis()
 
 onMounted(() => {
 	

@@ -113,11 +113,11 @@ ul.staggered-list {
 	}
 	&[data-layout="b"] {
 		li {
-			&:nth-child(20n + 1) { grid-column: 6 / -1; }
+			&:nth-child(20n + 1) { grid-column: 1 / -1; }
 			&:nth-child(20n + 2) { grid-column: 3 / -1; }
-			&:nth-child(20n + 3) { grid-column: 1 / -1; }
-			&:nth-child(20n + 4) { grid-column: 4 / -1; }
-			&:nth-child(20n + 5) { grid-column: 6 / -1; }
+			&:nth-child(20n + 3) { grid-column: 7 / -1; }
+			&:nth-child(20n + 4) { grid-column: 6 / -1; }
+			&:nth-child(20n + 5) { grid-column: 4 / -1; }
 			&:nth-child(20n + 6) {
 				grid-column: 1 / -1;
 				display: flex;

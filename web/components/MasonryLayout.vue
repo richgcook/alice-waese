@@ -136,7 +136,7 @@ onMounted(() => {
 			// Hide when you scroll past it or back above it
 			onLeave: hide,
 			onLeaveBack: hide,
-			markers: true,
+			//markers: true,
         })
 
 		triggers.push(st)

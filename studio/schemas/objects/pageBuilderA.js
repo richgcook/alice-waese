@@ -74,8 +74,7 @@ export default defineType({
 								]
 							},
 							initialValue: 'large',
-							description: 'Defines how wide the image should appear in a 5/6 block',
-							initialValue: 100,
+							description: 'Defines how wide the image should appear in its column',
 							validation: Rule => Rule.required(),
 						}),
 					],
@@ -85,13 +84,14 @@ export default defineType({
 				select: {
 					title: 'product.title',
 					image: 'product.primaryMedia.image',
+					imageOverride: 'mediaOverride.image',
 				},
 				prepare(selection) {
-					const { title, image } = selection
+					const { title, image, imageOverride } = selection
 					return {
 						title,
 						subtitle: 'Jewellery',
-						media: image ? image : PlayIcon,
+						media: imageOverride ? imageOverride : image ? image : PlayIcon,
 					}
 				},
 			},
@@ -153,7 +153,6 @@ export default defineType({
 							},
 							initialValue: 'large',
 							description: 'Defines how wide the image should appear in its column',
-							initialValue: 100,
 							validation: Rule => Rule.required(),
 						}),
 					],
@@ -163,13 +162,14 @@ export default defineType({
 				select: {
 					title: 'artwork.title',
 					image: 'artwork.primaryMedia.image',
+					imageOverride: 'mediaOverride.image',
 				},
 				prepare(selection) {
-					const { title, image } = selection
+					const { title, image, imageOverride } = selection
 					return {
 						title,
 						subtitle: 'Artwork',
-						media: image ? image : PlayIcon,
+						media: imageOverride ? imageOverride : image ? image : PlayIcon,
 					}
 				},
 			},

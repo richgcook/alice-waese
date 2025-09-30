@@ -364,6 +364,9 @@ div.masonry-layout {
 						z-index: 1;
 						pointer-events: none;
 						transition: opacity 0.3s;
+						img, video {
+							object-fit: cover !important;
+						}
 					}
 				}
 			}

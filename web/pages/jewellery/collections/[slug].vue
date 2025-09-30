@@ -34,6 +34,7 @@ import { useIllustrationPoolStore } from '~/store/illustrationPool'
  
 const { $seoQuery, $productQuery, $imageQuery, $richTextQuery } = useNuxtApp()
 
+const useIllustrationPool = useIllustrationPoolStore()
 const route = useRoute()
 
 const query = groq`{ 
@@ -82,10 +83,8 @@ useHead({
 	}
 })
 
-const useIllustrationPool = useIllustrationPoolStore()
-
 const { count: illustrationCount } = useIllustrationCountByItems(data?.value.collection.jewellery, {
-	oneAbove: 3,
+	oneAbove: 5,
 	twoAbove: 8,
 })
 
@@ -105,10 +104,6 @@ const lenisOptions = {
 }
 
 //const lenis = useLenis()
-
-onMounted(() => {
-	
-})
 
 </script>
 

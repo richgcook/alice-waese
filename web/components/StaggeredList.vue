@@ -101,6 +101,7 @@ ul.staggered-list {
 				}
 				&.--has-other {
 					@include media('phone') {
+						text-align: left;
 						/* a {
 							text-align: left;
 							display: flex;
@@ -188,7 +189,7 @@ ul.staggered-list {
 		grid-column: 1 / -1;
 		display: grid;
 		grid-template-columns: subgrid;
-		font-size: clamp(48px, 6.9vw, 180px);
+		font-size: clamp(45px, 6.9vw, 180px);
 		line-height: 1.2em;
 		letter-spacing: -0.03em;
 		@include media('phone') {
@@ -212,6 +213,9 @@ ul.staggered-list {
 				div.inner {
 					span.other {
 						display: block;
+						@include media('phone') {
+							display: inline;
+						}
 					}
 				}
 			}

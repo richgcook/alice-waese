@@ -11,9 +11,12 @@
 </template>
 
 <script setup>
+
+import { useIllustrationPoolStore } from '~/store/illustrationPool'
  
 const { $seoQuery, $artworkQuery } = useNuxtApp()
 
+const useIllustrationPool = useIllustrationPoolStore()
 const route = useRoute()
 
 const query = groq`{ 
@@ -51,9 +54,17 @@ useHead({
 })
 
 const { count: illustrationCount } = useIllustrationCountByItems(data?.value.type.artworks, {
-	oneAbove: 8,
-	twoAbove: 30,
+	oneAbove: 5,
+	twoAbove: 8,
 })
+
+const names = ref([])
+
+watch(
+	[() => route.fullPath, illustrationCount],
+	([id, count]) => { names.value = useIllustrationPool.assign(id, count) },
+	{ immediate: true }
+)
 
 </script>
 

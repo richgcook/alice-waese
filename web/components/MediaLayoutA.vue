@@ -108,6 +108,7 @@ div.media-layout {
 			column-gap: 0;
 			height: 100%;
 			grid-column: 1 / -1;
+			/*
 			&::-webkit-scrollbar {
 				width: 5px;
 			}
@@ -117,6 +118,7 @@ div.media-layout {
 			&::-webkit-scrollbar-thumb {
 				background: yellow;
 			}
+			*/
 		}
 		div.item {
 			scroll-snap-align: start;

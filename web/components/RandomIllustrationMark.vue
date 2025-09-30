@@ -21,9 +21,17 @@ const props = defineProps({
 		type: Object,
 		default: () => ({ min: 100, max: 200 })
 	},
+	rightPhone: {
+		type: Object,
+		default: () => ({ min: 35, max: 50 })
+	},
 	left: {
 		type: Object,
 		default: () => ({ min: 200, max: 250 })
+	},
+	leftPhone: {
+		type: Object,
+		default: () => ({ min: 35, max: 50 })
 	},
 	topUnit: {
 		type: String,
@@ -61,7 +69,9 @@ if (!randomIllustration.value) {
 const randomTop = ref('0')
 const randomTopPhone = ref('0')
 const randomRight = ref('auto')
+const randomRightPhone = ref('auto')
 const randomLeft  = ref('auto')
+const randomLeftPhone = ref('auto')
 
 const width = computed(() => {
 	if (randomIllustration.value == 'bear') {
@@ -113,9 +123,13 @@ onMounted(async () => {
 	if (props.side === 'left') {
 		randomLeft.value  = `${randInt(props.left.min, props.left.max)}px`
 		randomRight.value = 'auto'
+		randomLeftPhone.value  = `${randInt(props.leftPhone.min, props.leftPhone.max)}px`
+		randomRightPhone.value = 'auto'
 	} else {
 		randomRight.value = `${randInt(props.right.min, props.right.max)}px`
 		randomLeft.value  = 'auto'
+		randomRightPhone.value = `${randInt(props.rightPhone.min, props.rightPhone.max)}px`
+		randomLeftPhone.value  = 'auto'
 	}
 
 	ready.value = true
@@ -133,7 +147,6 @@ onMounted(async () => {
     ? { start: () => '0 0', end: () => `+=${window.innerHeight}` }
     // Start when element enters viewport (your original numeric logic)
     : { start: startPos, end: endPos }
-
 
 	gsap.to(illustration.value, {
 		y: () => window.innerHeight * -0.8,
@@ -157,12 +170,14 @@ img {
 	position: absolute;
 	top: v-bind(randomTop);
 	right: v-bind(randomRight);
-	left:  v-bind(randomLeft);
+	left: v-bind(randomLeft);
 	width: v-bind(width);
 	pointer-events: none;
 	@include media('phone') {
 		display: v-bind('hideOnPhone');
 		top: v-bind(randomTopPhone);
+		right: v-bind(randomRightPhone);
+		left: v-bind(randomLeftPhone);
 	}
 }
 

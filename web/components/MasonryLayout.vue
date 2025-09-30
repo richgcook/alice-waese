@@ -32,6 +32,11 @@
 
 <script setup>
 
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+import { useMediaQuery } from '@vueuse/core'
+
 const props = defineProps({
 	items: Array,
 	context: String,
@@ -105,6 +110,46 @@ const phoneItemPlacementClass = (item, c, i) => {
 	if (!qualifySet.has(size)) return []
 	return [itemPlacementByIndex.value[c]?.[i] ?? '']
 }
+
+gsap.registerPlugin(ScrollTrigger)
+
+const triggers = []
+
+onMounted(() => {
+
+	const isHoverCapable = useMediaQuery('(hover: hover) and (pointer: fine)')
+    if (isHoverCapable.value) return
+
+	gsap.utils.toArray('div.masonry-layout a.media.--has-hover').forEach(elem => {
+
+		const hoverElem = elem.querySelector('div.image.--hover')
+        if (!hoverElem) return
+
+		const show = () => gsap.to(hoverElem, { opacity: 1, duration: 0.3, overwrite: 'auto' })
+        const hide = () => gsap.to(hoverElem, { opacity: 0, duration: 0.25, overwrite: 'auto' })
+
+		const st = ScrollTrigger.create({
+			trigger: elem,
+			start: 'center center',
+			// Show when scrolling down past center
+			onEnter: show,
+			// Hide when you scroll past it or back above it
+			onLeave: hide,
+			onLeaveBack: hide,
+			//markers: true,
+        })
+
+		triggers.push(st)
+
+	})
+
+	ScrollTrigger.refresh()
+
+})
+
+onBeforeUnmount(() => {
+	triggers.forEach(t => t.kill())
+})
 
 </script>
 

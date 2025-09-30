@@ -12,8 +12,7 @@
 			<p v-if="data.pageA.colophon?.length">{{ config?.public?.siteTitle }} &copy; {{ new Date().getFullYear() }}</p>
 			<RandomIllustrationMark 
 				:name="name"
-				:top="{ min: 30, max: 65 }" 
-				:topPhone="{ min: 10, max: 50 }" 
+				:topPhone="{ min: 10, max: 40 }" 
 				:onlyShowOnPhone="true"
 			/>
 		</div>

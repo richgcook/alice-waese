@@ -328,6 +328,7 @@ div.masonry-layout {
 		}
 		div.item {
 			a.media {
+				display: block;
 				position: relative;
 				&.--has-hover {
 					@include isNotTouch() {

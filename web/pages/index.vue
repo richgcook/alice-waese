@@ -124,6 +124,9 @@ div.landing {
 		height: auto;
 		width: 9vw;
 		fill: var(--color-bg);
+		@include media('phone') {
+			width: 60px;
+		}
 	}
 }
 

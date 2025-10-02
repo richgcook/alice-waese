@@ -315,8 +315,9 @@ header {
 			all: unset;
 			box-sizing: border-box;
 			cursor: pointer;
+			position: relative;
+    		top: 4px;
 			@include media('phone') {
-				position: relative;
 				z-index: 1;
 			}
 			img {

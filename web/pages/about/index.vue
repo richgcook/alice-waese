@@ -67,12 +67,12 @@ div.container {
 	@media (orientation: portrait) {
 		display: grid;
    		grid-template-rows: 1fr auto;
-		min-height: calc(100vh + 0.265em);
-		@supports (min-height: 100dvh) {
-			min-height: calc(100dvh + 0.265em);
+		height: 100svh;
+		@supports (height: 100svh) {
+			height: 100svh;
 		}
 		@include media('phone') {
-			row-gap: 20px;
+			row-gap: 35px;
 		}
 	}
 }
@@ -89,10 +89,22 @@ h2.statement {
 	line-height: 1.03em;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
+	@supports (text-box: trim-both cap text) {
+		padding: 50px;
+		> div {
+			text-box: trim-both cap alphabetic;
+			div, span {
+				text-box: inherit;
+			}
+		}
+	}
 	@include media('phone') {
 		letter-spacing: 0.03em;
 	}
 	&.--portrait {
+		position: relative;
+		padding: 35px 35px 0 35px;
+		height: auto;
 		display: none;
 		@media (orientation: portrait) {
 			display: flex;
@@ -103,9 +115,6 @@ h2.statement {
 			&:nth-of-type(2),
 			&:nth-of-type(4) {
 				text-align: right;
-			}
-			&:nth-of-type(2) {
-				font-feature-settings: "ss04";
 			}
 			&:nth-of-type(6) {
 				text-align: right;
@@ -119,80 +128,35 @@ h2.statement {
 		}
 		> div {
 			display: block;
-			&:nth-of-type(1) {
-				span {
-					@media (orientation: portrait) {
-						display: block;
-					}
-					&:nth-of-type(2) {
-						font-feature-settings: "ss04";
-						@media (orientation: portrait) {
-							text-align: right;
-						}
-					}
-				}
-				div.space {
-					@media (orientation: portrait) {
-						display: none;
-					}
-				}
-			}
 			&:nth-of-type(2) {
 				text-align: right;
-				@media (orientation: portrait) {
-					text-align: left;
-				}
-				span {
-					&:nth-of-type(3) {
-						@media (orientation: portrait) {
-							display: block;
-							text-align: right;
-						}
-					}
-				}
 			}
 			&:nth-child(3) {
 				position: relative;
 				display: flex;
 				flex-flow: row nowrap;
-				@media (orientation: portrait) {
-					flex-flow: row wrap;
-				}
-				span {
-					&:nth-of-type(1) {
-						@media (orientation: portrait) {
-							width: 100%;
-						}
-					}
-				}
-				div.space {
-					@media (orientation: portrait) {
-						display: none;
-					}
-				}
 				div.details {
 					flex-grow: 1;
 					letter-spacing: 0.04em;
 					text-transform: none;
 					text-align: left;
-					height: 72%;
 					display: flex;
 					flex-flow: column nowrap;
 					justify-content: center;
 					align-items: center;
-					@media (orientation: portrait) {
-						display: none;
-					}
 				}
 			}
 			&:nth-of-type(4) {
 				text-align: right;
-				@media (orientation: portrait) {
-					text-align: left;
-				}
-				div.space {
-					@media (orientation: portrait) {
-						display: none;
+				@supports not (text-box: trim-both cap text) {
+					@media screen and (min-width: 2500px) {
+						margin-bottom: -0.13em;
+					}
+					@media screen and (min-width: 2000px) and (max-width: 2499px) {
+						margin-bottom: -0.1em;
+					}
+					@media screen and (min-width: 1600px) and (max-width: 1999px) {
+						margin-bottom: -0.06em;
 					}
 				}
 			}
@@ -212,6 +176,8 @@ div.details {
 		justify-content: flex-end;
         padding: 35px;
         padding-top: 0;
+		position: relative;
+		top: 6px;
 	}
 	p {
 		display: flex;

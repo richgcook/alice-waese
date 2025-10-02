@@ -7,7 +7,7 @@
 				@wheel="hideLanding = true"
 				v-show="!hideLanding" 
 				ref="landing" 
-				v-if="data.homePage.landing.image?.asset || data.homePage.landing.video"
+				v-if="data.homePage.landing?.image?.asset || data.homePage.landing?.video"
 			>
 				<video playsinline autoplay loop muted v-if="data.homePage.landing.video">
 					<source :src="data.homePage.landing.video" type="video/mp4">
@@ -87,7 +87,7 @@ useHead({
 	}
 })
 
-const hideLanding = ref(false)
+const hideLanding = ref(!data?.value.homePage.landing?.image?.asset && !data?.value.homePage.landing?.video)
 
 </script>
 

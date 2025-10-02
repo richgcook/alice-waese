@@ -41,7 +41,7 @@ const props = defineProps({
 const plugins = computed(() => {
 	const basePlugins = [
 		Autoplay({
-			playOnInit: false,
+			playOnInit: props.startPlaying,
 			delay: 4000,
 			stopOnInteraction: false,
 		}),

@@ -285,7 +285,7 @@ div.masonry-layout {
 		display: flex;
 		flex-flow: column nowrap;
 		row-gap: 250px;
-		row-gap: 27.78vh;  /* ((250 distance / 900 viewport height) * 100) */
+		row-gap: 27.78vh; /* ((250 distance / 900 viewport height) * 100) */
 		position: relative;
 		@include media('phone') {
 			row-gap: 150px;
@@ -317,9 +317,8 @@ div.masonry-layout {
 		&:nth-child(2) {
 			> div.item {
 				&:first-child {
-					//margin-top: 489px;
-					//margin-top: 54.33vh; /* ((489 distance / 900 viewport height) * 100) */
-					margin-top: 45vh;
+					margin-top: 250px;
+					margin-top: 27.78vh; /* ((250 distance / 900 viewport height) * 100) */
 					@include media('phone') {
 						margin-top: 0;
 					}

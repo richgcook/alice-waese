@@ -102,7 +102,7 @@ div.landing {
 	cursor: pointer;
 	&.slide-up-enter-active,
 	&.slide-up-leave-active {
-		transition: transform 0.5s ease-out;
+		transition: transform 0.35s ease-out;
 	}
 	&.slide-up-enter-from,
 	&.slide-up-leave-to {

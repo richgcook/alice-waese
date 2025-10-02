@@ -32,8 +32,8 @@ ul.staggered-list {
 	padding: 0 120px;
 	margin: 25px 0 120px 0;
 	@include media('phone') {
-		grid-template-columns: 1fr;
-		row-gap: 3em;
+		grid-template-columns: repeat(6, 1fr);
+		gap: 2em 0;
 		padding: 0 35px;
 	}
 	&[data-layout="a"] {
@@ -69,44 +69,49 @@ ul.staggered-list {
 			}
 			&:nth-child(12n + 12) { grid-column: 3 / -1; }
 
+			@include media('phone') {
+				&:nth-child(12n+5) {
+					text-align: right !important;
+				}
+				&:nth-child(12n+6) {
+					text-align: left !important;
+					a {
+						display: block;
+					}
+				}
+				&:nth-child(12n+7) {
+					text-align: right !important;
+				}
+				&:nth-child(12n+8) {
+					text-align: left !important;
+					a {
+						display: block;
+					}
+				}
+				&:nth-child(12n+9) {
+					text-align: right !important;
+				}
+				&:nth-child(12n+10) {
+					text-align: left !important;
+					grid-column: 2 / -1 !important;
+					a {
+						display: block;
+					}
+				}
+			}
+
 			&:nth-child(odd) {
 				@include media('phone') {
 					text-align: left;
-					/*
-					display: block;
-					a {
-						text-align: left;
-					}
-					*/
-				}
-				&.--has-other {
-					@include media('phone') {
-						/*
-						a {
-							text-align: left;
-							display: flex;
-							justify-content: flex-start;
-						}
-						*/
-					}
 				}
 			}
 			&:nth-child(even) {
 				@include media('phone') {
 					text-align: right;
-					/* display: block;
-					a {
-						text-align: right;
-					} */
 				}
 				&.--has-other {
 					@include media('phone') {
 						text-align: left;
-						/* a {
-							text-align: left;
-							display: flex;
-							justify-content: flex-end;
-						} */
 					}
 				}
 			}
@@ -151,6 +156,31 @@ ul.staggered-list {
 			}
 			&:nth-child(20n + 20) { grid-column: 6 / -1; }
 
+			@include media('phone') {
+				&:nth-child(20n + 4) { 
+					grid-column: 4 / -1 !important;
+					text-align: left !important;
+				}
+				&:nth-child(20n + 5) { 
+					grid-column: 2 / -1 !important;
+				}
+				&:nth-child(20n + 6) { 
+					grid-column: 1 / -1 !important;
+					text-align: left !important;
+				}
+				&:nth-child(20n + 7) { 
+					text-align: right !important;
+				}
+				&:nth-child(20n + 8) { 
+					text-align: left !important;
+				}
+				&:nth-child(20n + 12) { 
+					grid-column: 4 / -1 !important;
+					text-align: left !important;
+				}
+
+			}
+
 			&:nth-child(odd) {
 				@include media('phone') {
 					display: block;
@@ -189,7 +219,7 @@ ul.staggered-list {
 		grid-column: 1 / -1;
 		display: grid;
 		grid-template-columns: subgrid;
-		font-size: clamp(45px, 6.9vw, 180px);
+		font-size: clamp(47px, 6.9vw, 180px);
 		line-height: 1.2em;
 		letter-spacing: -0.03em;
 		@include media('phone') {

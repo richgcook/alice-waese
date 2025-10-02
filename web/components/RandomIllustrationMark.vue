@@ -11,11 +11,19 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 const props = defineProps({
 	top: {
 		type: Object,
-		default: () => ({ min: 30, max: 90 })
+		default: () => ({ min: 30, max: 60 })
 	},
 	topPhone: {
 		type: Object,
-		default: () => ({ min: 30, max: 90 })
+		default: () => ({ min: 30, max: 60 })
+	},
+	topIfOnLeft: {
+		type: Object,
+		default: () => ({ min: 80, max: 90 })
+	},
+	topIfOnLeftPhone: {
+		type: Object,
+		default: () => ({ min: 80, max: 90 })
 	},
 	right: {
 		type: Object,
@@ -31,7 +39,7 @@ const props = defineProps({
 	},
 	leftPhone: {
 		type: Object,
-		default: () => ({ min: 35, max: 50 })
+		default: () => ({ min: 100, max: 120 })
 	},
 	topUnit: {
 		type: String,
@@ -117,15 +125,16 @@ const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
 onMounted(async () => {
 
-	randomTop.value = `${randInt(props.top.min, props.top.max)}${props.topUnit}`
-	randomTopPhone.value = `${randInt(props.topPhone.min, props.topPhone.max)}${props.topUnit}`
-
 	if (props.side === 'left') {
+		randomTop.value = `${randInt(props.topIfOnLeft.min, props.topIfOnLeft.max)}${props.topUnit}`
+		randomTopPhone.value = `${randInt(props.topIfOnLeftPhone.min, props.topIfOnLeftPhone.max)}${props.topUnit}`
 		randomLeft.value  = `${randInt(props.left.min, props.left.max)}px`
 		randomRight.value = 'auto'
 		randomLeftPhone.value  = `${randInt(props.leftPhone.min, props.leftPhone.max)}px`
 		randomRightPhone.value = 'auto'
 	} else {
+		randomTop.value = `${randInt(props.top.min, props.top.max)}${props.topUnit}`
+		randomTopPhone.value = `${randInt(props.topPhone.min, props.topPhone.max)}${props.topUnit}`
 		randomRight.value = `${randInt(props.right.min, props.right.max)}px`
 		randomLeft.value  = 'auto'
 		randomRightPhone.value = `${randInt(props.rightPhone.min, props.rightPhone.max)}px`
@@ -173,6 +182,7 @@ img {
 	left: v-bind(randomLeft);
 	width: v-bind(width);
 	pointer-events: none;
+	z-index: 1;
 	@include media('phone') {
 		display: v-bind('hideOnPhone');
 		top: v-bind(randomTopPhone);

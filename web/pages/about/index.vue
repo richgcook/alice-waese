@@ -77,9 +77,11 @@ div.container {
 	}
 }
 h2.statement {
-	position: relative;
+	position: fixed;
+	inset: 0;
+	height: 100%;
 	width: 100%;
-	padding: 50px 50px 5px 50px;
+	padding: 50px 50px 0 50px;
 	display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -87,22 +89,6 @@ h2.statement {
 	line-height: 1.03em;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
-	//margin-bottom: calc(83px + 50px);
-	height: calc(100vh + 0.265em);
-	height: 100vh;
-	@supports (height: 100dvh) {
-		height: calc(100dvh + 0.265em);
-		height: 100dvh;
-	}
-	@media (orientation: portrait) {
-		padding: 35px;
-		padding-bottom: 0;
-		margin-bottom: 0;
-		height: auto;
-		@supports (height: 100dvh) {
-			height: auto;
-		}
-	}
 	@include media('phone') {
 		letter-spacing: 0.03em;
 	}

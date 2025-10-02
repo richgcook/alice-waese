@@ -9,14 +9,19 @@
 				ref="landing" 
 				v-if="data.homePage.landing.image?.asset || data.homePage.landing.video"
 			>
+				<video playsinline autoplay loop muted v-if="data.homePage.landing.video">
+					<source :src="data.homePage.landing.video" type="video/mp4">
+				</video>
 				<NuxtImg 
 					:src="data.homePage.landing.image.assetRef" 
 					:alt="data.homePage.landing.image.alt"
 					sizes="100vw tablet-portrait:100vw"
 					loading="eager"
 					preload
-					v-if="data.homePage.landing.image?.asset"
+					v-else-if="data.homePage.landing.image?.asset"
 				/>
+
+				<LogoSeed class="logo" v-cloak />
 			</div>
 		</Transition>
 		<SliderHome 
@@ -97,7 +102,7 @@ div.landing {
 	cursor: pointer;
 	&.slide-up-enter-active,
 	&.slide-up-leave-active {
-		transition: transform 1s ease-out;
+		transition: transform 0.5s ease-out;
 	}
 	&.slide-up-enter-from,
 	&.slide-up-leave-to {
@@ -110,6 +115,15 @@ div.landing {
 		width: 100%;
 		object-fit: cover;
 		object-position: center;
+	}
+	svg.logo {
+		position: absolute;
+		bottom: 50px;
+		left: 50%;
+		transform: translateX(-50%);
+		height: auto;
+		width: 9vw;
+		fill: var(--color-bg);
 	}
 }
 

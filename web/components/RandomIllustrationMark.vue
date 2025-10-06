@@ -1,5 +1,10 @@
 <template>
-	<img :src="`/illustrations/${randomIllustration}.png`" ref="illustration" v-show="ready" />
+	<img 
+		:src="`/illustrations/${randomIllustration}.png`" 
+		:style="imgStyle"
+		ref="illustration" 
+		v-show="ready" 
+	/>
 </template>
 
 <script setup>
@@ -67,6 +72,8 @@ const props = defineProps({
 	},
 })
 
+gsap.registerPlugin(ScrollTrigger)
+
 const illustrationPool = useIllustrationPoolStore()
 
 const randomIllustration = ref(props.name || null)
@@ -74,36 +81,56 @@ if (!randomIllustration.value) {
 	randomIllustration.value = illustrationPool.drawOne()
 }
 
-const randomTop = ref('0')
-const randomTopPhone = ref('0')
-const randomRight = ref('auto')
-const randomRightPhone = ref('auto')
-const randomLeft  = ref('auto')
-const randomLeftPhone = ref('auto')
+const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
-const width = computed(() => {
-	if (randomIllustration.value == 'bear') {
-		return `50px`
-	} else if (randomIllustration.value == 'bunny-ears') {
-		return `35px`
-	} else if (randomIllustration.value == 'cat') {
-		return `40px`
-	} else if (randomIllustration.value == 'elephant') {
-		return `50px`
-	} else if (randomIllustration.value == 'figure') {
-		return `40px`
-	} else if (randomIllustration.value == 'eye') {
-		return `38px`
-	} else if (randomIllustration.value == 'hand') {
-		return `60px`
-	} else if (randomIllustration.value == 'horse') {
-		return `35px`
-	} else if (randomIllustration.value == 'spider') {
-		return `43px`
-	} else {
-		return '40px'
-	}
-})
+const widthMap = {
+	'bear': 50,
+	'bunny-ears': 35,
+	'cat': 40,
+	'elephant': 43,
+	'figure': 40,
+	'eye': 38,
+	'hand': 60,
+	'horse': 35,
+	'spider': 43,
+}
+
+const pickWidthPx = (name) => `${(name && widthMap[name]) ?? widthMap.__default}px`
+
+const uid = useId()
+const k = (s) => `illu-${uid}-${s}`
+
+const isLeft = props.side === 'left'
+
+const randomTop = useState(k('top'), () =>
+  `${randInt(
+    (isLeft ? props.topIfOnLeft : props.top).min,
+    (isLeft ? props.topIfOnLeft : props.top).max
+  )}${props.topUnit}`
+)
+
+const randomTopPhone = useState(k('topPhone'), () =>
+  `${randInt(
+    (isLeft ? props.topIfOnLeftPhone : props.topPhone).min,
+    (isLeft ? props.topIfOnLeftPhone : props.topPhone).max
+  )}${props.topUnit}`
+)
+
+const randomRight = useState(k('right'), () =>
+  	isLeft ? 'auto' : `${randInt(props.right.min, props.right.max)}px`
+)
+const randomRightPhone = useState(k('rightPhone'), () =>
+ 	isLeft ? 'auto' : `${randInt(props.rightPhone.min, props.rightPhone.max)}px`
+)
+
+const randomLeft = useState(k('left'), () =>
+	isLeft ? `${randInt(props.left.min, props.left.max)}px` : 'auto'
+)
+const randomLeftPhone = useState(k('leftPhone'), () =>
+	isLeft ? `${randInt(props.leftPhone.min, props.leftPhone.max)}px` : 'auto'
+)
+
+const widthPx = useState(k('width'), () => pickWidthPx(randomIllustration.value))
 
 const hideOnPhone = computed(() => {
 	if (props.hideOnPhone) return `none`
@@ -115,35 +142,34 @@ const onlyShowOnPhone = computed(() => {
 	return `block`
 })
 
+const imgStyle = computed(() => {
+	const base = {
+		position: 'absolute',
+		top: randomTop.value,
+		right: randomRight.value,
+		left: randomLeft.value,
+		width: widthPx.value,
+		height: 'auto',
+		pointerEvents: 'none',
+		zIndex: 1,
+		display: props.onlyShowOnPhone ? 'none' : 'block'
+	}
+
+  return base
+
+})
+
 const ready = ref(false)
-
-gsap.registerPlugin(ScrollTrigger)
-
 const illustration = useTemplateRef('illustration')
 
-const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+const hideOnPhoneCss = computed(() => (props.hideOnPhone ? 'none' : 'initial'))
+
+console.log(randomRightPhone.value)
 
 onMounted(async () => {
 
-	if (props.side === 'left') {
-		randomTop.value = `${randInt(props.topIfOnLeft.min, props.topIfOnLeft.max)}${props.topUnit}`
-		randomTopPhone.value = `${randInt(props.topIfOnLeftPhone.min, props.topIfOnLeftPhone.max)}${props.topUnit}`
-		randomLeft.value  = `${randInt(props.left.min, props.left.max)}px`
-		randomRight.value = 'auto'
-		randomLeftPhone.value  = `${randInt(props.leftPhone.min, props.leftPhone.max)}px`
-		randomRightPhone.value = 'auto'
-	} else {
-		randomTop.value = `${randInt(props.top.min, props.top.max)}${props.topUnit}`
-		randomTopPhone.value = `${randInt(props.topPhone.min, props.topPhone.max)}${props.topUnit}`
-		randomRight.value = `${randInt(props.right.min, props.right.max)}px`
-		randomLeft.value  = 'auto'
-		randomRightPhone.value = `${randInt(props.rightPhone.min, props.rightPhone.max)}px`
-		randomLeftPhone.value  = 'auto'
-	}
-
 	ready.value = true
-
-	await nextTick() // ensure styles are applied so measurements are correct
+	await nextTick()
 
 	const pageY = () => (window.pageYOffset || document.documentElement.scrollTop || 0)
 	const absTop = () => illustration.value.getBoundingClientRect().top + pageY()
@@ -175,19 +201,11 @@ onMounted(async () => {
 <style lang="scss" scoped>
 
 img {
-	display: v-bind('onlyShowOnPhone');
-	position: absolute;
-	top: v-bind(randomTop);
-	right: v-bind(randomRight);
-	left: v-bind(randomLeft);
-	width: v-bind(width);
-	pointer-events: none;
-	z-index: 1;
 	@include media('phone') {
-		display: v-bind('hideOnPhone');
-		top: v-bind(randomTopPhone);
-		right: v-bind(randomRightPhone);
-		left: v-bind(randomLeftPhone);
+		display: v-bind(hideOnPhoneCss) !important;
+		top: v-bind(randomTopPhone) !important;
+		right: v-bind(randomRightPhone) !important;
+		left: v-bind(randomLeftPhone) !important;
 	}
 }
 

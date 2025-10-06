@@ -143,8 +143,6 @@ onMounted(() => {
 
 	})
 
-	ScrollTrigger.refresh()
-
 })
 
 onBeforeUnmount(() => {

@@ -93,6 +93,7 @@ const widthMap = {
 	'hand': 60,
 	'horse': 35,
 	'spider': 43,
+	'__default': 40,
 }
 
 const pickWidthPx = (name) => `${(name && widthMap[name]) ?? widthMap.__default}px`
@@ -132,16 +133,6 @@ const randomLeftPhone = useState(k('leftPhone'), () =>
 
 const widthPx = useState(k('width'), () => pickWidthPx(randomIllustration.value))
 
-const hideOnPhone = computed(() => {
-	if (props.hideOnPhone) return `none`
-	return `initial`
-})
-
-const onlyShowOnPhone = computed(() => {
-	if (props.onlyShowOnPhone) return `none`
-	return `block`
-})
-
 const imgStyle = computed(() => {
 	const base = {
 		position: 'absolute',
@@ -163,8 +154,6 @@ const ready = ref(false)
 const illustration = useTemplateRef('illustration')
 
 const hideOnPhoneCss = computed(() => (props.hideOnPhone ? 'none' : 'initial'))
-
-console.log(randomRightPhone.value)
 
 onMounted(async () => {
 

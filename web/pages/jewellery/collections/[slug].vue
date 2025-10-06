@@ -9,6 +9,7 @@
 				<div class="collection-description" v-if="data.collection.descriptionText?.length">
 					<RichText :blocks="data.collection.descriptionText" />
 				</div>
+
 				<RandomIllustrationMark 
 					v-for="(name, index) in names"
 					:key="name"
@@ -16,6 +17,7 @@
 					:top="names === 2 ? (index === 2 ? { min: 70, max: 90 } : { min: 30, max: 50 }) : undefined"
 					:side="index === 1 ? 'left' : 'right'" 
 				/>
+
 			</div>
 
 			<!--
@@ -176,8 +178,6 @@ onMounted(() => {
 		triggers.push(st)
 
 	})
-
-	ScrollTrigger.refresh()
 
 })
 

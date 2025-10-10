@@ -32,7 +32,7 @@ ul.staggered-list {
 	padding: 0 120px;
 	margin: 25px 0 120px 0;
 	@include media('phone') {
-		grid-template-columns: repeat(6, 1fr);
+		grid-template-columns: repeat(12, 1fr);
 		gap: 2em 0;
 		padding: 0 35px;
 	}
@@ -74,6 +74,7 @@ ul.staggered-list {
 					text-align: right !important;
 				}
 				&:nth-child(12n+6) {
+					grid-column: 4 / -1 !important;
 					text-align: left !important;
 					a {
 						display: block;
@@ -93,7 +94,7 @@ ul.staggered-list {
 				}
 				&:nth-child(12n+10) {
 					text-align: left !important;
-					grid-column: 2 / -1 !important;
+					grid-column: 4 / -1 !important;
 					a {
 						display: block;
 					}

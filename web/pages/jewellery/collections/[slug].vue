@@ -1,46 +1,48 @@
 <template>
-	<div class="collections">
+	<VueLenis root :options="lenisOptions">
+		<div class="collections">
 
-		<!--<VueLenis root :options="lenisOptions">-->
+			<h1 v-for="(collection, i) in allCollections" :key="collection._id" class="collection-title" :class="{ '--active': activeIndex === i }">
+				{{ collection?.titleFull ? collection.titleFull : collection?.title }}
+			</h1>
 
 			<div class="collection-layout">
-				<h1 class="collection-title">{{ data.collection.titleFull ? data.collection.titleFull : data.collection.title }}</h1>
-				<MasonryLayout :items="data.collection.jewellery" context="collections" v-if="data.collection.jewellery?.length" />
-				<div class="collection-description" v-if="data.collection.descriptionText?.length">
-					<RichText :blocks="data.collection.descriptionText" />
-				</div>
-
-				<RandomIllustrationMark 
-					v-for="(name, index) in names"
-					:key="name"
-					:name="name"
-					:top="names === 2 ? (index === 2 ? { min: 70, max: 90 } : { min: 30, max: 50 }) : undefined"
-					:side="index === 1 ? 'left' : 'right'" 
-				/>
-
-			</div>
-
-			<!--
-			<div class="collection-layout --clone">
-				<h1 class="collection-title">{{ data.collection.titleFull ? data.collection.titleFull : data.collection.title }}</h1>
 				<MasonryLayout :items="data.collection.jewellery" context="collections" v-if="data.collection.jewellery?.length" />
 				<div class="collection-description" v-if="data.collection.descriptionText?.length">
 					<RichText :blocks="data.collection.descriptionText" />
 				</div>
 			</div>
-			-->
 			
 			<div class="collection-layout" v-for="collection in data.otherCollections" :key="collection._id">
-				<h1 class="collection-title">{{ collection.titleFull ? collection.titleFull : collection.title }}</h1>
 				<MasonryLayout :items="collection.jewellery" context="collections" v-if="collection.jewellery?.length" />
 				<div class="collection-description" v-if="collection.descriptionText?.length">
 					<RichText :blocks="collection.descriptionText" />
 				</div>
 			</div>
 
-		<!--</VueLenis>-->
+		</div>
+		<div class="collections --clone">
 
-	</div>
+			<h1 v-for="(collection, i) in allCollections" :key="collection._id" class="collection-title" :class="{ '--active': activeIndex === i }">
+				{{ collection?.titleFull ? collection.titleFull : collection?.title }}
+			</h1>
+
+			<div class="collection-layout">
+				<MasonryLayout :items="data.collection.jewellery" context="collections" v-if="data.collection.jewellery?.length" />
+				<div class="collection-description" v-if="data.collection.descriptionText?.length">
+					<RichText :blocks="data.collection.descriptionText" />
+				</div>
+			</div>
+			
+			<div class="collection-layout" v-for="collection in data.otherCollections" :key="collection._id">
+				<MasonryLayout :items="collection.jewellery" context="collections" v-if="collection.jewellery?.length" />
+				<div class="collection-description" v-if="collection.descriptionText?.length">
+					<RichText :blocks="collection.descriptionText" />
+				</div>
+			</div>
+
+		</div>
+	</VueLenis>
 </template>
 
 <script setup>
@@ -50,7 +52,7 @@ import { useIllustrationPoolStore } from '~/store/illustrationPool'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-//import { VueLenis, useLenis } from 'lenis/vue'
+import { VueLenis, useLenis } from 'lenis/vue'
  
 const { $seoQuery, $productQuery, $imageQuery, $richTextQuery } = useNuxtApp()
 
@@ -127,6 +129,12 @@ useHead({
 	}
 })
 
+const allCollections = computed(() => [
+	data?.value.collection,
+	...(data?.value.otherCollections || [])
+])
+
+/*
 const { count: illustrationCount } = useIllustrationCountByItems(data?.value.collection.jewellery, {
 	oneAbove: 5,
 	twoAbove: 8,
@@ -139,6 +147,7 @@ watch(
 	([id, count]) => { names.value = useIllustrationPool.assign(id, count) },
 	{ immediate: true }
 )
+	*/
 
 const lenisOptions = {
 	//smoothWheel: true,
@@ -147,38 +156,30 @@ const lenisOptions = {
 	autoRaf: true,
 }
 
-//const lenis = useLenis()
+const lenis = useLenis()
 
 gsap.registerPlugin(ScrollTrigger)
 
+const activeIndex = ref(0)
 const triggers = []
 
 onMounted(() => {
 
-	gsap.utils.toArray('h1.collection-title').forEach((title, index) => {
-
-		if (index === 0) {
-			//gsap.set(title, { opacity: 1 })
-			//return
-		}
-
-		const show = () => gsap.to(title, { opacity: 1, duration: 0.3, overwrite: 'auto' })
-        const hide = () => gsap.to(title, { opacity: 0, duration: 0.25, overwrite: 'auto' })
-
+	const sections = gsap.utils.toArray('div.collection-layout')
+  	sections.forEach((section, index) => {
+		const start = index === 0 ? 'top-=1 top' : 'top center'
 		const st = ScrollTrigger.create({
-			trigger: title,
-			start: 'top center',
-			onEnter: show,
-			onEnterBack: show,
-			onLeave: hide,
-			onLeaveBack: hide,
-			markers: true,
-        })
-
+			id: `title-band-${index}`,
+			trigger: section,
+			start,
+			end: '+=50%',
+			onEnter: () =>  activeIndex.value = index,
+			onEnterBack: () => activeIndex.value = index,
+			onLeave: () =>  activeIndex.value = -1,
+			onLeaveBack: () => activeIndex.value = -1,
+		})
 		triggers.push(st)
-
 	})
-
 })
 
 onBeforeUnmount(() => {
@@ -195,6 +196,14 @@ div.collections {
 	row-gap: 250px;
 	row-gap: 27.78vh; 
 	position: relative;
+	&.--clone {
+		position: relative;
+		overflow: hidden;
+  		height: 100vh;
+		@supports (height: 100dvh) {
+			height: 100dvh;
+		}
+	}
 	@include media('phone') {
 		row-gap: 150px;
 		row-gap: 20.5vh;
@@ -212,7 +221,7 @@ div.collection-layout {
 	}
 }
 h1.collection-title {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 50%;
     transform: translateX(-50%);
@@ -224,6 +233,11 @@ h1.collection-title {
 	letter-spacing: -0.03em;
 	text-align: center;
 	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.3s ease;
+	&.--active {
+		opacity: 1;
+	}
 	@include media('phone') {
 		width: calc(100% - (35px * 2));
 	}

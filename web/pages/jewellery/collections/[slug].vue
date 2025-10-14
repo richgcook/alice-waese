@@ -167,16 +167,23 @@ onMounted(() => {
 
 	const sections = gsap.utils.toArray('div.collection-layout')
   	sections.forEach((section, index) => {
+
 		const start = index === 0 ? 'top-=1 top' : 'top center'
+		const next  = sections[index + 1] || null
+
 		const st = ScrollTrigger.create({
 			id: `title-band-${index}`,
 			trigger: section,
 			start,
-			end: '+=50%',
+      endTrigger: next || section,
+        end: next ? 'top-=100 center+=100' : 'bottom top',
+
 			onEnter: () =>  activeIndex.value = index,
 			onEnterBack: () => activeIndex.value = index,
-			onLeave: () =>  activeIndex.value = -1,
+			onLeave: () => activeIndex.value = -1,
 			onLeaveBack: () => activeIndex.value = -1,
+			invalidateOnRefresh: true,
+			//markers: true,
 		})
 		triggers.push(st)
 	})

@@ -123,6 +123,7 @@ div.landing {
 		transform: translateX(-50%);
 		height: auto;
 		width: 9vw;
+		max-width: 175px;
 		fill: var(--color-bg);
 		@include media('phone') {
 			width: 100px;

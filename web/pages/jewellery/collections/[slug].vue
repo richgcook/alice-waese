@@ -175,9 +175,8 @@ onMounted(() => {
 			id: `title-band-${index}`,
 			trigger: section,
 			start,
-      endTrigger: next || section,
-        end: next ? 'top-=100 center+=100' : 'bottom top',
-
+      		endTrigger: next || section,
+        	end: next ? 'top-=100 center+=100' : 'bottom top',
 			onEnter: () =>  activeIndex.value = index,
 			onEnterBack: () => activeIndex.value = index,
 			onLeave: () => activeIndex.value = -1,
@@ -244,6 +243,7 @@ h1.collection-title {
 	transition: opacity 0.3s ease;
 	&.--active {
 		opacity: 1;
+		transition: opacity 0.6s ease;
 	}
 	@include media('phone') {
 		width: calc(100% - (35px * 2));

@@ -1,5 +1,5 @@
 <template>
-	<div class="media-layout" :data-layout="context?._type == 'product' ? 'portrait' : media[0].image?.asset?.orientation">
+	<div class="media-layout" :data-layout="context?._type == 'product' ? 'portrait' : media[0].image?.asset?.orientation" :data-type="context?._type">
 		<div class="media">
 			<div v-for="(item, index) in media" :key="index" class="item" :data-orientation="item?.image?.asset?.orientation">
 				<template v-if="useBlockType(item._type) == 'image'">
@@ -90,6 +90,14 @@ div.media-layout {
 			}
 		}
 	}
+	&[data-type="artwork"] {
+		div.caption {
+			@include media('phone') {
+				text-align: center;
+				padding: 0 calc(78px + 35px);
+			}
+		}
+	}
 	div.media {
 		scroll-snap-type: y mandatory;
 		position: relative;
@@ -163,11 +171,15 @@ div.media-layout {
 		@include media('phone') {
 			position: relative;
 			height: auto;
+			min-height: 4.9em;
+        	align-content: flex-start;
 			padding: 0 35px 0 calc(78px + 35px);
 		}
 		&.--has-text {
 			@include media('phone') {
 				text-align: left;
+				min-height: auto;
+				align-content: flex-end;
 			}
 			:deep(div.text) {
 				padding-left: 65px;

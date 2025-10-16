@@ -14,6 +14,7 @@
 				:name="name"
 				:topPhone="{ min: 10, max: 40 }" 
 				:onlyShowOnPhone="true"
+				:preventAnimation="true"
 			/>
 		</div>
 		<RandomIllustrationMark 
@@ -22,6 +23,7 @@
 			:topUnit="`vh`" 
 			:hideOnPhone="true" 
 			:immediateStart="true" 
+			:preventAnimation="true"
 		/>
 	</div>
 </template>

@@ -2,6 +2,7 @@
 	<img 
 		:src="`/illustrations/${randomIllustration}.png`" 
 		:style="imgStyle"
+		:class="{ '--no-animation': props.preventAnimation }"
 		ref="illustration" 
 		v-show="ready" 
 	/>
@@ -70,6 +71,10 @@ const props = defineProps({
 		type: Boolean, 
 		default: false 
 	},
+	preventAnimation: {
+		type: Boolean,
+		default: false,
+	},
 })
 
 gsap.registerPlugin(ScrollTrigger)
@@ -135,7 +140,7 @@ const widthPx = useState(k('width'), () => pickWidthPx(randomIllustration.value)
 
 const imgStyle = computed(() => {
 	const base = {
-		position: 'absolute',
+		position: props.preventAnimation ? 'fixed' : 'absolute',
 		top: randomTop.value,
 		right: randomRight.value,
 		left: randomLeft.value,
@@ -165,6 +170,8 @@ onMounted(async () => {
 	const startPos = () => absTop() - window.innerHeight // when element's top hits bottom of viewport
 	const endPos   = () => startPos() + window.innerHeight // run for one viewport height
 
+	if (props.preventAnimation) return
+
 	const stConfig = props.immediateStart
     // Start right away and run for 1 viewport height.
     // Use ScrollTrigger.scroll() so it also works if the page loads mid-scroll.
@@ -190,6 +197,9 @@ onMounted(async () => {
 <style lang="scss" scoped>
 
 img {
+	&.--no-animation {
+		position: absolute !important;
+	}
 	@include media('phone') {
 		display: v-bind(hideOnPhoneCss) !important;
 		top: v-bind(randomTopPhone) !important;

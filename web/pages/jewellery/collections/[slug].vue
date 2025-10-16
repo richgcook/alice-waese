@@ -151,7 +151,7 @@ watch(
 
 const lenisOptions = {
 	//smoothWheel: true,
-	//smoothTouch: true,
+	smoothTouch: true,
 	infinite: true,
 	autoRaf: true,
 }

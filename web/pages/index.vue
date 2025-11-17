@@ -7,7 +7,7 @@
 				@wheel="hideLanding = true"
 				v-show="!hideLanding" 
 				ref="landing" 
-				v-if="data.homePage.landing?.image?.asset || data.homePage.landing?.video"
+				v-if="(data.homePage.landing?.image?.asset || data.homePage.landing?.video) && !homeStore.isLandingHidden"
 			>
 				<video playsinline autoplay loop muted v-if="data.homePage.landing.video">
 					<source :src="data.homePage.landing.video" type="video/mp4">
@@ -21,7 +21,11 @@
 					v-else-if="data.homePage.landing.image?.asset"
 				/>
 
-				<LogoSeed class="logo" v-cloak />
+				<LogoSeed 
+					class="logo" 
+					:class="{ '--visible': logoVisible }"
+					v-cloak 
+				/>
 			</div>
 		</Transition>
 		<SliderHome 
@@ -33,6 +37,8 @@
 </template>
 
 <script setup>
+
+import { useHomeStore } from '~/store/home'
 
 const { $seoQuery, $imageQuery, $internalLinkQuery } = useNuxtApp()
 
@@ -88,6 +94,15 @@ useHead({
 })
 
 const hideLanding = ref(!data?.value.homePage.landing?.image?.asset && !data?.value.homePage.landing?.video)
+const logoVisible = ref(false)
+
+const homeStore = useHomeStore()
+
+onMounted(() => {
+	requestAnimationFrame(() => {
+		logoVisible.value = true
+	})
+})
 
 </script>
 
@@ -125,6 +140,11 @@ div.landing {
 		width: 9vw;
 		max-width: 175px;
 		fill: var(--color-bg);
+		opacity: 0;
+		transition: opacity 0.5s ease 0.5s;
+		&.--visible {
+			opacity: 1;
+		}
 		@include media('phone') {
 			width: 100px;
 		}

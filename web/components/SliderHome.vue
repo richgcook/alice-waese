@@ -22,6 +22,7 @@
 
 <script setup>
 
+import { useHomeStore } from '~/store/home'
 import { useThemeModeStore } from '~/store/themeMode'
 
 import emblaCarouselVue from 'embla-carousel-vue'
@@ -41,7 +42,7 @@ const props = defineProps({
 const plugins = computed(() => {
 	const basePlugins = [
 		Autoplay({
-			playOnInit: props.startPlaying,
+			playOnInit: false,
 			delay: 4000,
 			stopOnInteraction: false,
 		}),
@@ -92,14 +93,44 @@ watch(effectiveTheme, () => {
 	themeModeStore.setMode(effectiveTheme.value)
 })
 
-watch(() => props.startPlaying, () => {
-	if (embla.value && props.startPlaying) embla.value.plugins().autoplay.play()
-}, { once: true })
+const homeStore = useHomeStore()
+
+let autoplayStartTimeoutId = null
+let hasTriggeredInitialAutoplay = false
+
+const startAutoplay = () => {
+	if (!embla.value) return
+	embla.value.plugins().autoplay.play()
+}
+
+watch(() => props.startPlaying, (shouldStart) => {
+	if (!embla.value || !shouldStart || hasTriggeredInitialAutoplay) return
+
+	hasTriggeredInitialAutoplay = true
+	homeStore.setHideLanding()
+
+	autoplayStartTimeoutId = setTimeout(() => {
+		embla.value.scrollNext()
+		startAutoplay()
+		autoplayStartTimeoutId = null
+	}, 2000)
+})
 
 onMounted(() => {
 	if (embla.value) {
 		onInit()
 		embla.value.on('select', onSelect)
+
+		if (homeStore.isLandingHidden) {
+			embla.value.plugins().autoplay.play()
+		}
+	}
+})
+
+onBeforeUnmount(() => {
+	if (autoplayStartTimeoutId) {
+		clearTimeout(autoplayStartTimeoutId)
+		autoplayStartTimeoutId = null
 	}
 })
 

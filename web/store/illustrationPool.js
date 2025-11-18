@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-const ALL = ['bear', 'bunny-ears', 'cat', 'elephant', 'eye', 'figure', 'hand', 'horse', 'spider']
+const ALL = ['bear', 'bunny-ears', 'butterfly', 'cat', 'elephant', 'elephant-figure', 'eye', 'figure', 'hand', 'horse', 'spider']
 
 export const useIllustrationPoolStore = defineStore('illustration-pool-store', {
 	state: () => {

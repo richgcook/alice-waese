@@ -91,10 +91,10 @@ const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 const widthMap = {
 	'bear': 50,
 	'bunny-ears': 35,
-	'butterfly': 40,
+	'butterfly': 35,
 	'cat': 40,
 	'elephant': 43,
-	'elephant-figure': 40,
+	'elephant-figure': 35,
 	'figure': 40,
 	'eye': 38,
 	'hand': 60,

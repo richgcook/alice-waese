@@ -1,6 +1,6 @@
 <template>
 	<div class="page-layout">
-		<MasonryLayout :items="data.type.jewellery" v-if="data.type.jewellery?.length" />
+		<MasonryLayout :items="data.type.jewelry" v-if="data.type.jewelry?.length" />
     	<RandomIllustrationMark 
 			v-for="(name, index) in names"
       		:key="name"
@@ -26,7 +26,7 @@ const query = groq`{
 		_id, _type, slug, title, seo {
 			${$seoQuery}
 		},
-		"jewellery": pageBuilder[] {
+		"jewelry": pageBuilder[] {
 			"item": product->{
 				${$productQuery},
 			},
@@ -63,7 +63,7 @@ useHead({
 	}
 })
 
-const { count: illustrationCount } = useIllustrationCountByItems(data?.value.type.jewellery, {
+const { count: illustrationCount } = useIllustrationCountByItems(data?.value.type.jewelry, {
 	oneAbove: 5,
 	twoAbove: 8,
 })

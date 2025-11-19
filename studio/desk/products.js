@@ -3,25 +3,14 @@ import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
 export const productsStructure = (S, context) =>
 S.listItem()
-	.title('Jewellery')
+	.title('Jewelry')
 	.icon(SketchLogoIcon)
 	.child(
 		S.list()
-			.title('Jewellery')
+			.title('Jewelry')
 			.items([
-				/*
-				S.listItem()
-				.title('Overview')
-				.icon(FileIcon)
-				.child(
-					S.document()
-					.id('projectsPage')
-					.schemaType('projectsPage')
-					.documentId('projectsPage')
-				),
-				*/
 				S.divider(),
-				S.documentTypeListItem('product').title('Jewellery').icon(SketchLogoIcon),
+				S.documentTypeListItem('product').title('Jewelry').icon(SketchLogoIcon),
 				orderableDocumentListDeskItem({
 					type: 'productCategory', 
 					title: 'Categories',

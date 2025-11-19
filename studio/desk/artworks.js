@@ -3,18 +3,18 @@ import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
 export const artworksStructure = (S, context) =>
 S.listItem()
-	.title('Artworks')
+	.title('Artwork')
 	.icon(PaletteIcon)
 	.child(
 		S.list()
-			.title('Artworks')
+			.title('Artwork')
 			.items([
 				/*
 				S.listItem()
 				.title('Overview')
 				.icon(FileIcon)
 				.child(
-					S.document()
+					S.document()s
 					.id('projectsPage')
 					.schemaType('projectsPage')
 					.documentId('projectsPage')

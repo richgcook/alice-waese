@@ -21,7 +21,7 @@
 					<button
 						@mouseover="activeSubMenu = 1"
 						@click.stop.prevent="onItemPress(1)"
-					>Jewellery</button>
+					>Jewelry</button>
 				</li>
 				<li>
 					<ul class="sub" v-show="activeSubMenu === 2">
@@ -32,7 +32,7 @@
 					<button
 						@mouseover="activeSubMenu = 2"
 						@click.stop.prevent="onItemPress(2)"
-					>Artworks</button>
+					>Artwork</button>
 				</li>
 				<li>
 					<ul class="sub" v-show="activeSubMenu === 3">
@@ -104,7 +104,7 @@ const route = useRoute()
 
 const showLogo = computed(() => {
 	const hiddenLogoRoutes = [
-		'jewellery-collections-slug',
+		'jewelry-collections-slug',
 		'about',
 		'about-stockists',
 		'about-press'

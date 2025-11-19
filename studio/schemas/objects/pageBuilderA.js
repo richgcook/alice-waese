@@ -9,7 +9,7 @@ export default defineType({
 	of: [
 		defineArrayMember({
 			type: 'object',
-			title: 'Jewellery',
+			title: 'Jewelry',
 			name: 'productBlock',
 			fields: [
 				defineArrayMember({
@@ -90,7 +90,7 @@ export default defineType({
 					const { title, image, imageOverride } = selection
 					return {
 						title,
-						subtitle: 'Jewellery',
+						subtitle: 'Jewelry',
 						media: imageOverride ? imageOverride : image ? image : PlayIcon,
 					}
 				},

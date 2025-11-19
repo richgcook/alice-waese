@@ -7,14 +7,14 @@
 			</h1>
 
 			<div class="collection-layout">
-				<MasonryLayout :items="data.collection.jewellery" context="collections" v-if="data.collection.jewellery?.length" />
+				<MasonryLayout :items="data.collection.jewelry" context="collections" v-if="data.collection.jewelry?.length" />
 				<div class="collection-description" v-if="data.collection.descriptionText?.length">
 					<RichText :blocks="data.collection.descriptionText" />
 				</div>
 			</div>
 			
 			<div class="collection-layout" v-for="collection in data.otherCollections" :key="collection._id">
-				<MasonryLayout :items="collection.jewellery" context="collections" v-if="collection.jewellery?.length" />
+				<MasonryLayout :items="collection.jewelry" context="collections" v-if="collection.jewelry?.length" />
 				<div class="collection-description" v-if="collection.descriptionText?.length">
 					<RichText :blocks="collection.descriptionText" />
 				</div>
@@ -28,14 +28,14 @@
 			</h1>
 
 			<div class="collection-layout">
-				<MasonryLayout :items="data.collection.jewellery" context="collections" v-if="data.collection.jewellery?.length" />
+				<MasonryLayout :items="data.collection.jewelry" context="collections" v-if="data.collection.jewelry?.length" />
 				<div class="collection-description" v-if="data.collection.descriptionText?.length">
 					<RichText :blocks="data.collection.descriptionText" />
 				</div>
 			</div>
 			
 			<div class="collection-layout" v-for="collection in data.otherCollections" :key="collection._id">
-				<MasonryLayout :items="collection.jewellery" context="collections" v-if="collection.jewellery?.length" />
+				<MasonryLayout :items="collection.jewelry" context="collections" v-if="collection.jewelry?.length" />
 				<div class="collection-description" v-if="collection.descriptionText?.length">
 					<RichText :blocks="collection.descriptionText" />
 				</div>
@@ -65,7 +65,7 @@ const query = groq`{
 		_id, _type, slug, title, titleFull, seo {
 			${$seoQuery}
 		},
-		"jewellery": pageBuilder[] {
+		"jewelry": pageBuilder[] {
 			"item": product->{
 				${$productQuery},
 			},
@@ -89,7 +89,7 @@ const query = groq`{
     	_id, _type, slug, title, titleFull, seo {
 			${$seoQuery}
 		},
-		"jewellery": pageBuilder[] {
+		"jewelry": pageBuilder[] {
 			"item": product->{
 				${$productQuery},
 			},
@@ -135,7 +135,7 @@ const allCollections = computed(() => [
 ])
 
 /*
-const { count: illustrationCount } = useIllustrationCountByItems(data?.value.collection.jewellery, {
+const { count: illustrationCount } = useIllustrationCountByItems(data?.value.collection.jewelry, {
 	oneAbove: 5,
 	twoAbove: 8,
 })

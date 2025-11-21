@@ -141,7 +141,7 @@ div.landing {
 		max-width: 175px;
 		fill: var(--color-bg);
 		opacity: 0;
-		transition: opacity 0.5s ease 0.5s;
+		transition: opacity 0.5s ease 0.1s;
 		&.--visible {
 			opacity: 1;
 		}

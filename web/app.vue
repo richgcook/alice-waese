@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="app">
 		<NuxtLayout>
 			<NuxtPage />
 		</NuxtLayout>
@@ -46,3 +46,11 @@ watch(() => route.path, (newRoute) => {
 }, { immediate: true })
 
 </script>
+
+<style lang="scss" scoped>
+
+div#app {
+	cursor: url('/cursor-black.svg') 0 0, auto;
+}
+
+</style>

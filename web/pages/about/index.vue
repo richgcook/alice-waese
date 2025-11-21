@@ -7,7 +7,7 @@
 			<div>
 				<span>based</span><div class="space">&nbsp;</div><span>in</span>
 				<div class="details">
-					<p>For direct orders & inquiries, contact<NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></p>
+					<p>For direct orders & inquiries <span>contact <NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></span></p>
 				</div>
 			</div>
 			<div><span>New</span><div class="space">&nbsp;</div><span>York.</span></div>
@@ -24,7 +24,7 @@
 		</h2>
 
 		<div class="details">
-			<p>For direct orders & inquiries, contact<NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></p>
+			<p>For direct orders & inquiries <span>contact <NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></span></p>
 		</div>
 	</div>
 </template>
@@ -183,7 +183,7 @@ div.details {
 		display: flex;
 		flex-flow: column nowrap;
 		row-gap: 0.8em;
-		a {
+		span {
 			text-indent: 65px;
 			&:hover {
 				color: var(--color-gold);

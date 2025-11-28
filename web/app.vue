@@ -47,10 +47,13 @@ watch(() => route.path, (newRoute) => {
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 div#app {
 	cursor: url('/cursor-black.svg') 0 0, auto;
+	a, button {
+		cursor: url('/cursor-black.svg') 0 0, auto;
+	}
 }
 
 </style>

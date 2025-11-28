@@ -1,36 +1,30 @@
 <template>
 	<div>
-		<Transition name="slide-up">
-			<div class="landing" 
-				@click="hideLanding = true" 
-				@touchstart="hideLanding = true" 
-				@wheel="hideLanding = true"
-				v-show="!hideLanding" 
-				ref="landing" 
-				v-if="(data.homePage.landing?.image?.asset || data.homePage.landing?.video) && !homeStore.isLandingHidden"
-			>
-				<video playsinline autoplay loop muted v-if="data.homePage.landing.video">
-					<source :src="data.homePage.landing.video" type="video/mp4">
-				</video>
-				<NuxtImg 
-					:src="data.homePage.landing.image.assetRef" 
-					:alt="data.homePage.landing.image.alt"
-					sizes="100vw tablet-portrait:100vw"
-					loading="eager"
-					preload
-					v-else-if="data.homePage.landing.image?.asset"
-				/>
-
-				<LogoSeed 
-					class="logo" 
-					:class="{ '--visible': logoVisible }"
-					v-cloak 
-				/>
-			</div>
-		</Transition>
+		<div class="landing" 
+			@click="hideLandingHandler" 
+			@touchstart="hideLandingHandler" 
+			@wheel="hideLandingHandler"
+			ref="landing" 
+			v-if="(data.homePage.landing?.image?.asset || data.homePage.landing?.video) && !homeStore.isLandingHidden"
+		>
+			<video playsinline autoplay loop muted ref="landingVideo" v-if="data.homePage.landing.video">
+				<source :src="data.homePage.landing.video" type="video/mp4">
+			</video>
+			<NuxtImg 
+				:src="data.homePage.landing.image.assetRef" 
+				:alt="data.homePage.landing.image.alt"
+				sizes="100vw tablet-portrait:100vw"
+				loading="eager"
+				preload
+				ref="landingImage"
+				v-else-if="data.homePage.landing.image?.asset"
+			/>
+			<LogoSeed class="logo" ref="landingLogoSeed" />
+			<div class="underlay" ref="landingUnderlay"></div>
+		</div>
 		<SliderHome 
 			:slides="data.homePage.content" 
-			:startPlaying="hideLanding"
+			:startPlaying="landingIsHidden"
 			v-if="data.homePage.content?.length" 
 		/>
 	</div>
@@ -39,6 +33,7 @@
 <script setup>
 
 import { useHomeStore } from '~/store/home'
+import { gsap } from 'gsap'
 
 const { $seoQuery, $imageQuery, $internalLinkQuery } = useNuxtApp()
 
@@ -93,14 +88,50 @@ useHead({
 	}
 })
 
-const hideLanding = ref(!data?.value.homePage.landing?.image?.asset && !data?.value.homePage.landing?.video)
-const logoVisible = ref(false)
-
 const homeStore = useHomeStore()
 
+const landing = useTemplateRef('landing')
+const landingVideo = useTemplateRef('landingVideo')
+const landingImage = useTemplateRef('landingImage')
+const landingLogoSeed = useTemplateRef('landingLogoSeed')
+const landingUnderlay = useTemplateRef('landingUnderlay')
+
+const landingIsHidden = ref(false)
+
+let landingTimeline = null
+
+const hideLandingHandler = () => {
+	gsap.timeline()
+	.to(landingLogoSeed.value.$el, {
+		opacity: 0,
+		duration: 0.5,
+		ease: 'power2.inOut',
+	})
+	.to(landing.value, {
+		transform: 'translateY(-100%)',
+		duration: 1.5,
+		ease: 'power2.inOut'
+	})
+	.to(landingUnderlay.value, {
+		opacity: 0,
+		duration: 1.5,
+		onComplete: () => {
+			landingIsHidden.value = true
+		}
+	}, '<0.5')
+}
+
 onMounted(() => {
-	requestAnimationFrame(() => {
-		logoVisible.value = true
+	landingTimeline = gsap.timeline()
+	landingTimeline.to(landingVideo.value || landingImage.value.$el, {
+		opacity: 1,
+		duration: 1,
+		ease: 'power2.inOut'
+	})
+	.to(landingLogoSeed.value.$el, {
+		opacity: 1,
+		duration: 1,
+		ease: 'power2.inOut'
 	})
 })
 
@@ -114,15 +145,7 @@ div.landing {
 	height: 100%;
 	width: 100%;
 	z-index: 30;
-	cursor: pointer;
-	&.slide-up-enter-active,
-	&.slide-up-leave-active {
-		transition: transform 0.25s ease-out;
-	}
-	&.slide-up-enter-from,
-	&.slide-up-leave-to {
-		transform: translateY(-100%);
-	}
+	background-color: black;
 	img, video {
 		position: absolute;
 		inset: 0;
@@ -130,6 +153,7 @@ div.landing {
 		width: 100%;
 		object-fit: cover;
 		object-position: center;
+		opacity: 0;
 	}
 	svg.logo {
 		position: absolute;
@@ -141,13 +165,15 @@ div.landing {
 		max-width: 175px;
 		fill: var(--color-bg);
 		opacity: 0;
-		transition: opacity 0.5s ease 0.1s;
-		&.--visible {
-			opacity: 1;
-		}
 		@include media('phone') {
 			width: 100px;
 		}
+	}
+	div.underlay {
+		position: absolute;
+		inset: 0;
+		background-color: black;
+		transform: translateY(100%);
 	}
 }
 

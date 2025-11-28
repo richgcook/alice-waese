@@ -115,6 +115,7 @@ const showLogo = computed(() => {
 
 const navStore = useNavStore()
 
+/*
 const themeModeStore = useThemeModeStore()
 
 const textAndAssetColor = computed(() => {
@@ -132,6 +133,7 @@ const invertAssets = computed(() => {
 		return 'invert(0)'
 	}
 })
+*/
 
 gsap.registerPlugin(ScrollToPlugin)
 
@@ -252,7 +254,7 @@ header {
 				max-height: 100%;
 				width: 100%;
 				max-width: 100%;
-				fill: v-bind(textAndAssetColor);
+				//fill: v-bind(textAndAssetColor);
 				@include media('phone') {
 					height: auto;
 					//fill: white !important;
@@ -306,7 +308,7 @@ header {
 				}
 				img {
 					@include media('phone') {
-						filter: invert(0) !important;
+						//filter: invert(0) !important;
 					}
 				}
 			}
@@ -322,7 +324,7 @@ header {
 			}
 			img {
 				width: 43px;
-				filter: v-bind(invertAssets);
+				//filter: v-bind(invertAssets);
 			}
 		}
 		ul.menu {
@@ -331,7 +333,7 @@ header {
 			gap: 0.215em 0;
 			justify-content: space-between;
 			align-items: flex-end;
-			color: v-bind(textAndAssetColor);
+			//color: v-bind(textAndAssetColor);
 			@include media('phone') {
 				display: flex;
 				flex-flow: column nowrap;
@@ -345,6 +347,14 @@ header {
 				color: black !important;
 				padding: 85px 35px 75px 35px;
 				gap: 2.5em 0;
+			}
+			&.fade-enter-active,
+			&.fade-leave-active {
+				transition: opacity 0.25s;
+			}
+			&.fade-enter-from,
+			&.fade-leave-to {
+				opacity: 0;
 			}
 			li {
 				display: flex;

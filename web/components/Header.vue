@@ -345,7 +345,6 @@ header {
 			//align-items: flex-end;
 			//color: v-bind(textAndAssetColor);
 			@include media('phone') {
-				display: flex;
 				flex-flow: column nowrap;
 				justify-content: center;
 				align-items: flex-start;
@@ -390,6 +389,8 @@ header {
 					flex-flow: column nowrap;
 					row-gap: 1.15em;
 					@include media('phone') {
+						position: relative;
+						bottom: 0;
 						padding-left: 80px;
 					}
 					ul.sub {

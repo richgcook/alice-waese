@@ -355,7 +355,7 @@ header {
 				background-color: var(--color-bg);
 				color: black !important;
 				padding: 85px 35px 75px 35px;
-				gap: 2.5em 0;
+				gap: 2em 0;
 			}
 			&.fade-enter-active,
 			&.fade-leave-active {
@@ -368,7 +368,7 @@ header {
 			li {
 				display: flex;
 				flex-flow: column nowrap;
-				row-gap: 1.15em;
+				row-gap: 0.8em;
 				position: relative;
 				white-space: nowrap;
 				@include media('phone') {
@@ -384,10 +384,10 @@ header {
 				}
 				ul.sub {
 					position: absolute;
-					bottom: calc(1.15em + 1.3em);
+					bottom: calc(1em + 1.3em);
 					display: flex;
 					flex-flow: column nowrap;
-					row-gap: 1.15em;
+					row-gap: 0.8em;
 					@include media('phone') {
 						position: relative;
 						bottom: 0;

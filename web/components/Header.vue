@@ -9,6 +9,7 @@
 						<li v-for="category in data.productCategories" :key="category._id">
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
 						</li>
+						<!--
 						<li v-if="data.productCollections?.length">
 							<button @mouseover="activeSubSubMenu ? activeSubSubMenu = null : activeSubSubMenu = 1">Collections</button>
 							<ul class="sub" v-show="activeSubSubMenu === 1">
@@ -17,6 +18,7 @@
 								</li>
 							</ul>
 						</li>
+						-->
 					</ul>
 					<button
 						@mouseover="activeSubMenu = 1"
@@ -25,6 +27,9 @@
 				</li>
 				<li>
 					<ul class="sub" v-show="activeSubMenu === 2">
+						<li v-for="collection in data.productCollections" :key="collection._id">
+							<NuxtLink :to="useInternalLinkUrl(collection)">{{ collection.title }}</NuxtLink>
+						</li>
 						<li v-for="category in data.artworkCategories" :key="category._id">
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
 						</li>
@@ -32,7 +37,7 @@
 					<button
 						@mouseover="activeSubMenu = 2"
 						@click.stop.prevent="onItemPress(2)"
-					>Artwork</button>
+					>Collections</button>
 				</li>
 				<li>
 					<ul class="sub" v-show="activeSubMenu === 3">
@@ -289,10 +294,11 @@ header {
 		bottom: 0;
 		left: 0;
 		padding: 0 0 50px 50px;
-		@include max-width-grid-columns(21, 6, '20px', 'width', '0px', '100vw + 100px');
+		//@include max-width-grid-columns(21, 6, '20px', 'width', '0px', '100vw + 100px');
+		width: 22.5%;
 		max-width: 768px;
 		@include media('tablet') {
-			@include max-width-grid-columns(21, 7, '20px', 'width', '0px', '100vw + 100px');
+			//@include max-width-grid-columns(21, 7, '20px', 'width', '0px', '100vw + 100px');
 		}
 		@include media('phone') {
 			width: auto;
@@ -328,11 +334,15 @@ header {
 			}
 		}
 		ul.menu {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			gap: 0.215em 0;
+			display: flex;
+			flex-flow: row nowrap;
 			justify-content: space-between;
 			align-items: flex-end;
+			//display: grid;
+			//grid-template-columns: repeat(3, 1fr);
+			//gap: 0.215em 0;
+			//justify-content: space-between;
+			//align-items: flex-end;
 			//color: v-bind(textAndAssetColor);
 			@include media('phone') {
 				display: flex;
@@ -374,6 +384,8 @@ header {
 					}
 				}
 				ul.sub {
+					position: absolute;
+					bottom: calc(1.15em + 1.3em);
 					display: flex;
 					flex-flow: column nowrap;
 					row-gap: 1.15em;

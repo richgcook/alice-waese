@@ -113,7 +113,8 @@ watch(() => props.startPlaying, (shouldStart) => {
 		embla.value.scrollNext()
 		startAutoplay()
 		autoplayStartTimeoutId = null
-	}, 2000)
+		console.log('startAutoplay')
+	}, 4000)
 })
 
 onMounted(() => {

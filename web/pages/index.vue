@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<div class="landing" 
-			@click="hideLandingHandler" 
-			@touchstart="hideLandingHandler" 
-			@wheel="hideLandingHandler"
+			@click.once="hideLandingHandler" 
+			@touchstart.once="hideLandingHandler" 
+			@wheel.once="hideLandingHandler"
 			ref="landing" 
 			v-if="(data.homePage.landing?.image?.asset || data.homePage.landing?.video) && !homeStore.isLandingHidden"
 		>
@@ -101,6 +101,7 @@ const landingIsHidden = ref(false)
 let landingTimeline = null
 
 const hideLandingHandler = () => {
+	console.log('hideLandingHandler')
 	gsap.timeline()
 	.to(landingLogoSeed.value.$el, {
 		opacity: 0,

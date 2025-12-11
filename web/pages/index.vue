@@ -105,12 +105,12 @@ const hideLandingHandler = () => {
 	gsap.timeline()
 	.to(landingLogoSeed.value.$el, {
 		opacity: 0,
-		duration: 0.5,
+		duration: 1,
 		ease: 'power2.inOut',
 	})
 	.to(landing.value, {
 		transform: 'translateY(-100%)',
-		duration: 1.5,
+		duration: 1.2,
 		ease: 'power2.inOut'
 	})
 	.to(landingUnderlay.value, {

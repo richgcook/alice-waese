@@ -87,7 +87,7 @@ h2.statement {
     justify-content: space-between;
 	font-size: clamp(69px, 11.5vw, 320px);
 	line-height: 1.03em;
-	letter-spacing: 0.06em;
+	letter-spacing: 0.03em;
 	text-transform: uppercase;
 	@supports (text-box: trim-both cap text) {
 		padding: 50px;

@@ -2,6 +2,7 @@ import { HouseIcon, FilesIcon, AtIcon } from '@phosphor-icons/react'
 
 import { productsStructure } from './products'
 import { artworksStructure } from './artworks'
+import { collaborationsStructure } from './collaborations'
 
 import { aboutStructure } from './about'
 import { settingsStructure } from './settingsGeneral'
@@ -17,6 +18,8 @@ const hiddenDocTypes = listItem =>
 		'productCollection',
 		'artwork',
 		'artworkCategory',
+		'collaborationsPage',
+		'collaboration',
 		'aboutPage',
 		'pageA',
 	]
@@ -43,6 +46,8 @@ export const deskStructure = (S, context) =>
 		productsStructure(S, context),
 
 		artworksStructure(S, context),
+
+		collaborationsStructure(S, context),
 
 		S.documentTypeListItem('pageA').title('Pages').icon(FilesIcon),
 

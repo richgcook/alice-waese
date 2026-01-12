@@ -8,5 +8,6 @@ export const useInternalLinkUrl = (page) => {
 	if (_type === 'productCollection') return `/jewelry/collections/${slug.current}`
 	if (_type === 'artwork') return `/artwork/${slug.current}`
 	if (_type === 'artworkCategory') return `/artwork/type/${slug.current}`
+	if (_type === 'collaboration') return `/collaborations/${slug.current}`
 	return `/${slug.current}`
 }

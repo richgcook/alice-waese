@@ -174,6 +174,78 @@ export default defineType({
 				},
 			},
 		}),
+		defineArrayMember({
+			type: 'object',
+			title: 'Media block',
+			name: 'mediaBlock',
+			fields: [
+				defineField({
+					type: 'image',
+					title: 'Image',
+					name: 'image',
+					fields: [
+						defineField({
+							type: 'alt',
+							name: 'alt'
+						})
+					],
+				}),
+				defineField({
+					type: 'image',
+					title: 'Image (hover state)',
+					name: 'imageHoverState',
+					description: "Optional image that appears on hover",
+					fields: [
+						defineField({
+							type: 'alt',
+							name: 'alt'
+						})
+					],
+				}),
+				defineField({
+					type: 'file',
+					title: 'Video',
+					name: 'video',
+					description: "Optional video that appears instead of the image",
+					options: {
+						accept: 'video/*'
+					},
+				}),
+				defineField({
+					type: 'object',
+					title: 'Settings',
+					name: 'settings',
+					fields: [
+						defineField({
+							type: 'string',
+							title: 'Size',
+							name: 'size',
+							options: {
+								list: [
+									{ title: 'Large', value: 'large' },
+									{ title: 'Medium', value: 'medium' },
+									{ title: 'Small', value: 'small' },
+								]
+							},
+							initialValue: 'large',
+							description: 'Defines how wide the image or video should appear in its column',
+							validation: Rule => Rule.required(),
+						}),
+					],
+				}),
+			],
+			preview: {
+				select: {
+					image: 'image',
+				},
+				prepare({ image }) {
+					return {
+						title: 'Media',
+						media: image ? image : PlayIcon,
+					}
+				}
+			},
+		}),
 	],
 	components: {
     	input: DocumentBasedPageBuilderAInput,

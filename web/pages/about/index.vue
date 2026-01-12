@@ -185,7 +185,7 @@ div.details {
 		row-gap: 0.8em;
 		span {
 			text-indent: 65px;
-			&:hover {
+			a:hover {
 				color: var(--color-gold);
 			}
 		}

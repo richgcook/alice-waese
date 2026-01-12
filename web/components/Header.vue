@@ -33,6 +33,9 @@
 						<li v-for="category in data.artworkCategories" :key="category._id">
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
 						</li>
+						<li v-if="data.collaborationsPage">
+							<NuxtLink :to="useInternalLinkUrl(data.collaborationsPage)">{{ data.collaborationsPage.title }}</NuxtLink>
+						</li>
 					</ul>
 					<button
 						@mouseover="activeSubMenu = 2"
@@ -86,6 +89,10 @@ const query = groq`{
 		_id, _type, title, slug,
 	},
 
+	"collaborationsPage": *[_type == "collaborationsPage"] {
+		_id, _type, title, slug,
+	}[0],
+
 	"aboutPage": *[_type == "aboutPage"] {
 		_id, _type, title, slug,
 	}[0],
@@ -110,6 +117,8 @@ const route = useRoute()
 const showLogo = computed(() => {
 	const hiddenLogoRoutes = [
 		'jewelry-collections-slug',
+		'collaborations',
+		'collaborations-slug',
 		'about',
 		'about-stockists',
 		'about-press'

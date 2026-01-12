@@ -1,9 +1,10 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField, defineArrayMember } from 'sanity'
+import { LinkIcon } from '@phosphor-icons/react'
 
 export default defineType({
 	type: "document",
-	title: "About",
-	name: "aboutPage",
+	title: "Collaborations",
+	name: "collaborationsPage",
 	fields: [
 		defineField({
 			type: 'string',

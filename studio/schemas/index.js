@@ -11,6 +11,9 @@ import productCollection from './documents/productCollection'
 import artwork from './documents/artwork'
 import artworkCategory from './documents/artworkCategory'
 
+import collaborationsPage from './documents/collaborationsPage'
+import collaboration from './documents/collaboration'
+
 import pageA from './documents/pageA'
 
 import richText from './objects/richText'
@@ -35,6 +38,9 @@ export const schemaTypes = [
 
 	artwork,
 	artworkCategory,
+
+	collaborationsPage,
+	collaboration,
 
 	pageA,
 

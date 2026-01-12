@@ -19,7 +19,8 @@ export default defineType({
 			options: {
 				source: 'title'
 			},
-			validation: Rule => Rule.required()
+			readOnly: true,
+			validation: Rule => Rule.required(),
 		}),
 		defineField({
 			type: 'array',

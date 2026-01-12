@@ -15,6 +15,10 @@ export const DocumentBasedPageBuilderAInput = (props) => {
 			return false
 		}
 
+		if (documentType !== 'collaboration' && type.name === 'collaborationBlock') {
+			return false
+		}
+
 		return true
 	})
 

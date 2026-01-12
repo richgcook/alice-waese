@@ -2,7 +2,7 @@
 	<div class="masonry-layout" :data-context="context">
 		<div class="column" v-for="(col, c) in columns" :key="c">
 			<div v-for="(item, i) in col" :key="item.item?._id" class="item" :class="phoneItemPlacementClass(item, c, i)">
-				<NuxtLink :to="useInternalLinkUrl(item.item)" class="media" :class="{ '--has-hover': item.mediaOverride?.imageHoverState?.asset }">
+				<NuxtLink :to="useInternalLinkUrl(item.item)" class="media" :class="{ '--has-hover': item.mediaOverride?.imageHoverState?.asset || item.imageHoverState?.asset }" v-if="item.item">
 					<video 
 						playsinline autoplay loop muted 
 						v-if="primaryMedia(item)?.type === 'video'">
@@ -17,14 +17,37 @@
 						v-else-if="primaryMedia(item)?.type === 'image'"
 					/>
 					<ImgWithRatio 
-						:src="item.mediaOverride?.imageHoverState.assetRef" 
-						:alt="item.mediaOverride?.imageHoverState.alt" 
+						:src="item.mediaOverride?.imageHoverState.assetRef || item.imageHoverState?.assetRef" 
+						:alt="item.mediaOverride?.imageHoverState.alt || item.imageHoverState?.alt" 
 						:sizes="`100vw tablet-portrait:50vw`"
 						:ratio="primaryMedia(item).image.asset.ratio"
 						:class="[ item.settings?.size ? `--${item.settings.size}` : '', '--hover' ]"
-						v-if="primaryMedia(item)?.type === 'image' && item.mediaOverride?.imageHoverState?.asset"
+						v-if="primaryMedia(item)?.type === 'image' && (item.mediaOverride?.imageHoverState?.asset || item.imageHoverState?.asset)"
 					/>
 				</NuxtLink>
+				<div class="media" v-else>
+					<video 
+						playsinline autoplay loop muted 
+						v-if="primaryMedia(item)?.type === 'video'">
+						<source :src="primaryMedia(item).video" type="video/mp4">
+					</video>
+					<ImgWithRatio 
+						:src="primaryMedia(item).image.assetRef" 
+						:alt="primaryMedia(item).image.alt" 
+						:sizes="`100vw tablet-portrait:50vw`"
+						:ratio="primaryMedia(item).image.asset.ratio"
+						:class="[ item.settings?.size ? `--${item.settings.size}` : '' ]"
+						v-else-if="primaryMedia(item)?.type === 'image'"
+					/>
+					<ImgWithRatio 
+						:src="item.imageHoverState?.assetRef" 
+						:alt="item.imageHoverState?.alt" 
+						:sizes="`100vw tablet-portrait:50vw`"
+						:ratio="primaryMedia(item).image.asset.ratio"
+						:class="[ item.settings?.size ? `--${item.settings.size}` : '', '--hover' ]"
+						v-if="primaryMedia(item)?.type === 'image' && item.imageHoverState?.asset"
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -44,8 +67,6 @@ const props = defineProps({
 
 const primaryMedia = (item) => {
 
-	if (!item?.item) return null
-
 	if (item.mediaOverride) {
 		if (item.mediaOverride.video) {
 			return {
@@ -61,18 +82,31 @@ const primaryMedia = (item) => {
 		}
 	}
 
-	if (item.item.primaryMedia) {
+	if (item.item?.primaryMedia) {
 		if (item.item.primaryMedia.video) {
 			return {
 				type: 'video',
 				video: item.item.primaryMedia.video
 			}
 		}
-		if (item.item.primaryMedia.image?.asset) {
+		if (item.item?.primaryMedia.image?.asset) {
 			return {
 				type: 'image',
 				image: item.item.primaryMedia.image
 			}
+		}
+	}
+
+	if (item.video) {
+		return {
+			type: 'video',
+			video: item.video
+		}
+	}
+	if (item.image?.asset) {
+		return {
+			type: 'image',
+			image: item.image
 		}
 	}
 

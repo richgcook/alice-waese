@@ -57,11 +57,11 @@ div.collaborations {
 	ul {
 		display: flex;
 		flex-flow: column nowrap;
-		align-items: center;
+		justify-content: center;
 		row-gap: 6em;
-		min-height: calc(100dvh - 50px);
+		min-height: calc(100vh - (120px * 2));
 		@supports (min-height: 100dvh) {
-			min-height: calc(100dvh - 50px);
+			min-height: calc(100dvh - (120px * 2));
 		}
 		div.init-group {
 			margin: auto 0;

@@ -2,7 +2,7 @@
 	<div class="collaborations">
 		<ul v-if="data.collaborations?.length">
 			<li v-for="collaboration in data.collaborations" :key="collaboration._id">
-				<NuxtLink :to="useInternalLinkUrl(collaboration)">{{ collaboration.title }}</NuxtLink>	
+				<NuxtLink :to="useInternalLinkUrl(collaboration)">{{ collaboration.titleFormatted ? collaboration.titleFormatted : collaboration.title }}</NuxtLink>	
 			</li>
 		</ul>
 	</div>
@@ -21,7 +21,7 @@ const query = groq`{
 	}[0],
 
 	"collaborations": *[_type == "collaboration"] | order(orderRank) {
-    	_id, _type, slug, title, seo {
+    	_id, _type, slug, title, titleFormatted, seo {
 			${$seoQuery}
 		},
   	},
@@ -78,6 +78,7 @@ div.collaborations {
 			line-height: 1em;
 			letter-spacing: -0.03em;
 			text-align: center;
+			white-space: pre-wrap;
 			a:hover {
 				color: var(--color-gold);
 			}

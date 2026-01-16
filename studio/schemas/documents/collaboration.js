@@ -23,6 +23,13 @@ export default defineType({
 			validation: Rule => Rule.required()
 		}),
 		defineField({
+			type: 'text',
+			title: 'Full title',
+			name: 'titleFormatted',
+			description: 'Presentational title, can include line breaks',
+			rows: 2,
+		}),
+		defineField({
 			type: 'pageBuilderA',
 			title: 'Content',
 			name: 'pageBuilder',

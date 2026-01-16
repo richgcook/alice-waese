@@ -3,7 +3,7 @@
 		<div class="collections">
 
 			<h1 v-for="(collection, i) in allCollections" :key="collection._id" class="collection-title" :class="{ '--active': activeIndex === i }">
-				{{ collection?.titleFull ? collection.titleFull : collection?.title }}
+				{{ collection?.titleFormatted ? collection.titleFormatted : collection?.title }}
 			</h1>
 
 			<div class="collection-layout">
@@ -24,7 +24,7 @@
 		<div class="collections --clone">
 
 			<h1 v-for="(collection, i) in allCollections" :key="collection._id" class="collection-title" :class="{ '--active': activeIndex === i }">
-				{{ collection?.titleFull ? collection.titleFull : collection?.title }}
+				{{ collection?.titleFormatted ? collection.titleFormatted : collection?.title }}
 			</h1>
 
 			<div class="collection-layout">
@@ -62,7 +62,7 @@ const route = useRoute()
 const query = groq`{ 
 
 	"collection": *[_type == "productCollection" && slug.current == $slug] {
-		_id, _type, slug, title, titleFull, seo {
+		_id, _type, slug, title, titleFormatted, seo {
 			${$seoQuery}
 		},
 		"jewelry": pageBuilder[] {
@@ -86,7 +86,7 @@ const query = groq`{
 	}[0],
 
 	"otherCollections": *[_type == "productCollection" && _id != *[_type == "productCollection" && slug.current == $slug][0]._id] | order(orderRank) {
-    	_id, _type, slug, title, titleFull, seo {
+    	_id, _type, slug, title, titleFormatted, seo {
 			${$seoQuery}
 		},
 		"jewelry": pageBuilder[] {
@@ -237,6 +237,7 @@ h1.collection-title {
 	line-height: 1em;
 	letter-spacing: -0.03em;
 	text-align: center;
+	white-space: pre-wrap;
 	opacity: 0;
 	pointer-events: none;
 	transition: opacity 0.3s ease;

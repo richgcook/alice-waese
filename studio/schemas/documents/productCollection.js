@@ -24,10 +24,11 @@ export default defineType({
 			validation: Rule => Rule.required()
 		}),
 		defineField({
-			type: 'string',
+			type: 'text',
 			title: 'Full title',
-			name: 'titleFull',
-			description: 'Full presentational title, used as the large title on the collection page',
+			name: 'titleFormatted',
+			description: 'Presentational title, can include line breaks',
+			rows: 2,
 		}),
 		defineField({
 			type: 'pageBuilderA',

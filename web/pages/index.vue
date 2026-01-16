@@ -101,7 +101,6 @@ const landingIsHidden = ref(false)
 let landingTimeline = null
 
 const hideLandingHandler = () => {
-	console.log('hideLandingHandler')
 	gsap.timeline()
 	.to(landingLogoSeed.value.$el, {
 		opacity: 0,

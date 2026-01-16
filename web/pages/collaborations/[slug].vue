@@ -1,6 +1,6 @@
 <template>
 	<div class="collaboration">
-		<h1 class="title">{{ data.collaboration.title }}</h1>
+		<h1 class="title">{{ data.collaboration.titleFormatted ? data.collaboration.titleFormatted : data.collaboration.title }}</h1>
 		<MasonryLayout :items="data.collaboration.pageBuilder" context="collaboration" v-if="data.collaboration.pageBuilder?.length" />
 		<div class="description" v-if="data.collaboration.descriptionText?.length">
 			<RichText :blocks="data.collaboration.descriptionText" />
@@ -20,7 +20,7 @@ const route = useRoute()
 const query = groq`{ 
 
 	"collaboration": *[_type == "collaboration" && slug.current == $slug] {
-		_id, _type, slug, title, seo {
+		_id, _type, slug, title, titleFormatted, seo {
 			${$seoQuery}
 		},
 		pageBuilder[] {

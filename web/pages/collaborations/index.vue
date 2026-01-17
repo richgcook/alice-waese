@@ -2,7 +2,10 @@
 	<div class="collaborations">
 		<ul v-if="data.collaborations?.length">
 			<li v-for="collaboration in data.collaborations" :key="collaboration._id">
-				<NuxtLink :to="useInternalLinkUrl(collaboration)">{{ collaboration.titleFormatted ? collaboration.titleFormatted : collaboration.title }}</NuxtLink>	
+				<NuxtLink :to="useInternalLinkUrl(collaboration)">
+					<span class="hide-xs">{{ collaboration.titleFormatted ? collaboration.titleFormatted : collaboration.title }}</span>
+					<span class="show-xs">{{ collaboration.title }}</span>
+				</NuxtLink>
 			</li>
 		</ul>
 	</div>
@@ -52,25 +55,23 @@ div.collaborations {
 	padding: 0 120px;
     margin: 120px 0;
 	@include media('phone') {
-		padding: 0 35px;
+		padding: 35px;
+		margin: 0;
 	}
 	ul {
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: center;
-		row-gap: 6em;
+		row-gap: 8.5em;
 		min-height: calc(100vh - (120px * 2));
 		@supports (min-height: 100dvh) {
 			min-height: calc(100dvh - (120px * 2));
 		}
-		div.init-group {
-			margin: auto 0;
-			display: flex;
-			flex-flow: column nowrap;
-			align-items: center;
-			row-gap: 6em;
-			@include media('phone') {
-				row-gap: 2em;
+		@include media('phone') {
+			row-gap: 3.5em;
+			min-height: calc(100vh - (35px * 2));
+			@supports (min-height: 100dvh) {
+				min-height: calc(100dvh - (35px * 2));
 			}
 		}
 		li {
@@ -79,8 +80,24 @@ div.collaborations {
 			letter-spacing: -0.03em;
 			text-align: center;
 			white-space: pre-wrap;
+			@supports (text-box: trim-both cap text) {
+				text-box: trim-both cap alphabetic;
+			}
 			a:hover {
 				color: var(--color-gold);
+			}
+			span {
+				&.hide-xs {
+					@include media('phone') {
+						display: none;
+					}
+				}
+				&.show-xs {
+					display: none;
+					@include media('phone') {
+						display: inline;
+					}
+				}
 			}
 		}
 	}

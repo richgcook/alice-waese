@@ -2,10 +2,7 @@
 	<div class="collaborations">
 		<ul v-if="data.collaborations?.length">
 			<li v-for="collaboration in data.collaborations" :key="collaboration._id">
-				<NuxtLink :to="useInternalLinkUrl(collaboration)">
-					<span class="hide-xs">{{ collaboration.titleFormatted ? collaboration.titleFormatted : collaboration.title }}</span>
-					<span class="show-xs">{{ collaboration.title }}</span>
-				</NuxtLink>
+				<NuxtLink :to="useInternalLinkUrl(collaboration)">{{ collaboration.titleFormatted ? collaboration.titleFormatted : collaboration.title }}</NuxtLink>
 			</li>
 		</ul>
 	</div>
@@ -68,7 +65,7 @@ div.collaborations {
 			min-height: calc(100dvh - (120px * 2));
 		}
 		@include media('phone') {
-			row-gap: 3.5em;
+			row-gap: 4.5em;
 			min-height: calc(100vh - (35px * 2));
 			@supports (min-height: 100dvh) {
 				min-height: calc(100dvh - (35px * 2));
@@ -83,21 +80,11 @@ div.collaborations {
 			@supports (text-box: trim-both cap text) {
 				text-box: trim-both cap alphabetic;
 			}
+			@include media('phone') {
+				white-space: normal;
+			}
 			a:hover {
 				color: var(--color-gold);
-			}
-			span {
-				&.hide-xs {
-					@include media('phone') {
-						display: none;
-					}
-				}
-				&.show-xs {
-					display: none;
-					@include media('phone') {
-						display: inline;
-					}
-				}
 			}
 		}
 	}

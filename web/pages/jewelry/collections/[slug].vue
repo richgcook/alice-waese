@@ -235,7 +235,7 @@ h1.collection-title {
 	z-index: 1;
 	font-size: clamp(48px, 6.9vw, 100px);
 	line-height: 1em;
-	letter-spacing: -0.03em;
+	letter-spacing: -0.02em;
 	text-align: center;
 	white-space: pre-wrap;
 	opacity: 0;
@@ -247,6 +247,7 @@ h1.collection-title {
 	}
 	@include media('phone') {
 		width: calc(100% - (35px * 2));
+		white-space: normal;
 	}
 }
 div.collection-description {

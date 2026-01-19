@@ -86,8 +86,10 @@ h1.title {
 	line-height: 1em;
 	letter-spacing: -0.03em;
 	text-align: center;
+	white-space: pre-wrap;
 	@include media('phone') {
 		width: calc(100% - (35px * 2));
+		white-space: normal;
 	}
 }
 

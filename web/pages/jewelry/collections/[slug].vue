@@ -235,7 +235,7 @@ h1.collection-title {
 	z-index: 1;
 	font-size: clamp(48px, 6.9vw, 100px);
 	line-height: 1em;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.03em;
 	text-align: center;
 	white-space: pre-wrap;
 	opacity: 0;

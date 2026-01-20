@@ -43,7 +43,7 @@ const plugins = computed(() => {
 	const basePlugins = [
 		Autoplay({
 			playOnInit: false,
-			delay: 4000,
+			delay: 3500,
 			stopOnInteraction: false,
 		}),
 		Fade(),
@@ -113,7 +113,7 @@ watch(() => props.startPlaying, (shouldStart) => {
 		embla.value.scrollNext()
 		startAutoplay()
 		autoplayStartTimeoutId = null
-	}, 4000)
+	}, 1500)
 })
 
 onMounted(() => {

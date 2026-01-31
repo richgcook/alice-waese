@@ -23,6 +23,53 @@ export default defineType({
 			validation: Rule => Rule.required(),
 		}),
 		defineField({
+			type: 'array',
+			title: 'Collaborations',
+			name: 'collaborations',
+			of: [
+				defineArrayMember({
+					type: 'object',
+					name: 'Collaboration',
+					title: 'collaboration',
+					fields: [
+						defineField({
+							type: 'string',
+							title: 'Name',
+							name: 'name',
+							validation: Rule => Rule.required()
+						}),
+						defineField({
+							type: 'string',
+							title: 'Location/Other',
+							name: 'other',
+						}),
+						defineField({
+							type: 'reference',
+							title: 'Link',
+							name: 'link',
+							to: [{ type: 'collaboration' }],
+							validation: Rule => Rule.required(),
+						}),
+					],
+					preview: {
+						select: {
+							title: 'name',
+							other: 'other',
+							url: 'link'
+						},
+						prepare(selection) {
+							const { title, other, url } = selection
+							return {
+								title: other ? `${title} (${other})` : title,
+								subtitle: url,
+								media: LinkIcon,
+							}
+						}
+					}
+				}),
+			],
+		}),
+		defineField({
 			title: 'SEO',
 			name: 'seo',
 			type: 'seo'

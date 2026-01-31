@@ -19,11 +19,6 @@ S.listItem()
 					.documentId('collaborationsPage')
 				),
 				S.divider(),
-				orderableDocumentListDeskItem({
-					type: 'collaboration', 
-					title: 'Collaborations',
-					icon: UsersThreeIcon,
-					S, context
-				}),
+				S.documentTypeListItem('collaboration').title('Collaborations').icon(UsersThreeIcon),
 			])
 		)

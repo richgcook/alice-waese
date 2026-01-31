@@ -1,11 +1,5 @@
 <template>
-	<div class="collaborations">
-		<ul v-if="data.collaborations?.length">
-			<li v-for="collaboration in data.collaborations" :key="collaboration._id">
-				<NuxtLink :to="useInternalLinkUrl(collaboration)">{{ collaboration.titleFormatted ? collaboration.titleFormatted : collaboration.title }}</NuxtLink>
-			</li>
-		</ul>
-	</div>
+	<StaggeredList :items="data.collaborations" layoutVersion="collaborations" />
 </template>
 
 <script setup>

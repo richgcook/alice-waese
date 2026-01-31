@@ -1,12 +1,21 @@
 <template>
 	<ul class="staggered-list" :data-layout="layoutVersion">
 		<li v-for="(item, index) in items" :key="index" :class="{ '--has-other': item.other }">
-			<NuxtLink :to="item.link" target="_blank">
-				<div class="inner">
-					<span class="name">{{ item.name }}</span>
-					<span class="other" v-if="item.other"><span>&mdash;{{ item.other }}</span></span>
-				</div>
-			</NuxtLink>
+			<template v-if="item._type == 'collaboration'">
+				<NuxtLink :to="useInternalLinkUrl(item)">
+					<div class="inner">
+						<h3 class="title">{{ item.titleFormatted ? item.titleFormatted : item.title }}</h3>
+					</div>
+				</NuxtLink>
+			</template>
+			<template v-else>
+				<NuxtLink :to="item.link" target="_blank">
+					<div class="inner">
+						<span class="name">{{ item.name }}</span>
+						<span class="other" v-if="item.other"><span>&mdash;{{ item.other }}</span></span>
+					</div>
+				</NuxtLink>
+			</template>
 		</li>
 	</ul>
 </template>
@@ -212,6 +221,37 @@ ul.staggered-list {
 							justify-content: flex-end;
 						}
 					}
+				}
+			}
+		}
+	}
+	&[data-layout="collaborations"] {
+		li {
+			white-space: pre-wrap;
+			@include media('phone') {
+				white-space: normal;
+			}
+			&:nth-child(12n + 1) {
+				grid-column: 1 / -1;
+				a {
+					display: flex;
+					justify-content: flex-end;
+					@include media('phone') {
+						display: block;
+					}
+				}
+			}
+			&:nth-child(12n + 3) { grid-column: 4 / -1; }
+			&:nth-child(12n + 4) { grid-column: 3 / -1; }
+
+			&:nth-child(odd) {
+				@include media('phone') {
+					text-align: right;
+				}
+			}
+			&:nth-child(even) {
+				@include media('phone') {
+					text-align: left;
 				}
 			}
 		}

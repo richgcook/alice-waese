@@ -274,6 +274,9 @@ ul.staggered-list {
 			}
 			div.inner {
 				display: inline-block;
+				span.name {
+					display: inline-block;
+				}
 			}
 		}
 		&.--has-other {

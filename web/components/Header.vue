@@ -1,11 +1,18 @@
 <template>
 	<header ref="header">
 		<h1 class="logo" v-show="showLogo"><NuxtLink to="/"><Logo /></NuxtLink></h1>
-		<div class="nav" :class="{ '--open': navStore.isOpen }" ref="nav" @pointerenter="onEnter" @pointerleave="onLeave">
+		<div
+			class="nav"
+			:class="{ '--open': navStore.isOpen }"
+			:style="{ '--active-sub-height': `${activeSubHeight}px` }"
+			ref="nav"
+			@pointerenter="onEnter"
+			@pointerleave="onLeave"
+		>
 			<button class="menu-trigger" @click="onTriggerClick"><img src="/illustrations/bunny.png" /></button>
 			<ul class="menu" ref="menu" v-show="navStore.isOpen">
 				<li>
-					<ul class="sub" v-show="activeSubMenu === 1">
+					<ul class="sub" :ref="el => setSubRef(1, el)" v-show="activeSubMenu === 1">
 						<li v-for="category in data.productCategories" :key="category._id">
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
 						</li>
@@ -26,7 +33,7 @@
 					>Jewelry</button>
 				</li>
 				<li>
-					<ul class="sub" v-show="activeSubMenu === 2">
+					<ul class="sub" :ref="el => setSubRef(2, el)" v-show="activeSubMenu === 2">
 						<li v-for="collection in data.productCollections" :key="collection._id">
 							<NuxtLink :to="useInternalLinkUrl(collection)">{{ collection.title }}</NuxtLink>
 						</li>
@@ -43,7 +50,7 @@
 					>Collections</button>
 				</li>
 				<li>
-					<ul class="sub" v-show="activeSubMenu === 3">
+					<ul class="sub" :ref="el => setSubRef(3, el)" v-show="activeSubMenu === 3">
 						<li><NuxtLink :to="useInternalLinkUrl(data.aboutPage)">{{ data.aboutPage.title }}</NuxtLink></li>
 						<li><NuxtLink :to="useInternalLinkUrl(data.stockistsPage)">{{ data.stockistsPage.title }}</NuxtLink></li>
 						<li><NuxtLink :to="useInternalLinkUrl(data.pressPage)">{{ data.pressPage.title }}</NuxtLink></li>
@@ -166,6 +173,7 @@ const onItemPress = (id) => {
 const { height } = useWindowSize()
 
 let closeTimer
+const HOVER_CLOSE_DELAY_MS = 500
 
 const openNav  = () => {
 	if (closeTimer) clearTimeout(closeTimer) // Cancel any pending close
@@ -218,12 +226,32 @@ const onLeave = (e) => {
 	if (!isHoverCapable.value) return
 	const to = e.relatedTarget
 	if (to && navRef.value?.contains(to)) return
-	closeTimer = setTimeout(closeNav, 120)
+	closeTimer = setTimeout(closeNav, HOVER_CLOSE_DELAY_MS)
 }
 
 const activeSubMenu = ref(null)
 const activeSubSubMenu = ref(null)
 const navRef = useTemplateRef('nav')
+const subRefs = new Map()
+const activeSubHeight = ref(0)
+
+const setSubRef = (id, el) => {
+	if (el) {
+		subRefs.set(id, el)
+	} else {
+		subRefs.delete(id)
+	}
+}
+
+const updateActiveSubHeight = async () => {
+	if (!isHoverCapable.value || !navStore.isOpen || !activeSubMenu.value) {
+		activeSubHeight.value = 0
+		return
+	}
+	await nextTick()
+	const activeEl = subRefs.get(activeSubMenu.value)
+	activeSubHeight.value = activeEl ? activeEl.getBoundingClientRect().height : 0
+}
 
 onClickOutside(navRef, () => {
 	if (navStore.isOpen) navStore.setClose()
@@ -238,9 +266,22 @@ watch(() => route.path, () => {
 	activeSubSubMenu.value = null
 })
 
+watch([activeSubMenu, () => navStore.isOpen, isHoverCapable, height], () => {
+	updateActiveSubHeight()
+}, { immediate: true })
+
 </script>
 
 <style lang="scss" scoped>
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.25s;
+}
+.fade-enter-from,
+.fade-leave-to {
+	opacity: 0;
+}
 
 header {
 	position: fixed;
@@ -299,10 +340,12 @@ header {
 		}
 	}
 	div.nav {
+		--active-sub-height: 0px;
 		position: fixed;
 		bottom: 0;
 		left: 0;
 		padding: 0 0 50px 50px;
+		padding-top: var(--active-sub-height);
 		//@include max-width-grid-columns(21, 6, '20px', 'width', '0px', '100vw + 100px');
 		width: 22.5%;
 		max-width: 768px;
@@ -365,14 +408,6 @@ header {
 				color: black !important;
 				padding: 85px 35px 75px 35px;
 				gap: 2em 0;
-			}
-			&.fade-enter-active,
-			&.fade-leave-active {
-				transition: opacity 0.25s;
-			}
-			&.fade-enter-from,
-			&.fade-leave-to {
-				opacity: 0;
 			}
 			li {
 				display: flex;

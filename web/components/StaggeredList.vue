@@ -273,9 +273,9 @@ ul.staggered-list {
 				color: var(--color-gold);
 			}
 			div.inner {
-				display: inline-block;
+				display: block;
 				span.name {
-					display: inline-block;
+					display: block;
 				}
 			}
 		}

@@ -261,7 +261,7 @@ ul.staggered-list {
 		display: grid;
 		grid-template-columns: subgrid;
 		font-size: clamp(47px, 6.9vw, 180px);
-		line-height: 1.2em;
+		line-height: 1.3em;
 		letter-spacing: -0.03em;
 		@include media('phone') {
 			line-height: 1.1em;

@@ -46,12 +46,12 @@
 		@content;
 	}
 }
-@mixin isTouch() {
+@mixin is-touch() {
 	@media (hover: none) {
 		@content;
 	}
 }
-@mixin isNotTouch() {
+@mixin is-not-touch() {
 	@media (hover: hover) {
 		@content;
 	}

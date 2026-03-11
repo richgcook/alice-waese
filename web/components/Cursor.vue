@@ -73,7 +73,7 @@ div.cursor {
 	left: 0;
 	pointer-events: none;
 	z-index: 666;
-	@include isTouch() {
+	@include is-touch() {
 		display: none;
 	}
 	svg {

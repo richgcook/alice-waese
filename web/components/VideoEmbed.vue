@@ -84,9 +84,11 @@ div.video-embed {
 				height: 50px;
 				width: 50px;
 			}
-			&:hover {
-				svg {
-					transform: translate(-50%, -50%) scale(1.05);
+			@include is-not-touch() {
+				&:hover {
+					svg {
+						transform: translate(-50%, -50%) scale(1.05);
+					}
 				}
 			}
 			svg {

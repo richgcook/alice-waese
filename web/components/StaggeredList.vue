@@ -269,8 +269,10 @@ ul.staggered-list {
 		}
 		a {
 			grid-column: 1 / -1;
-			&:hover {
-				color: var(--color-gold);
+			@include is-not-touch() {
+				&:hover {
+					color: var(--color-gold);
+				}
 			}
 			div.inner {
 				display: block;

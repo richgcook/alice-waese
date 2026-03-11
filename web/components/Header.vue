@@ -448,7 +448,7 @@ header {
 					}
 					li a {
 						transition: padding-left 0.2s;
-						@include isNotTouch() {
+						@include is-not-touch() {
 							&:hover {
 								padding-left: 20px;
 							}

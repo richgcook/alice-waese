@@ -362,7 +362,7 @@ div.masonry-layout {
 				display: block;
 				position: relative;
 				&.--has-hover {
-					@include isNotTouch() {
+					@include is-not-touch() {
 						&:hover {
 							:deep(div.image) {
 								&.--hover {

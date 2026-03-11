@@ -94,9 +94,9 @@ div.page-layout {
 	gap: 0 20px;
 	padding: 0 50px;
 	margin: 62px auto 120px auto;
-	font-family: var(--font-body);
-	font-weight: 300;
-	font-size: var(--font-size-sm);
+	//font-family: var(--font-body);
+	//font-weight: 300;
+	//font-size: var(--font-size-sm);
 	line-height: 2.06em;
 	position: relative;
 	@include media('phone') {

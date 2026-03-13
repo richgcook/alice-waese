@@ -1,24 +1,36 @@
 <template>
 	<div>
-		<div class="landing" 
+		<div
+			class="landing" 
 			@click.once="hideLandingHandler" 
 			@touchstart.once="hideLandingHandler" 
 			@wheel.once="hideLandingHandler"
 			ref="landing" 
-			v-if="(data.homePage.landing?.image?.asset || data.homePage.landing?.video) && !homeStore.isLandingHidden"
+			v-if="(landingLandscapeSrc || landingPortraitSrc || data.homePage.landing?.video) && !homeStore.isLandingHidden"
 		>
 			<video playsinline autoplay loop muted ref="landingVideo" v-if="data.homePage.landing.video">
 				<source :src="data.homePage.landing.video" type="video/mp4">
 			</video>
-			<NuxtImg 
-				:src="data.homePage.landing.image.assetRef" 
-				:alt="data.homePage.landing.image.alt"
-				sizes="100vw tablet-portrait:100vw"
-				loading="eager"
-				preload
-				ref="landingImage"
-				v-else-if="data.homePage.landing.image?.asset"
-			/>
+			<div class="landing-image" ref="landingImage">
+				<NuxtImg 
+					v-if="landingLandscapeSrc"
+					:src="landingLandscapeSrc" 
+					:alt="landingImageAlt"
+					sizes="100vw tablet-portrait:100vw"
+					loading="eager"
+					preload
+					data-orientation="landscape"
+				/>
+				<NuxtImg 
+					v-if="landingPortraitSrc"
+					:src="landingPortraitSrc" 
+					:alt="landingImageAlt"
+					sizes="100vw tablet-portrait:100vw"
+					loading="eager"
+					preload
+					data-orientation="portrait"
+				/>
+			</div>
 			<LogoSeed class="logo" ref="landingLogoSeed" />
 			<div class="underlay" ref="landingUnderlay"></div>
 		</div>
@@ -35,7 +47,7 @@
 import { useHomeStore } from '~/store/home'
 import { gsap } from 'gsap'
 
-const { $seoQuery, $imageQuery, $internalLinkQuery } = useNuxtApp()
+const { $seoQuery, $imageQuery, $internalLinkQuery, $responsiveImageQuery } = useNuxtApp()
 
 const query = groq`{ 
 
@@ -45,7 +57,7 @@ const query = groq`{
 		},
 		landing {
 			image {
-				${$imageQuery}
+				${$responsiveImageQuery}
 			},
 			"video": video.asset->url,
 		},
@@ -53,7 +65,7 @@ const query = groq`{
 			_type,
 			_type == "imageBlock" => {
 				image {
-					${$imageQuery}
+					${$responsiveImageQuery}
 				},
 				link {
 					"internal": internal.page->{
@@ -74,6 +86,10 @@ const query = groq`{
 
 const { data } = await useSanityQuery(query)
 
+const landingResponsiveImage = computed(() => data.value?.homePage?.landing?.image || null)
+
+const { landscapeSrc: landingLandscapeSrc, portraitSrc: landingPortraitSrc, alt: landingImageAlt } = useResponsiveImage(landingResponsiveImage)
+
 const { title, description, image, bodyClass } = useMetaBodyHelpers(data?.value.homePage)
 
 useHead({
@@ -91,8 +107,10 @@ useHead({
 const homeStore = useHomeStore()
 
 const landing = useTemplateRef('landing')
-const landingVideo = useTemplateRef('landingVideo')
 const landingImage = useTemplateRef('landingImage')
+const landingVideo = useTemplateRef('landingVideo')
+const landingImageLandscape = useTemplateRef('landingImageLandscape')
+const landingImagePortrait = useTemplateRef('landingImagePortrait')
 const landingLogoSeed = useTemplateRef('landingLogoSeed')
 const landingUnderlay = useTemplateRef('landingUnderlay')
 
@@ -123,7 +141,9 @@ const hideLandingHandler = () => {
 
 onMounted(() => {
 	landingTimeline = gsap.timeline()
-	landingTimeline.to(landingVideo.value || landingImage.value.$el, {
+	const mediaEl = landingVideo.value || landingImage.value
+	if (!mediaEl) return
+	landingTimeline.to(mediaEl, {
 		opacity: 1,
 		duration: 1,
 		ease: 'power2.inOut'
@@ -146,14 +166,21 @@ div.landing {
 	width: 100%;
 	z-index: 30;
 	background-color: black;
-	img, video {
+	div.landing-image {
 		position: absolute;
 		inset: 0;
 		height: 100%;
 		width: 100%;
-		object-fit: cover;
-		object-position: center;
 		opacity: 0;
+		img, video {
+			position: absolute;
+			inset: 0;
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+			object-position: center;
+			@include orientation-visibility;
+		}
 	}
 	svg.logo {
 		position: absolute;

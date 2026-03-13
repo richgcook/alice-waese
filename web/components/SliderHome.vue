@@ -4,13 +4,12 @@
 			<div class="slider" ref="slider">
 				<div v-for="(slide, index) in slides" :key="index" class="slide" :data-settings-position="slide.settings?.position">
 					<template v-if="useBlockType(slide._type) === 'image'">
-						<NuxtImg 
-							:src="slide.image.assetRef" 
-							:alt="slide.image.alt"
+						<ImgResponsive
+							:image="slide.image"
 							sizes="100vw tablet-portrait:100vw"
 							loading="eager"
 							preload
-							v-if="slide.image?.asset"
+							class="image"
 						/>
 					</template>
 					<NuxtLink :to="useLinkLink(slide.link)" class="link" v-if="slide.link"></NuxtLink>
@@ -170,25 +169,29 @@ div.slider-container {
 					grid-template-columns: 1fr;
 				}
 				&[data-settings-position="left"] {
-					img {
+					:deep(div.image) {
 						grid-column: 1 / span 8;
 						@include media('phone') {
 							grid-column: 1 / -1;
 						}
 					}
 				}
-				img, video {
+				&:deep(div.image) {
 					grid-column: 7 / span 8;
-					position: absolute;
-					top: 50%;
-					left: 50%;
-					height: 100%;
-					width: 100%;
-					max-width: none;
-					transform: translate(-50%, -50%);
-					object-fit: cover;
+					position: relative;
 					@include media('phone') {
 						grid-column: 1 / -1;
+					}
+					img {
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						height: 100%;
+						width: 100%;
+						max-width: none;
+						transform: translate(-50%, -50%);
+						object-fit: cover;
+						@include orientation-visibility;
 					}
 				}
 				a.link {

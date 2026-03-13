@@ -23,6 +23,7 @@ import pageBuilderA from './objects/pageBuilderA'
 import pageBuilderB from './objects/pageBuilderB'
 import themeMode from './objects/themeMode'
 import hero from './objects/hero'
+import responsiveImage from './objects/responsiveImage'
 
 export const schemaTypes = [
 	// Documents
@@ -52,4 +53,5 @@ export const schemaTypes = [
 	pageBuilderB,
 	themeMode,
 	hero,
+	responsiveImage,
 ]

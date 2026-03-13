@@ -45,6 +45,15 @@ const imageQuery = `
 	}
 `
 
+const responsiveImageQuery = `
+	imageLandscape {
+		${imageQuery}
+	},
+	imagePortrait {
+		${imageQuery}
+	},
+`
+
 const pageBuilderAQuery = `
 	_type,
 	_type == "textBlock" => {
@@ -161,6 +170,7 @@ export default defineNuxtPlugin(nuxtApp => {
 	nuxtApp.provide('internalLinkQuery', internalLinkQuery)
 	nuxtApp.provide('richTextQuery', richTextQuery)
 	nuxtApp.provide('imageQuery', imageQuery)
+	nuxtApp.provide('responsiveImageQuery', responsiveImageQuery)
 	nuxtApp.provide('pageBuilderAQuery', pageBuilderAQuery)
 	nuxtApp.provide('productQuery', productQuery)
 	nuxtApp.provide('artworkQuery', artworkQuery)

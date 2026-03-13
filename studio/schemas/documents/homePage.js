@@ -12,15 +12,9 @@ export default defineType({
 			name: 'landing',
 			fields: [
 				defineField({
-					type: 'image',
+					type: 'responsiveImage',
 					title: 'Image',
 					name: 'image',
-					fields: [
-						defineField({
-							type: 'alt',
-							name: 'alt'
-						})
-					],
 				}),
 				defineField({
 					type: 'file',
@@ -43,16 +37,9 @@ export default defineType({
 					name: 'imageBlock',
 					fields: [
 						defineField({
-							type: 'image',
+							type: 'responsiveImage',
 							title: 'Image',
 							name: 'image',
-							fields: [
-								{
-									type: 'alt',
-									name: 'alt'
-								}
-							],
-							validation: Rule => Rule.required()
 						}),
 						defineField({
 							type: 'object',
@@ -124,7 +111,7 @@ export default defineType({
 					],
 					preview: {
 						select: {
-							image: 'image',
+							image: 'image.imageLandscape',
 							settingsPosition: 'settings.position',
 						},
 						prepare(selection) {

@@ -115,3 +115,18 @@
 	background-color: var(--color-green);
 	margin: 0 calc(50% - 50vw);
 }
+@mixin orientation-visibility {
+	&[data-orientation] {
+		display: none;
+	}
+	@media (orientation: landscape) {
+		&[data-orientation="landscape"] {
+			display: block;
+		}
+	}
+	@media (orientation: portrait) {
+		&[data-orientation="portrait"] {
+			display: block;
+		}
+	}
+}

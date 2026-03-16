@@ -264,15 +264,12 @@ ul.staggered-list {
 		line-height: 1.3em;
 		letter-spacing: -0.03em;
 		@include media('phone') {
-			line-height: 1.1em;
 			grid-column: 1 / -1 !important;
 		}
 		a {
 			grid-column: 1 / -1;
-			@include is-not-touch() {
-				&:hover {
-					color: var(--color-gold);
-				}
+			&:hover {
+				color: var(--color-gold);
 			}
 			div.inner {
 				display: block;

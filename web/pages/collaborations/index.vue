@@ -77,10 +77,8 @@ div.collaborations {
 			@include media('phone') {
 				white-space: normal;
 			}
-			@include is-not-touch() {
-				a:hover {
-					color: var(--color-gold);
-				}
+			a:hover {
+				color: var(--color-gold);
 			}
 		}
 	}

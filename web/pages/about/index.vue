@@ -185,10 +185,8 @@ div.details {
 		row-gap: 0.8em;
 		span {
 			text-indent: 65px;
-			@include is-not-touch() {
-				a:hover {
-					color: var(--color-gold);
-				}
+			a:hover {
+				color: var(--color-gold);
 			}
 		}
 	}

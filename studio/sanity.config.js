@@ -3,7 +3,7 @@ import { structureTool}  from 'sanity/structure'
 import { visionTool} from '@sanity/vision'
 import { schemaTypes } from './schemas'
 import { deskStructure } from './desk'
-import { netlifyTool } from 'sanity-plugin-netlify'
+//import { netlifyTool } from 'sanity-plugin-netlify'
 import { simplerColorInput } from 'sanity-plugin-simpler-color-input'
 
 const devOnlyPlugins = [visionTool()]
@@ -27,7 +27,7 @@ export default defineConfig({
 		structureTool({
 			structure: deskStructure,
 		}), 
-		netlifyTool(),
+		//netlifyTool(),
 		simplerColorInput(),
 		...(isDev ? devOnlyPlugins : []),
 	],

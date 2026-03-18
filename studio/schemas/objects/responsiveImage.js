@@ -9,6 +9,10 @@ export default defineType({
 			type: 'image',
 			title: 'Image',
 			name: 'imageLandscape',
+			options: {
+				collapsible: false,
+				collapsed: false,
+			},
 			fields: [
 				defineField({
 					type: 'alt',

@@ -7,7 +7,7 @@
 			<div>
 				<span>based</span><div class="space">&nbsp;</div><span>in</span>
 				<div class="details">
-					<p>For direct orders & inquiries <span>contact <NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></span></p>
+					<p>For all inquiries & direct orders <span>contact <NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></span></p>
 				</div>
 			</div>
 			<div><span>New</span><div class="space">&nbsp;</div><span>York.</span></div>

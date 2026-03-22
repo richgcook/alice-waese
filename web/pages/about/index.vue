@@ -24,7 +24,7 @@
 		</h2>
 
 		<div class="details">
-			<p>For direct orders & inquiries <span>contact <NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></span></p>
+			<p>For all inquiries & direct orders <span>contact <NuxtLink to="mailto:alice@alicewaese.com">alice@alicewaese.com</NuxtLink></span></p>
 		</div>
 	</div>
 </template>

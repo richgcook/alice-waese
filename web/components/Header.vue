@@ -10,13 +10,13 @@
 			@pointerleave="onLeave"
 		>
 			<button class="menu-trigger" @click="onTriggerClick"><img src="/illustrations/bunny.png" /></button>
+			<!-- Preview: full nav hidden; menu-trigger goes to About
 			<ul class="menu" ref="menu" v-show="navStore.isOpen">
 				<li>
 					<ul class="sub" :ref="el => setSubRef(1, el)" v-show="activeSubMenu === 1">
 						<li v-for="category in data.productCategories" :key="category._id">
 							<NuxtLink :to="useInternalLinkUrl(category)">{{ category.title }}</NuxtLink>
 						</li>
-						<!--
 						<li v-if="data.productCollections?.length">
 							<button @mouseover="activeSubSubMenu ? activeSubSubMenu = null : activeSubSubMenu = 1">Collections</button>
 							<ul class="sub" v-show="activeSubSubMenu === 1">
@@ -25,7 +25,6 @@
 								</li>
 							</ul>
 						</li>
-						-->
 					</ul>
 					<button
 						@mouseover="activeSubMenu = 1"
@@ -65,6 +64,7 @@
 				</li>
 				<button class="logo" @click="navStore.setClose"><Logo /></button>
 			</ul>
+			-->
 		</div>
 	</header>
 </template>
@@ -83,39 +83,9 @@ const config = useRuntimeConfig()
 const { $seoQuery, $imageQuery, $richTextQuery } = useNuxtApp()
 
 const query = groq`{ 
-
-	"productCategories": *[_type == "productCategory"] | order(orderRank) {
-		_id, _type, title, slug,
-	},
-
-	"productCollections": *[_type == "productCollection"] | order(orderRank) {
-		_id, _type, title, slug,
-	},
-
-	"artworkCategories": *[_type == "artworkCategory"] | order(orderRank) {
-		_id, _type, title, slug,
-	},
-
-	"collaborationsPage": *[_type == "collaborationsPage"] {
-		_id, _type, title, slug,
-	}[0],
-
 	"aboutPage": *[_type == "aboutPage"] {
 		_id, _type, title, slug,
 	}[0],
-
-	"stockistsPage": *[_type == "stockistsPage"] {
-		_id, _type, title, slug,
-	}[0],
-
-	"pressPage": *[_type == "pressPage"] {
-		_id, _type, title, slug,
-	}[0],
-
-	"pages": *[_type == "pageA"] {
-		_id, _type, title, slug,
-	},
-	
 }`
 const { data } = await useSanityQuery(query)
 
@@ -187,35 +157,9 @@ const closeNav = () => {
 	navStore.setClose()
 }
 
-const onTriggerClick = (e) => {
-  
-	if (!isHoverCapable.value) {
-		e.stopPropagation()
-		navStore.isOpen ? closeNav() : openNav()
-		return
-	}
-
-	/*
-	if (route.name === 'about') {
-		const doc = document.documentElement
-		const atBottom   = window.innerHeight + window.scrollY >= doc.scrollHeight - 2
-		const hasScrolled = window.scrollY > 2 || atBottom
-
-		if (!hasScrolled) {
-			gsap.to(window, {
-				duration: 0.3,
-				scrollTo: {
-					y: doc.scrollHeight - unref(height),
-					offsetY: 0
-				},
-				onComplete: openNav
-			})
-			return
-		}
-	}
-	*/
-
-	openNav()
+const onTriggerClick = () => {
+	if (!data.value?.aboutPage) return
+	navigateTo(useInternalLinkUrl(data.value.aboutPage))
 }
 
 const onEnter = () => {
